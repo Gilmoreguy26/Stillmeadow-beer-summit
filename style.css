@@ -149,3 +149,322 @@
   }
 
 }
+/* =========================
+
+   MANAGER CARDS
+
+========================== */
+
+.managers-section {
+
+  overflow: hidden;
+
+}
+
+.manager-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 28px;
+
+  margin-top: 42px;
+
+}
+
+.manager-card {
+
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+
+    145deg,
+
+    rgba(255,255,255,0.09),
+
+    rgba(255,255,255,0.025)
+
+  );
+
+  box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+
+  transition:
+
+    transform 0.25s ease,
+
+    box-shadow 0.25s ease,
+
+    border-color 0.25s ease;
+
+}
+
+.manager-card:hover {
+
+  transform: translateY(-8px);
+
+  border-color: rgba(255,255,255,0.28);
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+
+}
+
+.manager-photo {
+
+  position: relative;
+
+  height: 310px;
+
+  overflow: hidden;
+
+  background: #111;
+
+}
+
+.manager-photo::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+
+    to bottom,
+
+    transparent 45%,
+
+    rgba(0,0,0,0.82) 100%
+
+  );
+
+  pointer-events: none;
+
+}
+
+.manager-photo img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  display: block;
+
+  transition: transform 0.35s ease;
+
+}
+
+.manager-card:hover .manager-photo img {
+
+  transform: scale(1.05);
+
+}
+
+.manager-number {
+
+  position: absolute;
+
+  top: 14px;
+
+  right: 14px;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 42px;
+
+  height: 42px;
+
+  border: 1px solid rgba(255,255,255,0.3);
+
+  border-radius: 50%;
+
+  background: rgba(0,0,0,0.55);
+
+  color: white;
+
+  font-size: 0.75rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  backdrop-filter: blur(8px);
+
+}
+
+.manager-info {
+
+  padding: 22px 22px 24px;
+
+}
+
+.manager-label {
+
+  margin: 0 0 7px;
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+
+  opacity: 0.6;
+
+}
+
+.manager-info h3 {
+
+  margin: 0;
+
+  font-size: 1.45rem;
+
+  line-height: 1.1;
+
+}
+
+.manager-info h4 {
+
+  margin: 8px 0 18px;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  opacity: 0.72;
+
+}
+
+.manager-meta {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-bottom: 20px;
+
+}
+
+.manager-meta span {
+
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.07);
+
+  font-size: 0.72rem;
+
+  font-weight: 600;
+
+}
+
+.manager-stats {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  border-top: 1px solid rgba(255,255,255,0.1);
+
+  padding-top: 17px;
+
+}
+
+.manager-stats div {
+
+  text-align: center;
+
+  border-right: 1px solid rgba(255,255,255,0.08);
+
+}
+
+.manager-stats div:last-child {
+
+  border-right: none;
+
+}
+
+.manager-stats strong {
+
+  display: block;
+
+  font-size: 1.1rem;
+
+}
+
+.manager-stats small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 0.65rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  opacity: 0.5;
+
+}
+
+/* =========================
+
+   MANAGER CARD RESPONSIVE
+
+========================== */
+
+@media (max-width: 1050px) {
+
+  .manager-grid {
+
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .manager-grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 22px;
+
+  }
+
+  .manager-photo {
+
+    height: 360px;
+
+  }
+
+  .manager-info {
+
+    padding: 20px;
+
+  }
+
+}
