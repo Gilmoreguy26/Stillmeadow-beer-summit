@@ -219,7 +219,7 @@
 
   position: relative;
 
-  height: 210px;
+  height: 150px;
 
   overflow: hidden;
 
@@ -451,16 +451,23 @@
 
     grid-template-columns: 1fr;
 
-    gap: 22px;
+    gap: 18px;
 
   }
 
   .manager-photo {
 
-  height: 230px;
+    height: 170px;
+
+  }
+
+  .manager-info {
+
+    padding: 18px;
+
+  }
 
 }
-
   .manager-info {
 
     padding: 20px;
