@@ -219,7 +219,7 @@
 
   position: relative;
 
-  height: 310px;
+  height: 210px;
 
   overflow: hidden;
 
@@ -457,9 +457,9 @@
 
   .manager-photo {
 
-    height: 360px;
+  height: 230px;
 
-  }
+}
 
   .manager-info {
 
