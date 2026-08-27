@@ -2,9 +2,15 @@ const LEAGUE_ID = "4174174";
 
 const SEASON = "2026";
 
-const ESPN_URL =
+const ESPN_BASE_URL =
 
-  `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${SEASON}/segments/0/leagues/${LEAGUE_ID}?view=mTeam`;
+  `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${SEASON}/segments/0/leagues/${LEAGUE_ID}`;
+
+/* =========================
+
+   LIVE STANDINGS
+
+========================= */
 
 async function loadStandings() {
 
@@ -14,7 +20,7 @@ async function loadStandings() {
 
   try {
 
-    const response = await fetch(ESPN_URL);
+    const response = await fetch(`${ESPN_BASE_URL}?view=mTeam`);
 
     if (!response.ok) {
 
@@ -80,14 +86,6 @@ async function loadStandings() {
 
           .join(", ") || "—";
 
-      const wins = record.wins || 0;
-
-      const losses = record.losses || 0;
-
-      const pointsFor = record.pointsFor || 0;
-
-      const pointsAgainst = record.pointsAgainst || 0;
-
       const row = document.createElement("tr");
 
       row.innerHTML = `
@@ -98,13 +96,13 @@ async function loadStandings() {
 
         <td>${manager}</td>
 
-        <td>${wins}</td>
+        <td>${record.wins || 0}</td>
 
-        <td>${losses}</td>
+        <td>${record.losses || 0}</td>
 
-        <td>${Number(pointsFor).toFixed(2)}</td>
+        <td>${Number(record.pointsFor || 0).toFixed(2)}</td>
 
-        <td>${Number(pointsAgainst).toFixed(2)}</td>
+        <td>${Number(record.pointsAgainst || 0).toFixed(2)}</td>
 
       `;
 
@@ -134,4 +132,138 @@ async function loadStandings() {
 
 }
 
+/* =========================
+
+   LIVE CURRENT WEEK MATCHUPS
+
+========================= */
+
+async function loadCurrentMatchups() {
+
+  const matchupContainer = document.getElementById("espn-matchups");
+
+  if (!matchupContainer) return;
+
+  try {
+
+    const response = await fetch(`${ESPN_BASE_URL}?view=mScoreboard`);
+
+    if (!response.ok) {
+
+      throw new Error("Could not connect to ESPN");
+
+    }
+
+    const data = await response.json();
+
+    const currentWeek = data.scoringPeriodId || 1;
+
+    const schedule = data.schedule || [];
+
+    const matchups = schedule.filter(
+
+      (game) => game.matchupPeriodId === currentWeek
+
+    );
+
+    matchupContainer.innerHTML = "";
+
+    if (matchups.length === 0) {
+
+      matchupContainer.innerHTML = `
+
+        <p class="matchup-message">
+
+          Matchups for Week ${currentWeek} are not available yet.
+
+        </p>
+
+      `;
+
+      return;
+
+    }
+
+    matchups.forEach((game) => {
+
+      const home = game.home || {};
+
+      const away = game.away || {};
+
+      const homeTeam = data.teams.find(
+
+        (team) => team.id === home.teamId
+
+      );
+
+      const awayTeam = data.teams.find(
+
+        (team) => team.id === away.teamId
+
+      );
+
+      const homeName = homeTeam?.name || "Home Team";
+
+      const awayName = awayTeam?.name || "Away Team";
+
+      const homeScore = Number(home.totalPoints || 0).toFixed(2);
+
+      const awayScore = Number(away.totalPoints || 0).toFixed(2);
+
+      const card = document.createElement("article");
+
+      card.className = "matchup-card";
+
+      card.innerHTML = `
+
+        <div class="matchup-team">
+
+          <span>${awayName}</span>
+
+          <strong>${awayScore}</strong>
+
+        </div>
+
+        <div class="matchup-vs">VS</div>
+
+        <div class="matchup-team">
+
+          <span>${homeName}</span>
+
+          <strong>${homeScore}</strong>
+
+        </div>
+
+      `;
+
+      matchupContainer.appendChild(card);
+
+    });
+
+  } catch (error) {
+
+    console.error("ESPN matchup error:", error);
+
+    matchupContainer.innerHTML = `
+
+      <p class="matchup-message">
+
+        Live matchups are temporarily unavailable.
+
+      </p>
+
+    `;
+
+  }
+
+}
+
+/* =========================
+
+   LOAD ESPN DATA
+
+========================= */
+
 loadStandings();
+
+loadCurrentMatchups();
