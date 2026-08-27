@@ -1291,3 +1291,166 @@ footer span {
   }
 
 }
+/* =========================
+
+   LIVE WEEKLY MATCHUPS
+
+========================== */
+
+.live-matchups {
+
+  margin-top: 35px;
+
+  padding: 30px;
+
+  border: 1px solid #2b3745;
+
+  border-radius: 16px;
+
+  background: #18212d;
+
+}
+
+.live-matchups-head {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 22px;
+
+}
+
+.live-matchups-head h3 {
+
+  margin: 0;
+
+  font-size: 1.5rem;
+
+}
+
+.live-badge {
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  color: #d7a84a;
+
+}
+
+.matchup-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+
+}
+
+.matchup-card {
+
+  padding: 18px;
+
+  border: 1px solid #2b3745;
+
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.18);
+
+}
+
+.matchup-team {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  font-size: 0.9rem;
+
+}
+
+.matchup-team span {
+
+  font-weight: 700;
+
+}
+
+.matchup-team strong {
+
+  font-size: 1.1rem;
+
+  color: #d7a84a;
+
+}
+
+.matchup-vs {
+
+  margin: 10px 0;
+
+  text-align: center;
+
+  font-size: 0.65rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.45;
+
+}
+
+.matchup-message {
+
+  grid-column: 1 / -1;
+
+  margin: 10px 0;
+
+  text-align: center;
+
+  color: #aaa;
+
+}
+
+@media (max-width: 900px) {
+
+  .matchup-grid {
+
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .live-matchups {
+
+    padding: 22px;
+
+  }
+
+  .live-matchups-head {
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+  }
+
+  .matchup-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}
