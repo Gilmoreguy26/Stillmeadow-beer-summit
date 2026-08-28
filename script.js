@@ -320,8 +320,6 @@ async function loadWeeklyAwards() {
 
     );
 
-    /* Player arrays */
-
     const starters = [];
 
     const benchPlayers = [];
@@ -352,14 +350,6 @@ async function loadWeeklyAwards() {
 
         });
 
-        /*
-
-          ESPN stores the lineup for the current scoring period
-
-          inside rosterForCurrentScoringPeriod.
-
-        */
-
         const roster =
 
           side.rosterForCurrentScoringPeriod?.entries || [];
@@ -381,20 +371,6 @@ async function loadWeeklyAwards() {
           const lineupSlot =
 
             Number(entry.lineupSlotId);
-
-          /*
-
-            Position IDs:
-
-            16 = D/ST
-
-            17 = Kicker
-
-            20 = Bench
-
-            21 = IR
-
-          */
 
           const positionId =
 
@@ -435,6 +411,60 @@ async function loadWeeklyAwards() {
       });
 
     });
+
+    /* =========================
+
+       CHECK IF ANY GAMES HAVE
+
+       ACTUALLY STARTED
+
+    ========================= */
+
+    const hasScores = teamScores.some(
+
+      (team) => team.score > 0
+
+    );
+
+    /*
+
+      If nobody has scored yet, don't show
+
+      random 0-point players or team awards.
+
+    */
+
+    if (!hasScores) {
+
+      awardsContainer.innerHTML = `
+
+        <div class="awards-week">
+
+          WEEK ${currentWeek} AWARDS
+
+        </div>
+
+        <div class="award-empty awards-coming-soon">
+
+          <div class="coming-soon-icon">🔥</div>
+
+          <strong>Weekly Awards Coming Soon</strong>
+
+          <p>
+
+            Studs, Duds, Oh Cruds and more will be revealed
+
+            once the games begin.
+
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
 
     /* =========================
 
@@ -594,11 +624,7 @@ async function loadWeeklyAwards() {
 
             <small>STUD OF THE WEEK</small>
 
-            <strong>
-
-              ${studOfWeek?.name || "—"}
-
-            </strong>
+            <strong>${studOfWeek?.name || "—"}</strong>
 
             <span>
 
@@ -622,11 +648,7 @@ async function loadWeeklyAwards() {
 
             <small>TURD OF THE WEEK</small>
 
-            <strong>
-
-              ${turdOfWeek?.name || "—"}
-
-            </strong>
+            <strong>${turdOfWeek?.name || "—"}</strong>
 
             <span>
 
