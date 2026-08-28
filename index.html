@@ -38,6 +38,8 @@
 
         <a href="#season">2026 Season</a>
 
+        <a href="#schedule">Schedule</a>
+
         <a href="#history">History</a>
 
         <a href="#champions">Champions</a>
@@ -294,7 +296,7 @@
 
       <div class="season-links">
 
-        <div class="season-link">
+        <a class="season-link" href="#records">
 
           <span>📊</span>
 
@@ -306,59 +308,35 @@
 
           </div>
 
-        </div>
+        </a>
 
-       <section class="live-matchups">
+        <a class="season-link" href="#schedule">
 
-  <div class="live-matchups-head">
+          <span>📅</span>
 
-    <div>
+          <div>
 
-      <p class="eyebrow">LIVE FROM ESPN</p>
+            <h3>Schedule</h3>
 
-      <h3>This Week's Matchups</h3>
+            <p>Season VII matchups and results.</p>
 
-    </div>
+          </div>
 
-    <span class="live-badge">● LIVE</span>
+        </a>
 
-  </div>
+        <a class="season-link" href="#awards">
 
-  <div id="espn-matchups" class="matchup-grid">
+          <span>🔥</span>
 
-    <p class="matchup-message">Loading this week's matchups...</p>
+          <div>
 
-  </div>
+            <h3>Weekly Awards</h3>
 
-</section>
+            <p>Studs, Duds, Oh Cruds and more.</p>
 
-        <section class="weekly-awards">
+          </div>
 
-  <div class="weekly-awards-head">
-
-    <div>
-
-      <p class="eyebrow">THE BEST... AND THE WORST</p>
-
-      <h3>Weekly Awards</h3>
-
-    </div>
-
-    <span class="awards-badge">🔥 WEEKLY</span>
-
-  </div>
-
-  <div id="espn-weekly-awards">
-
-    <p class="matchup-message">
-
-      Loading this week's awards...
-
-    </p>
-
-  </div>
-
-</section>
+        </a>
 
       </div>
 
@@ -590,7 +568,7 @@
 
     <!-- =========================
 
-         LIVE ESPN STANDINGS
+         LIVE STANDINGS
 
     ========================== -->
 
@@ -606,7 +584,7 @@
 
         </div>
 
-        <p>Season VII • Automatically updated from ESPN Fantasy Football.</p>
+        <p>Updated automatically throughout the season.</p>
 
       </div>
 
@@ -636,23 +614,139 @@
 
           </thead>
 
-          <!-- ESPN WILL AUTOMATICALLY INSERT STANDINGS HERE -->
-
           <tbody id="espn-standings">
 
             <tr>
 
-              <td colspan="7" style="text-align:center; padding:25px;">
-
-                Loading live ESPN standings...
-
-              </td>
+              <td colspan="7">Loading standings...</td>
 
             </tr>
 
           </tbody>
 
         </table>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+
+         LIVE CURRENT WEEK MATCHUPS
+
+    ========================== -->
+
+    <section class="live-matchups">
+
+      <div class="live-matchups-head">
+
+        <div>
+
+          <p class="eyebrow">LIVE FROM ESPN</p>
+
+          <h2>This Week's Matchups</h2>
+
+        </div>
+
+        <div class="live-indicator">
+
+          <span></span>
+
+          LIVE
+
+        </div>
+
+      </div>
+
+      <div id="espn-matchups">
+
+        <p class="matchup-message">Loading this week's matchups...</p>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+
+         FULL 2026 SCHEDULE
+
+    ========================== -->
+
+    <section id="schedule" class="section schedule-section">
+
+      <div class="section-head">
+
+        <div>
+
+          <p class="eyebrow">SEASON VII • 2026</p>
+
+          <h2>Full League Schedule</h2>
+
+        </div>
+
+        <p>
+
+          Every matchup. Every week. Every step toward the Beer Boot.
+
+        </p>
+
+      </div>
+
+      <div class="schedule-week-selector" id="schedule-week-selector">
+
+        <!-- Week buttons added automatically -->
+
+      </div>
+
+      <div id="espn-full-schedule">
+
+        <p class="matchup-message">Loading the 2026 schedule...</p>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+
+         WEEKLY AWARDS
+
+    ========================== -->
+
+    <section id="awards" class="section dark awards-section">
+
+      <div class="section-head">
+
+        <div>
+
+          <p class="eyebrow">THE WEEKLY HONORS</p>
+
+          <h2>Weekly Awards</h2>
+
+        </div>
+
+        <p>
+
+          Studs, Duds, Oh Cruds and the best and worst teams of the week.
+
+        </p>
+
+      </div>
+
+      <div id="espn-weekly-awards">
+
+        <div class="award-empty awards-coming-soon">
+
+          <div class="coming-soon-icon">🔥</div>
+
+          <strong>Weekly Awards Coming Soon</strong>
+
+          <p>
+
+            Studs, Duds, Oh Cruds and more will be revealed once the games begin.
+
+          </p>
+
+        </div>
 
       </div>
 
@@ -672,17 +766,11 @@
 
           <p class="eyebrow">THE OWNERS</p>
 
-          <h2>Meet the Managers</h2>
+          <h2>2026 League Teams</h2>
 
         </div>
 
-        <p>
-
-          Twelve managers. Three divisions. One Beer Boot.
-
-          Choose your character wisely.
-
-        </p>
+        <p>Meet the managers competing for the Beer Boot in Season VII.</p>
 
       </div>
 
@@ -696,17 +784,25 @@
 
             <img src="images/IMG_6482.jpeg" alt="Matt Gilmore">
 
-          </div>
+            <span class="manager-number">01</span>
 
-          <div class="manager-number">01</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Commissioner</p>
 
-            <h3>Matt Gilmore</h3>
+            <h3>Watt She Said</h3>
 
-            <h4>Watt She Said</h4>
+            <h4>Matt Gilmore</h4>
+
+            <div class="manager-meta">
+
+              <span>Chief Division</span>
+
+              <span>Commissioner</span>
+
+            </div>
 
           </div>
 
@@ -720,17 +816,23 @@
 
             <img src="images/IMG_6423.jpeg" alt="Andy Rohrbaugh">
 
-          </div>
+            <span class="manager-number">02</span>
 
-          <div class="manager-number">02</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Andy Rohrbaugh</h3>
+            <h3>Bed Bath and Bijan</h3>
 
-            <h4>Bed Bath and Bijan</h4>
+            <h4>Andy Rohrbaugh</h4>
+
+            <div class="manager-meta">
+
+              <span>Chief Division</span>
+
+            </div>
 
           </div>
 
@@ -744,17 +846,23 @@
 
             <img src="images/IMG_6421.jpeg" alt="Daryl Creager">
 
-          </div>
+            <span class="manager-number">03</span>
 
-          <div class="manager-number">03</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Daryl Creager</h3>
+            <h3>Ames is Ahole!</h3>
 
-            <h4>Ames is Ahole!</h4>
+            <h4>Daryl Creager</h4>
+
+            <div class="manager-meta">
+
+              <span>Chief Division</span>
+
+            </div>
 
           </div>
 
@@ -768,17 +876,23 @@
 
             <img src="images/IMG_6427.jpeg" alt="Mike Ames">
 
-          </div>
+            <span class="manager-number">04</span>
 
-          <div class="manager-number">04</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Mike Ames</h3>
+            <h3>The Price is Right</h3>
 
-            <h4>The Price is Right</h4>
+            <h4>Mike Ames</h4>
+
+            <div class="manager-meta">
+
+              <span>Chief Division</span>
+
+            </div>
 
           </div>
 
@@ -792,17 +906,23 @@
 
             <img src="images/IMG_6429.jpeg" alt="Mike Caufield">
 
-          </div>
+            <span class="manager-number">05</span>
 
-          <div class="manager-number">05</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Mike Caufield</h3>
+            <h3>CauFIELD of Dreams</h3>
 
-            <h4>CauFIELD of Dreams</h4>
+            <h4>Mike Caufield</h4>
+
+            <div class="manager-meta">
+
+              <span>Billtrots Division</span>
+
+            </div>
 
           </div>
 
@@ -816,17 +936,23 @@
 
             <img src="images/IMG_6422.jpeg" alt="Rob Robertson">
 
-          </div>
+            <span class="manager-number">06</span>
 
-          <div class="manager-number">06</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Rob Robertson</h3>
+            <h3>1-Tooth Willies Hillbillies</h3>
 
-            <h4>1-Tooth Willies Hillbillies</h4>
+            <h4>Rob Robertson</h4>
+
+            <div class="manager-meta">
+
+              <span>Bear Down Division</span>
+
+            </div>
 
           </div>
 
@@ -840,17 +966,23 @@
 
             <img src="images/IMG_6455.png" alt="Tim Stough">
 
-          </div>
+            <span class="manager-number">07</span>
 
-          <div class="manager-number">07</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Tim Stough</h3>
+            <h3>Waller in Misery</h3>
 
-            <h4>Waller in Misery</h4>
+            <h4>Tim Stough</h4>
+
+            <div class="manager-meta">
+
+              <span>Billtrots Division</span>
+
+            </div>
 
           </div>
 
@@ -864,17 +996,23 @@
 
             <img src="images/IMG_6454.png" alt="Jon Rohrbaugh">
 
-          </div>
+            <span class="manager-number">08</span>
 
-          <div class="manager-number">08</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Jon Rohrbaugh</h3>
+            <h3>Blink Juan82</h3>
 
-            <h4>Blink Juan82</h4>
+            <h4>Jon Rohrbaugh</h4>
+
+            <div class="manager-meta">
+
+              <span>Billtrots Division</span>
+
+            </div>
 
           </div>
 
@@ -888,17 +1026,23 @@
 
             <img src="images/IMG_6456.jpeg" alt="Jeff Fishel">
 
-          </div>
+            <span class="manager-number">09</span>
 
-          <div class="manager-number">09</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Jeff Fishel</h3>
+            <h3>Just SKOL Baby!</h3>
 
-            <h4>Just SKOL Baby!</h4>
+            <h4>Jeff Fishel</h4>
+
+            <div class="manager-meta">
+
+              <span>Billtrots Division</span>
+
+            </div>
 
           </div>
 
@@ -912,17 +1056,23 @@
 
             <img src="images/IMG_6480.jpeg" alt="Tyler Gilmore">
 
-          </div>
+            <span class="manager-number">10</span>
 
-          <div class="manager-number">10</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Tyler Gilmore</h3>
+            <h3>Mid Draft Drunken Dropout</h3>
 
-            <h4>Mid Draft Drunken Dropout</h4>
+            <h4>Tyler Gilmore</h4>
+
+            <div class="manager-meta">
+
+              <span>Bear Down Division</span>
+
+            </div>
 
           </div>
 
@@ -936,17 +1086,23 @@
 
             <img src="images/IMG_6430.jpeg" alt="Dave Cox">
 
-          </div>
+            <span class="manager-number">11</span>
 
-          <div class="manager-number">11</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Dave Cox</h3>
+            <h3>Whit’s Warriors</h3>
 
-            <h4>Whit’s Warriors</h4>
+            <h4>Dave Cox</h4>
+
+            <div class="manager-meta">
+
+              <span>Bear Down Division</span>
+
+            </div>
 
           </div>
 
@@ -960,17 +1116,23 @@
 
             <img src="images/IMG_6420.jpeg" alt="Dan Gilmore">
 
-          </div>
+            <span class="manager-number">12</span>
 
-          <div class="manager-number">12</div>
+          </div>
 
           <div class="manager-info">
 
             <p class="manager-label">Manager</p>
 
-            <h3>Dan Gilmore</h3>
+            <h3>Chase-n da Boot</h3>
 
-            <h4>Chase-n da Boot</h4>
+            <h4>Dan Gilmore</h4>
+
+            <div class="manager-meta">
+
+              <span>Bear Down Division</span>
+
+            </div>
 
           </div>
 
@@ -1042,7 +1204,7 @@
 
   </footer>
 
-  <!-- CONNECT ESPN JAVASCRIPT -->
+  <!-- JAVASCRIPT -->
 
   <script src="script.js"></script>
 
