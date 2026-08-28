@@ -2639,3 +2639,66 @@ footer span {
   }
 
 }
+/* =========================
+
+   FLAGSHIP LEGACY STATS
+
+========================= */
+
+.legacy-stats {
+
+  display: grid;
+
+  gap: 12px;
+
+}
+
+.legacy-stat {
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  background: #f4f1ea;
+
+  text-align: center;
+
+}
+
+.legacy-stat strong {
+
+  display: block;
+
+  font-size: 1.35rem;
+
+}
+
+.legacy-stat span {
+
+  display: block;
+
+  margin-top: 5px;
+
+  color: #777;
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+}
+
+.legacy-message {
+
+  margin: 20px 0 0;
+
+  color: #777;
+
+  line-height: 1.6;
+
+  text-align: center;
+
+}
