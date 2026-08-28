@@ -26,7 +26,49 @@ const managers = {
 
     role: "Commissioner",
 
-    number: "01"
+    number: "01",
+
+    legacy: {
+
+      playoffs: "4 of 5",
+
+      championships: "0",
+
+      reputation: "Always in the Hunt"
+
+    },
+
+    story: {
+
+      title: "Still Chasing the Boot",
+
+      text: `
+
+        Since the beginning of the Stillmeadow Beer Summit, Watt She Said
+
+        has been a fixture in the hunt. As commissioner and one of the league's
+
+        most consistent competitors, Matt has built a reputation for finding a
+
+        way into the conversation when the playoffs roll around.
+
+        <br><br>
+
+        Four semifinal appearances in the previous five seasons prove that
+
+        this team is never far from the Beer Boot. But consistency alone
+
+        doesn't get your name engraved in league history.
+
+        <br><br>
+
+        The mission remains the same: survive the season, win when it matters,
+
+        and finally bring the Beer Boot home. Until then, the chase continues.
+
+      `
+
+    }
 
   },
 
@@ -250,9 +292,93 @@ function renderProfile(teamData = null) {
 
       : `${wins}-${losses}`;
 
-  document.title =
+  const legacyContent = manager.legacy
 
-    `${manager.name} | Stillmeadow Beer Summit`;
+    ? `
+
+      <div class="legacy-stats">
+
+        <div class="legacy-stat">
+
+          <strong>${manager.legacy.playoffs}</strong>
+
+          <span>Semifinal Appearances</span>
+
+        </div>
+
+        <div class="legacy-stat">
+
+          <strong>${manager.legacy.championships}</strong>
+
+          <span>Beer Boots</span>
+
+        </div>
+
+        <div class="legacy-stat">
+
+          <strong>${manager.legacy.reputation}</strong>
+
+          <span>League Reputation</span>
+
+        </div>
+
+      </div>
+
+      <p class="legacy-message">
+
+        Consistency has never been the problem. The only thing missing
+
+        from the resume is the Beer Boot.
+
+      </p>
+
+    `
+
+    : `
+
+      <div class="legacy-placeholder">
+
+        <div class="legacy-icon">🍺</div>
+
+        <strong>League history is coming.</strong>
+
+        <p>
+
+          Championships, playoff appearances, career records
+
+          and Beer Summit legends will be added as we build
+
+          the complete league history.
+
+        </p>
+
+      </div>
+
+    `;
+
+  const storyTitle = manager.story
+
+    ? manager.story.title
+
+    : "Every Manager Has a Story";
+
+  const storyText = manager.story
+
+    ? manager.story.text
+
+    : `
+
+      This is where the legends of the Stillmeadow Beer Summit live.
+
+      Rivalries, questionable trades, championship runs, draft-day
+
+      disasters and the moments that make this league more than
+
+      just fantasy football.
+
+    `;
+
+  document.title = `${manager.name} | Stillmeadow Beer Summit`;
 
   profile.innerHTML = `
 
@@ -364,7 +490,7 @@ function renderProfile(teamData = null) {
 
     </section>
 
-    <!-- MANAGER CARD DETAILS -->
+    <!-- MANAGER DETAILS -->
 
     <section class="profile-details-grid">
 
@@ -414,53 +540,37 @@ function renderProfile(teamData = null) {
 
         <h2>Career Resume</h2>
 
-        <div class="legacy-placeholder">
-
-          <div class="legacy-icon">🍺</div>
-
-          <strong>League history is coming.</strong>
-
-          <p>
-
-            Championships, playoff appearances, career records
-
-            and Beer Summit legends will be added as we build
-
-            the complete league history.
-
-          </p>
-
-        </div>
+        ${legacyContent}
 
       </article>
 
     </section>
 
-    <!-- PERSONALITY / FUN FACTS -->
+    <!-- THE STORY -->
 
     <section class="profile-story">
 
       <p class="eyebrow">THE STORY</p>
 
-      <h2>Every Manager Has a Story</h2>
+      <h2>${storyTitle}</h2>
 
-      <p>
+      <p>${storyText}</p>
 
-        This is where the legends of the Stillmeadow Beer Summit live.
+      ${manager.story
 
-        Rivalries, questionable trades, championship runs, draft-day
+        ? `<p class="profile-coming-soon">
 
-        disasters and the moments that make this league more than
+             Season VII is still being written.
 
-        just fantasy football.
+           </p>`
 
-      </p>
+        : `<p class="profile-coming-soon">
 
-      <p class="profile-coming-soon">
+             More manager history coming soon.
 
-        More manager history coming soon.
+           </p>`
 
-      </p>
+      }
 
     </section>
 
