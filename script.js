@@ -22,11 +22,7 @@ async function loadStandings() {
 
     const response = await fetch(`${ESPN_BASE_URL}?view=mTeam`);
 
-    if (!response.ok) {
-
-      throw new Error("Could not connect to ESPN");
-
-    }
+    if (!response.ok) throw new Error("Could not connect to ESPN");
 
     const data = await response.json();
 
@@ -52,21 +48,13 @@ async function loadStandings() {
 
       const bRecord = b.record?.overall || {};
 
-      const aWins = aRecord.wins || 0;
+      if ((bRecord.wins || 0) !== (aRecord.wins || 0)) {
 
-      const bWins = bRecord.wins || 0;
-
-      const aPoints = aRecord.pointsFor || 0;
-
-      const bPoints = bRecord.pointsFor || 0;
-
-      if (bWins !== aWins) {
-
-        return bWins - aWins;
+        return (bRecord.wins || 0) - (aRecord.wins || 0);
 
       }
 
-      return bPoints - aPoints;
+      return (bRecord.pointsFor || 0) - (aRecord.pointsFor || 0);
 
     });
 
@@ -86,47 +74,33 @@ async function loadStandings() {
 
           .join(", ") || "—";
 
-      const row = document.createElement("tr");
+      standingsBody.innerHTML += `
 
-      row.innerHTML = `
+        <tr>
 
-        <td>${index + 1}</td>
+          <td>${index + 1}</td>
 
-        <td><strong>${team.name || "Unknown Team"}</strong></td>
+          <td><strong>${team.name || "Unknown Team"}</strong></td>
 
-        <td>${manager}</td>
+          <td>${manager}</td>
 
-        <td>${record.wins || 0}</td>
+          <td>${record.wins || 0}</td>
 
-        <td>${record.losses || 0}</td>
+          <td>${record.losses || 0}</td>
 
-        <td>${Number(record.pointsFor || 0).toFixed(2)}</td>
+          <td>${Number(record.pointsFor || 0).toFixed(2)}</td>
 
-        <td>${Number(record.pointsAgainst || 0).toFixed(2)}</td>
+          <td>${Number(record.pointsAgainst || 0).toFixed(2)}</td>
+
+        </tr>
 
       `;
-
-      standingsBody.appendChild(row);
 
     });
 
   } catch (error) {
 
     console.error("ESPN standings error:", error);
-
-    standingsBody.innerHTML = `
-
-      <tr>
-
-        <td colspan="7" style="text-align:center; padding:25px;">
-
-          ESPN standings are temporarily unavailable.
-
-        </td>
-
-      </tr>
-
-    `;
 
   }
 
@@ -152,11 +126,7 @@ async function loadCurrentMatchups() {
 
     );
 
-    if (!response.ok) {
-
-      throw new Error("Could not connect to ESPN");
-
-    }
+    if (!response.ok) throw new Error("Could not connect to ESPN");
 
     const data = await response.json();
 
@@ -165,8 +135,6 @@ async function loadCurrentMatchups() {
       data.status?.currentMatchupPeriod ||
 
       data.status?.currentScoringPeriod ||
-
-      data.scoringPeriodId ||
 
       1;
 
@@ -182,17 +150,11 @@ async function loadCurrentMatchups() {
 
     matchupContainer.innerHTML = "";
 
-    if (matchups.length === 0) {
+    if (!matchups.length) {
 
-      matchupContainer.innerHTML = `
+      matchupContainer.innerHTML =
 
-        <p class="matchup-message">
-
-          Matchups for Week ${currentWeek} are not available yet.
-
-        </p>
-
-      `;
+        `<p class="matchup-message">Matchups for Week ${currentWeek} are not available yet.</p>`;
 
       return;
 
@@ -204,53 +166,43 @@ async function loadCurrentMatchups() {
 
       const away = game.away || {};
 
-      const homeTeam = teams.find(
+      const homeName =
 
-        (team) => Number(team.id) === Number(home.teamId)
+        teams.find((team) => Number(team.id) === Number(home.teamId))?.name ||
 
-      );
+        "Home Team";
 
-      const awayTeam = teams.find(
+      const awayName =
 
-        (team) => Number(team.id) === Number(away.teamId)
+        teams.find((team) => Number(team.id) === Number(away.teamId))?.name ||
 
-      );
+        "Away Team";
 
-      const homeName = homeTeam?.name || "Home Team";
+      matchupContainer.innerHTML += `
 
-      const awayName = awayTeam?.name || "Away Team";
+        <article class="matchup-card">
 
-      const homeScore = Number(home.totalPoints || 0).toFixed(2);
+          <div class="matchup-team">
 
-      const awayScore = Number(away.totalPoints || 0).toFixed(2);
+            <span>${awayName}</span>
 
-      const card = document.createElement("article");
+            <strong>${Number(away.totalPoints || 0).toFixed(2)}</strong>
 
-      card.className = "matchup-card";
+          </div>
 
-      card.innerHTML = `
+          <div class="matchup-vs">VS</div>
 
-        <div class="matchup-team">
+          <div class="matchup-team">
 
-          <span>${awayName}</span>
+            <span>${homeName}</span>
 
-          <strong>${awayScore}</strong>
+            <strong>${Number(home.totalPoints || 0).toFixed(2)}</strong>
 
-        </div>
+          </div>
 
-        <div class="matchup-vs">VS</div>
-
-        <div class="matchup-team">
-
-          <span>${homeName}</span>
-
-          <strong>${homeScore}</strong>
-
-        </div>
+        </article>
 
       `;
-
-      matchupContainer.appendChild(card);
 
     });
 
@@ -258,17 +210,263 @@ async function loadCurrentMatchups() {
 
     console.error("ESPN matchup error:", error);
 
-    matchupContainer.innerHTML = `
+  }
+
+}
+
+/* =========================
+
+   FULL INTERACTIVE SCHEDULE
+
+========================= */
+
+let leagueSchedule = [];
+
+let leagueTeams = [];
+
+let currentScheduleWeek = 1;
+
+async function loadFullSchedule() {
+
+  const scheduleContainer =
+
+    document.getElementById("espn-full-schedule");
+
+  const weekSelector =
+
+    document.getElementById("schedule-week-selector");
+
+  if (!scheduleContainer || !weekSelector) return;
+
+  try {
+
+    const response = await fetch(
+
+      `${ESPN_BASE_URL}?view=mTeam&view=mMatchupScore&view=mScoreboard`
+
+    );
+
+    if (!response.ok) {
+
+      throw new Error("Could not connect to ESPN");
+
+    }
+
+    const data = await response.json();
+
+    leagueSchedule = data.schedule || [];
+
+    leagueTeams = data.teams || [];
+
+    currentScheduleWeek =
+
+      data.status?.currentMatchupPeriod ||
+
+      data.status?.currentScoringPeriod ||
+
+      1;
+
+    /*
+
+      Get every unique regular-season matchup week
+
+    */
+
+    const availableWeeks = [
+
+      ...new Set(
+
+        leagueSchedule
+
+          .map((game) => Number(game.matchupPeriodId))
+
+          .filter((week) => week > 0)
+
+      )
+
+    ].sort((a, b) => a - b);
+
+    /* Build Week Buttons */
+
+    weekSelector.innerHTML = "";
+
+    availableWeeks.forEach((week) => {
+
+      const button = document.createElement("button");
+
+      button.className = "schedule-week-button";
+
+      if (week === Number(currentScheduleWeek)) {
+
+        button.classList.add("active");
+
+      }
+
+      button.textContent = `Week ${week}`;
+
+      button.addEventListener("click", () => {
+
+        document
+
+          .querySelectorAll(".schedule-week-button")
+
+          .forEach((btn) => btn.classList.remove("active"));
+
+        button.classList.add("active");
+
+        renderScheduleWeek(week);
+
+      });
+
+      weekSelector.appendChild(button);
+
+    });
+
+    /* Show current week first */
+
+    renderScheduleWeek(currentScheduleWeek);
+
+  } catch (error) {
+
+    console.error("ESPN schedule error:", error);
+
+    scheduleContainer.innerHTML = `
 
       <p class="matchup-message">
 
-        Live matchups are temporarily unavailable.
+        The 2026 schedule is temporarily unavailable.
 
       </p>
 
     `;
 
   }
+
+}
+
+function renderScheduleWeek(week) {
+
+  const scheduleContainer =
+
+    document.getElementById("espn-full-schedule");
+
+  const matchups = leagueSchedule.filter(
+
+    (game) => Number(game.matchupPeriodId) === Number(week)
+
+  );
+
+  if (!matchups.length) {
+
+    scheduleContainer.innerHTML = `
+
+      <p class="matchup-message">
+
+        Week ${week} matchups are not available yet.
+
+      </p>
+
+    `;
+
+    return;
+
+  }
+
+  const matchupsHTML = matchups.map((game) => {
+
+    const home = game.home || {};
+
+    const away = game.away || {};
+
+    const homeTeam = leagueTeams.find(
+
+      (team) => Number(team.id) === Number(home.teamId)
+
+    );
+
+    const awayTeam = leagueTeams.find(
+
+      (team) => Number(team.id) === Number(away.teamId)
+
+    );
+
+    const homeName = homeTeam?.name || "Home Team";
+
+    const awayName = awayTeam?.name || "Away Team";
+
+    const homeScore = Number(home.totalPoints || 0);
+
+    const awayScore = Number(away.totalPoints || 0);
+
+    /*
+
+      Only show scores if at least one team
+
+      has actually scored.
+
+    */
+
+    const hasStarted =
+
+      homeScore > 0 || awayScore > 0;
+
+    return `
+
+      <article class="schedule-matchup-card">
+
+        <div class="schedule-team ${awayScore > homeScore && hasStarted ? "winning" : ""}">
+
+          <span>${awayName}</span>
+
+          <strong>
+
+            ${hasStarted ? awayScore.toFixed(2) : "—"}
+
+          </strong>
+
+        </div>
+
+        <div class="schedule-vs">
+
+          ${hasStarted ? "VS" : "UPCOMING"}
+
+        </div>
+
+        <div class="schedule-team ${homeScore > awayScore && hasStarted ? "winning" : ""}">
+
+          <span>${homeName}</span>
+
+          <strong>
+
+            ${hasStarted ? homeScore.toFixed(2) : "—"}
+
+          </strong>
+
+        </div>
+
+      </article>
+
+    `;
+
+  }).join("");
+
+  scheduleContainer.innerHTML = `
+
+    <div class="schedule-week-title">
+
+      <span>2026 SEASON VII</span>
+
+      <h3>Week ${week}</h3>
+
+    </div>
+
+    <div class="schedule-matchup-grid">
+
+      ${matchupsHTML}
+
+    </div>
+
+  `;
 
 }
 
@@ -280,7 +478,9 @@ async function loadCurrentMatchups() {
 
 async function loadWeeklyAwards() {
 
-  const awardsContainer = document.getElementById("espn-weekly-awards");
+  const awardsContainer =
+
+    document.getElementById("espn-weekly-awards");
 
   if (!awardsContainer) return;
 
@@ -306,8 +506,6 @@ async function loadWeeklyAwards() {
 
       data.status?.currentScoringPeriod ||
 
-      data.scoringPeriodId ||
-
       1;
 
     const schedule = data.schedule || [];
@@ -325,8 +523,6 @@ async function loadWeeklyAwards() {
     const benchPlayers = [];
 
     const teamScores = [];
-
-    /* Go through every matchup */
 
     matchups.forEach((game) => {
 
@@ -360,35 +556,21 @@ async function loadWeeklyAwards() {
 
             entry.playerPoolEntry?.player || {};
 
-          const playerName =
+          const playerData = {
 
-            player.fullName || "Unknown Player";
+            name: player.fullName || "Unknown Player",
 
-          const score =
+            team: teamName,
 
-            Number(entry.appliedStatTotal || 0);
+            score: Number(entry.appliedStatTotal || 0),
+
+            position: Number(player.defaultPositionId)
+
+          };
 
           const lineupSlot =
 
             Number(entry.lineupSlotId);
-
-          const positionId =
-
-            Number(player.defaultPositionId);
-
-          const playerData = {
-
-            name: playerName,
-
-            team: teamName,
-
-            score: score,
-
-            position: positionId
-
-          };
-
-          /* BENCH */
 
           if (lineupSlot === 20) {
 
@@ -397,8 +579,6 @@ async function loadWeeklyAwards() {
             return;
 
           }
-
-          /* STARTERS */
 
           if (lineupSlot !== 21) {
 
@@ -412,27 +592,9 @@ async function loadWeeklyAwards() {
 
     });
 
-    /* =========================
+    const hasScores =
 
-       CHECK IF ANY GAMES HAVE
-
-       ACTUALLY STARTED
-
-    ========================= */
-
-    const hasScores = teamScores.some(
-
-      (team) => team.score > 0
-
-    );
-
-    /*
-
-      If nobody has scored yet, don't show
-
-      random 0-point players or team awards.
-
-    */
+      teamScores.some((team) => team.score > 0);
 
     if (!hasScores) {
 
@@ -466,27 +628,13 @@ async function loadWeeklyAwards() {
 
     }
 
-    /* =========================
-
-       CALCULATE STUDS
-
-    ========================= */
-
     const studs = [...starters]
 
       .sort((a, b) => b.score - a.score)
 
       .slice(0, 5);
 
-    /* =========================
-
-       CALCULATE DUDS
-
-       Excludes Kicker and D/ST
-
-    ========================= */
-
-    const duds = starters
+    const duds = [...starters]
 
       .filter(
 
@@ -502,45 +650,15 @@ async function loadWeeklyAwards() {
 
       .slice(0, 5);
 
-    /* =========================
-
-       CALCULATE OH CRUDS
-
-    ========================= */
-
     const ohCruds = [...benchPlayers]
 
       .sort((a, b) => b.score - a.score)
 
       .slice(0, 5);
 
-    /* =========================
+    const sortedTeams = [...teamScores]
 
-       STUD & TURD OF THE WEEK
-
-    ========================= */
-
-    const sortedTeams =
-
-      [...teamScores].sort(
-
-        (a, b) => b.score - a.score
-
-      );
-
-    const studOfWeek =
-
-      sortedTeams[0];
-
-    const turdOfWeek =
-
-      sortedTeams[sortedTeams.length - 1];
-
-    /* =========================
-
-       DISPLAY AWARDS
-
-    ========================= */
+      .sort((a, b) => b.score - a.score);
 
     awardsContainer.innerHTML = `
 
@@ -552,9 +670,7 @@ async function loadWeeklyAwards() {
 
       <div class="awards-grid">
 
-        <!-- STUDS -->
-
-        <section class="award-card studs-card">
+        <section class="award-card">
 
           <h3>⭐ Studs</h3>
 
@@ -572,9 +688,7 @@ async function loadWeeklyAwards() {
 
         </section>
 
-        <!-- DUDS -->
-
-        <section class="award-card duds-card">
+        <section class="award-card">
 
           <h3>💩 Duds</h3>
 
@@ -592,9 +706,7 @@ async function loadWeeklyAwards() {
 
         </section>
 
-        <!-- OH CRUDS -->
-
-        <section class="award-card cruds-card">
+        <section class="award-card">
 
           <h3>😩 Oh Cruds!</h3>
 
@@ -616,7 +728,7 @@ async function loadWeeklyAwards() {
 
       <div class="team-awards">
 
-        <div class="team-award stud-team">
+        <div class="team-award">
 
           <span class="team-award-icon">🏆</span>
 
@@ -624,15 +736,15 @@ async function loadWeeklyAwards() {
 
             <small>STUD OF THE WEEK</small>
 
-            <strong>${studOfWeek?.name || "—"}</strong>
+            <strong>${sortedTeams[0]?.name || "—"}</strong>
 
             <span>
 
-              ${studOfWeek
+              ${sortedTeams[0]
 
-                ? studOfWeek.score.toFixed(2) + " points"
+                ? sortedTeams[0].score.toFixed(2) + " points"
 
-                : "Scores coming soon"}
+                : ""}
 
             </span>
 
@@ -640,7 +752,7 @@ async function loadWeeklyAwards() {
 
         </div>
 
-        <div class="team-award turd-team">
+        <div class="team-award">
 
           <span class="team-award-icon">💩</span>
 
@@ -648,15 +760,19 @@ async function loadWeeklyAwards() {
 
             <small>TURD OF THE WEEK</small>
 
-            <strong>${turdOfWeek?.name || "—"}</strong>
+            <strong>
+
+              ${sortedTeams[sortedTeams.length - 1]?.name || "—"}
+
+            </strong>
 
             <span>
 
-              ${turdOfWeek
+              ${sortedTeams.length
 
-                ? turdOfWeek.score.toFixed(2) + " points"
+                ? sortedTeams[sortedTeams.length - 1].score.toFixed(2) + " points"
 
-                : "Scores coming soon"}
+                : ""}
 
             </span>
 
@@ -686,12 +802,6 @@ async function loadWeeklyAwards() {
 
 }
 
-/* =========================
-
-   RENDER PLAYER LIST
-
-========================= */
-
 function renderPlayerList(players) {
 
   if (!players.length) {
@@ -712,11 +822,7 @@ function renderPlayerList(players) {
 
     <div class="award-player">
 
-      <span class="award-rank">
-
-        ${index + 1}
-
-      </span>
+      <span class="award-rank">${index + 1}</span>
 
       <div class="award-player-info">
 
@@ -740,12 +846,14 @@ function renderPlayerList(players) {
 
 /* =========================
 
-   LOAD ESPN DATA
+   LOAD EVERYTHING
 
 ========================= */
 
 loadStandings();
 
 loadCurrentMatchups();
+
+loadFullSchedule();
 
 loadWeeklyAwards();
