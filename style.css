@@ -1770,4 +1770,38 @@ footer span {
 
   }
 
+.awards-coming-soon {
+
+  padding: 45px 20px;
+
+}
+
+.awards-coming-soon strong {
+
+  display: block;
+
+  margin: 12px 0 8px;
+
+  color: #fff;
+
+  font-size: 1.1rem;
+
+}
+
+.awards-coming-soon p {
+
+  max-width: 450px;
+
+  margin: 0 auto;
+
+  color: #999;
+
+  line-height: 1.5;
+
+}
+
+.coming-soon-icon {
+
+  font-size: 2.5rem;
+
 }
