@@ -146,7 +146,13 @@ async function loadCurrentMatchups() {
 
   try {
 
-    const response = await fetch(`${ESPN_BASE_URL}?view=mScoreboard`);
+    /* Get teams and matchup information together */
+
+    const response = await fetch(
+
+      `${ESPN_BASE_URL}?view=mTeam&view=mScoreboard&view=mMatchupScore`
+
+    );
 
     if (!response.ok) {
 
@@ -156,13 +162,33 @@ async function loadCurrentMatchups() {
 
     const data = await response.json();
 
-    const currentWeek = data.scoringPeriodId || 1;
+    const currentWeek =
+
+      data.status?.currentMatchupPeriod ||
+
+      data.status?.currentScoringPeriod ||
+
+      data.scoringPeriodId ||
+
+      1;
 
     const schedule = data.schedule || [];
 
+    const teams = data.teams || [];
+
+    /*
+
+      Find every matchup for the current matchup period.
+
+      Number() makes sure ESPN's numbers match even if
+
+      one is returned as text.
+
+    */
+
     const matchups = schedule.filter(
 
-      (game) => game.matchupPeriodId === currentWeek
+      (game) => Number(game.matchupPeriodId) === Number(currentWeek)
 
     );
 
@@ -190,15 +216,15 @@ async function loadCurrentMatchups() {
 
       const away = game.away || {};
 
-      const homeTeam = data.teams.find(
+      const homeTeam = teams.find(
 
-        (team) => team.id === home.teamId
+        (team) => Number(team.id) === Number(home.teamId)
 
       );
 
-      const awayTeam = data.teams.find(
+      const awayTeam = teams.find(
 
-        (team) => team.id === away.teamId
+        (team) => Number(team.id) === Number(away.teamId)
 
       );
 
