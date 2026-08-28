@@ -30,7 +30,7 @@ const managers = {
 
     legacy: {
 
-      playoffs: "4 of 5",
+      playoffs: "4 of 6",
 
       championships: "0",
 
