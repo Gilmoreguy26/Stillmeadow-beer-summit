@@ -54,7 +54,7 @@ const managers = {
 
         <br><br>
 
-        Four semifinal appearances in the previous five seasons prove that
+        Four semifinal appearances in the first six seasons prove that
 
         this team is never far from the Beer Boot. But consistency alone
 
