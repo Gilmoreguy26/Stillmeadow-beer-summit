@@ -2702,3 +2702,22 @@ footer span {
   text-align: center;
 
 }
+.profile-story-text {
+
+  font-size: 1rem;
+
+  line-height: 1.8;
+
+  color: inherit;
+
+}
+
+.profile-story-text br {
+
+  display: block;
+
+  content: "";
+
+  margin-bottom: 0.5rem;
+
+}
