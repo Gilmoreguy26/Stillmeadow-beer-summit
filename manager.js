@@ -16,62 +16,99 @@ const managers = {
 
   matt: {
 
-    name: "Matt Gilmore",
+  name: "Matt Gilmore",
 
-    team: "Watt She Said",
+  team: "Watt She Said",
 
-    division: "CHIEF Division",
+  division: "CHIEF Division",
 
-    photo: "images/IMG_6482.jpeg",
+  photo: "images/IMG_6482.jpeg",
 
-    role: "Commissioner",
+  role: "Commissioner",
 
-    number: "01",
+  number: "01",
 
-    legacy: {
+  nickname: "The Commissioner",
 
-      playoffs: "4 of 6",
+  legacy: {
 
-      championships: "0",
+    playoffs: "5 of 6",
 
-      reputation: "Always in the Hunt"
+    championships: "0",
 
-    },
+    reputation: "Always in the Hunt",
 
-    story: {
+    record: "46-37-0",
 
-      title: "Still Chasing the Boot",
+    averageFinish: "4th",
 
-      text: `
-
-        Since the beginning of the Stillmeadow Beer Summit, Watt She Said
-
-        has been a fixture in the hunt. As commissioner and one of the league's
-
-        most consistent competitors, Matt has built a reputation for finding a
-
-        way into the conversation when the playoffs roll around.
-
-        <br><br>
-
-        Four semifinal appearances in the first six seasons prove that
-
-        this team is never far from the Beer Boot. But consistency alone
-
-        doesn't get your name engraved in league history.
-
-        <br><br>
-
-        The mission remains the same: survive the season, win when it matters,
-
-        and finally bring the Beer Boot home. Until then, the chase continues.
-
-      `
-
-    }
+    bestFinish: "2nd"
 
   },
 
+  traits: {
+
+    strength: "Creativity, competitiveness and keeping the league alive",
+
+    weakness: "Turning a great season into a championship",
+
+    signature: "Creating another league feature while his lineup is still questionable",
+
+    ability: "Commissioner's Privilege"
+
+  },
+
+  quote: "I built the league, bought the trophy, and wrote the history… I just haven't figured out how to win the damn thing.",
+
+  story: {
+
+    title: "Still Chasing the Boot",
+
+    text: `
+
+      The man responsible for this entire mess. Matt started the
+
+      Stillmeadow Beer Summit with one simple goal: get a group of
+
+      friends together and beat the hell out of them in fantasy football.
+
+      <br><br>
+
+      Somewhere along the way, it became much bigger than that. Draft
+
+      parties. The legendary Beer Boot trophy. Weekly breakdowns and
+
+      predictions. Monday Night Lites. Studs, Duds & Oh Cruds. A league
+
+      Facebook page built to keep the trash talk flowing. And now an
+
+      entire website dedicated to the history and insanity of the league.
+
+      <br><br>
+
+      Competitive, creative, and apparently willing to do almost anything
+
+      to make the league better—except build a championship-caliber team.
+
+      Despite consistently being in the hunt, the Commissioner is still
+
+      chasing his first Beer Boot.
+
+      <br><br>
+
+      A die-hard Steelers fan, proud owner of a brand-new Bronco that he
+
+      swears was not purchased with league dues, and capable of drinking
+
+      almost anyone under the table, Matt remains one championship away
+
+      from completing his ultimate fantasy football resume.
+
+    `
+
+  }
+
+},
   andy: {
 
     name: "Andy Rohrbaugh",
