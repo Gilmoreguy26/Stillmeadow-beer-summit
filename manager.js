@@ -740,17 +740,27 @@ function renderProfile(teamData = null) {
       </blockquote>
     </section>
 
-    <!-- THE STORY -->
-    <section class="profile-story">
-      <p class="eyebrow">THE STORY</p>
-      <h2>${manager.story.title}</h2>
+  <!-- THE STORY -->
 
-      <p>${manager.story.text}</p>
+<section class="profile-story">
 
-      <p class="profile-coming-soon">
-        Season VII is still being written.
-      </p>
-    </section>
+  <p class="eyebrow">THE STORY</p>
+
+  <h2>${manager.story.title}</h2>
+
+  <div class="profile-story-text">
+
+    ${manager.story.text}
+
+  </div>
+
+  <p class="profile-coming-soon">
+
+    Season VII is still being written.
+
+  </p>
+
+</section>
 
     <!-- BACK TO MANAGERS -->
     <div class="profile-bottom-link">
