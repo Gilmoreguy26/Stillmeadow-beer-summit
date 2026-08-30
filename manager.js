@@ -840,11 +840,7 @@ const legacyContent = manager.legacy
       <a href="index.html#managers" class="button primary">
         ← Back to All Managers
       </a>
-    </div>
-  `;
-}
-
-//* =========================
+    <//* =========================
 
    LOAD LIVE ESPN TEAM DATA
 
@@ -905,28 +901,4 @@ async function loadManagerData() {
 /* Load ESPN data in the background */
 
 loadManagerData();
-async function loadManagerData() {
-  try {
-    const response = await fetch(
-      `${ESPN_BASE_URL}?view=mTeam`
-    );
-
-    if (!response.ok) {
-      throw new Error("Could not connect to ESPN");
-    }
-
-    const data = await response.json();
-    const teams = data.teams || [];
-
-    const teamData = teams.find(
-      (team) => team.name === manager.team
-    );
-
-    renderProfile(teamData);
-  } catch (error) {
-    console.error("Manager profile ESPN error:", error);
-    renderProfile();
-  }
-}
-
 loadManagerData();
