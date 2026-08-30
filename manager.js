@@ -6,9 +6,6 @@ const ESPN_BASE_URL =
    MANAGER DATABASE
 ========================================================= */
 const managers = {
-  /* =======================================================
-     MATT GILMORE
-  ======================================================= */
   matt: {
     name: "Matt Gilmore",
     team: "Watt She Said",
@@ -35,7 +32,9 @@ const managers = {
     story: {
       title: "Still Chasing the Boot",
       text: `
-        Matt started the Stillmeadow Beer Summit with one simple goal: beat up on his friends in fantasy football and have a damn good time doing it. Somewhere along the way, that turned into draft parties, the legendary Beer Boot trophy, weekly breakdowns and predictions, Monday Night Lites, Studs, Duds and Oh Cruds, a league Facebook page, and now an entire website dedicated to this beautiful mess.
+        Matt started the Stillmeadow Beer Summit with one simple goal: beat up on his friends in fantasy football and have a damn good time doing it.
+        <br><br>
+        Somewhere along the way, that turned into draft parties, the legendary Beer Boot trophy, weekly breakdowns and predictions, Monday Night Lites, Studs, Duds and Oh Cruds, a league Facebook page, and now an entire website dedicated to this beautiful mess.
         <br><br>
         All that creativity and competitiveness has produced plenty of memorable moments—and absolutely zero championships. Four semifinal appearances in six seasons prove he's always around when things get serious, but the Beer Boot has somehow remained just out of reach.
         <br><br>
@@ -43,9 +42,6 @@ const managers = {
       `
     }
   },
-  /* =======================================================
-     DAN GILMORE
-  ======================================================= */
   dan: {
     name: "Dan Gilmore",
     team: "Mind Ur O's n Q's",
@@ -80,9 +76,6 @@ const managers = {
       `
     }
   },
-  /* =======================================================
-     MIKE CAUFIELD
-  ======================================================= */
   caufield: {
     name: "Mike Caufield",
     team: "CauFIELD of Dreams",
@@ -117,9 +110,6 @@ const managers = {
       `
     }
   },
-  /* =======================================================
-     ROB ROBERTSON
-  ======================================================= */
   rob: {
     name: "Rob Robertson",
     team: "1-Tooth Willies Hillbillies",
@@ -148,15 +138,12 @@ const managers = {
       text: `
         Rob has been the commissioner's best friend since their school years, and their friendship has survived decades of fantasy football, questionable decisions, and conversations that usually revolve back around Rob.
         <br><br>
-        At one point, the group attempted a drinking game where everyone took a drink whenever Rob talked about himself. They had to stop because somebody was eventually going to get alcohol poisoning. That may be the greatest testament to his ability to keep a conversation going.
+        At one point, the group attempted a drinking game where everyone took a drink whenever Rob talked about himself. They had to stop because somebody was eventually going to get alcohol poisoning.
         <br><br>
         A high school teacher, good dad, and friend to just about anyone, Rob brings plenty of personality to the Beer Summit. His fantasy teams may need new players about as badly as he needs a hip replacement, but the man never runs out of confidence—or things to say.
       `
     }
   },
-  /* =======================================================
-     TIM STOUGH
-  ======================================================= */
   tim: {
     name: "Tim Stough",
     team: "Waller in Misery",
@@ -183,17 +170,14 @@ const managers = {
     story: {
       title: "The Guy Who Will Help Anyone",
       text: `
-        Tim was the first replacement brought in after the legendary Kidwell Purge, but he had been around the Stillmeadow crew long before officially joining the league. As a coach on the church softball team back when everyone still thought they were 20 and capable of balling, he was already part of the chaos.
+        Tim was the first replacement brought in after the legendary Kidwell Purge, but he had been around the Stillmeadow crew long before officially joining the league.
         <br><br>
         Tim is the kind of guy who will help with anything. Need a pop-up tent? You got it. Need somebody to lend a hand? He's probably already on his way. Need a running back for your fantasy team? Well... he might even give you his best one.
         <br><br>
-        A die-hard Eagles fan, Tim brings loyalty, generosity, and questionable trade decisions to the Beer Summit. His prize possessions include his sports car and his guns, but the Beer Boot remains the prize still missing from the collection.
+        A die-hard Eagles fan, Tim brings loyalty, generosity, and questionable trade decisions to the Beer Summit. The Beer Boot remains the prize still missing from the collection.
       `
     }
   },
-  /* =======================================================
-     JON ROHRBAUGH
-  ======================================================= */
   jon: {
     name: "Jon Rohrbaugh",
     team: "Blink Juan82",
@@ -220,17 +204,14 @@ const managers = {
     story: {
       title: "The Lovable Loser",
       text: `
-        Jon may not always be at the top of the standings, but he is almost always at the center of a good story. His teams seem to come down with a case of the injury bug every season, and recovering from it has proven to be almost as difficult as turning down another trip to the casino.
+        Jon may not always be at the top of the standings, but he is almost always at the center of a good story. His teams seem to come down with a case of the injury bug every season.
         <br><br>
         While stacking up Turd Awards and questionable injury reports, Jon somehow manages to keep the league entertained. If his fantasy team is struggling, there's a decent chance he's got a casino jackpot story ready to distract everyone.
         <br><br>
-        A Navy veteran and a man with stories that somehow get better with every telling, Jon remains one of the league's most lovable managers. The championship drought may continue, but at least the stories are always championship caliber.
+        A Navy veteran and a man with stories that somehow get better with every telling, Jon remains one of the league's most lovable managers.
       `
     }
   },
-  /* =======================================================
-     JEFF FISHEL
-  ======================================================= */
   jeff: {
     name: "Jeff Fishel",
     team: "Just SKOL Baby!",
@@ -261,13 +242,10 @@ const managers = {
         <br><br>
         One of the members added during the great league expansion of 2023, Jeff has become a key part of the league through his knowledge of beer, his unwavering Vikings fandom, and his willingness to embrace the chaos.
         <br><br>
-        His fantasy seasons have been up and down, but Season VII presents another opportunity for a bounce-back campaign. If knowledge of beer and Vikings trivia counted toward the standings, he'd already have the Beer Boot.
+        His fantasy seasons have been up and down, but Season VII presents another opportunity for a bounce-back campaign.
       `
     }
   },
-  /* =======================================================
-     TYLER GILMORE
-  ======================================================= */
   tyler: {
     name: "Tyler Gilmore",
     team: "Mid Draft Drunken Dropout",
@@ -298,13 +276,10 @@ const managers = {
         <br><br>
         Tyler studies players more like the Godfather than the commissioner, taking the preparation side of fantasy football seriously. That made his first-season performance even more impressive when he finished third place.
         <br><br>
-        Of course, the season began with an unforgettable draft-day performance. Tyler got so drunk that he actually left partway through the draft and had to come back. Somehow, even a temporary drunken disappearance couldn't stop him from exterminating the competition. Apparently, exterminators are good at getting rid of pests—and bad fantasy teams.
+        Of course, the season began with an unforgettable draft-day performance. Tyler got so drunk that he actually left partway through the draft and had to come back. Somehow, even a temporary drunken disappearance couldn't stop him from exterminating the competition.
       `
     }
   },
-  /* =======================================================
-     DAVE COX
-  ======================================================= */
   dave: {
     name: "Dave Cox",
     team: "Whit’s Warriors",
@@ -331,7 +306,7 @@ const managers = {
     story: {
       title: "The Original Draft Researcher",
       text: `
-        Dave may have officially joined during the great league expansion of 2023, but he had been hanging around the Stillmeadow drafts long before receiving his own team. He spent plenty of time helping Andy and Jon draft while patiently waiting for his turn.
+        Dave may have officially joined during the great league expansion of 2023, but he had been hanging around the Stillmeadow drafts long before receiving his own team.
         <br><br>
         When that turn finally came, Dave brought his own approach. He's the only manager who still brings a draft magazine to the draft. ESPN rankings? Not trusted. Dave makes his own rankings and follows his own plan.
         <br><br>
@@ -339,9 +314,6 @@ const managers = {
       `
     }
   },
-  /* =======================================================
-     DARYL CREAGER
-  ======================================================= */
   daryl: {
     name: "Daryl Creager",
     team: "The Godfather Part II",
@@ -370,15 +342,12 @@ const managers = {
       text: `
         Self-proclaimed Godfather of the Stillmeadow Beer Summit, Daryl has built a reputation as one of the league's most successful—and most prepared—managers. A two-time Beer Boot champion, he approaches fantasy football like a full-time job and mock drafts like a sacred ritual.
         <br><br>
-        Nobody overprepares quite like Daryl. Rankings are studied, strategies are tested, and mock drafts are completed at a rate that would make most fantasy analysts uncomfortable. Then draft day arrives and everyone finds out whether all that preparation was worth it.
+        Nobody overprepares quite like Daryl. Rankings are studied, strategies are tested, and mock drafts are completed at a rate that would make most fantasy analysts uncomfortable.
         <br><br>
         Of course, the Godfather is also known for sending out trade offers that may be just slightly more beneficial to Daryl than the person receiving them. But when you have two championships, confidence comes with the territory.
       `
     }
   },
-  /* =======================================================
-     ANDY ROHRBAUGH
-  ======================================================= */
   andy: {
     name: "Andy Rohrbaugh",
     team: "Gone in 60 Saquons",
@@ -405,17 +374,14 @@ const managers = {
     story: {
       title: "The Championship-Chasing Ginger",
       text: `
-        Andy has been the commissioner's friend since third grade, which means the league has been putting up with his competitive nature for decades. He loves to compete, whether it's fantasy football or tossing his balls into the air so grown men can hit them with sticks as a softball pitcher.
+        Andy has been the commissioner's friend since third grade, which means the league has been putting up with his competitive nature for decades.
         <br><br>
-        He's a ginger, but don't let that fool you. What he lacks in pigmentation, he also lacks in championships... although he makes up for it with intelligence and an enthusiastic "try anything once" spirit. Or twice. Maybe three times. Who's counting?
+        He's a ginger, but don't let that fool you. What he lacks in pigmentation, he also lacks in championships... although he makes up for it with intelligence and an enthusiastic "try anything once" spirit.
         <br><br>
-        Andy has never missed the playoffs, yet somehow his best finish came last season with a fourth-place finish. He would trade his soul for a championship—if gingers had souls, of course. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
+        Andy has never missed the playoffs, yet somehow his best finish came last season with a fourth-place finish. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
       `
     }
   },
-  /* =======================================================
-     MIKE AMES
-  ======================================================= */
   ames: {
     name: "Mike Ames",
     team: "Won’t you be my Naber",
@@ -442,11 +408,11 @@ const managers = {
     story: {
       title: "The Quiet Assassin",
       text: `
-        Mike Ames doesn't need to talk a lot of trash. He prefers to quietly build a dangerous team and let the standings do the talking. While everyone else is busy making excuses, Ames is usually finding another way to make an unconventional strategy work.
+        Mike Ames doesn't need to talk a lot of trash. He prefers to quietly build a dangerous team and let the standings do the talking.
         <br><br>
         He's willing to take risks that most managers wouldn't consider, and somehow they often pay off. His championship season included starting two elite tight ends all season, with one sitting in the flex—a lineup strategy that didn't make sense until it absolutely did.
         <br><br>
-        A fan of his Commanders players, Ames always seems to find room for a few of them in his lineup. It may not be the conventional way to build a roster, but the Quiet Assassin has proven that conventional doesn't always win championships.
+        A fan of his Commanders players, Ames always seems to find room for a few of them in his lineup. It may not be conventional, but the Quiet Assassin has proven that conventional doesn't always win championships.
       `
     }
   }
@@ -466,14 +432,12 @@ function renderProfile(teamData = null) {
   const profile =
     document.getElementById("manager-profile");
   if (!profile) {
-    console.error(
-      "ERROR: #manager-profile was not found."
-    );
+    console.error("MANAGER ERROR: #manager-profile not found.");
     return;
   }
-  /* =======================================================
-     ESPN RECORD
-  ======================================================= */
+  /* =========================
+     ESPN DATA
+  ========================= */
   const record =
     teamData?.record?.overall || {};
   const wins =
@@ -490,12 +454,11 @@ function renderProfile(teamData = null) {
     ties > 0
       ? `${wins}-${losses}-${ties}`
       : `${wins}-${losses}`;
-  /* =======================================================
-     OPTIONAL DATA
-  ======================================================= */
+  /* =========================
+     SAFE DATA
+  ========================= */
   const nickname =
     manager.nickname ||
-    manager.story?.title ||
     "Stillmeadow Manager";
   const traits =
     manager.traits || {
@@ -506,75 +469,23 @@ function renderProfile(teamData = null) {
     };
   const quote =
     manager.quote ||
-    manager.legacy?.message ||
     "Season VII is still being written.";
-  /* =======================================================
-     LEGACY
-  ======================================================= */
-  const legacyContent = manager.legacy
-    ? `
-      <div class="legacy-stats">
-        <div class="legacy-stat">
-          <strong>
-            ${manager.legacy.playoffs}
-          </strong>
-          <span>
-            Playoff Resume
-          </span>
-        </div>
-        <div class="legacy-stat">
-          <strong>
-            ${manager.legacy.championships}
-          </strong>
-          <span>
-            Beer Boots
-          </span>
-        </div>
-        <div class="legacy-stat">
-          <strong>
-            ${manager.legacy.reputation}
-          </strong>
-          <span>
-            League Reputation
-          </span>
-        </div>
-      </div>
-      <p class="legacy-message">
-        ${manager.legacy.message}
-      </p>
-    `
-    : `
-      <div class="legacy-placeholder">
-        <div class="legacy-icon">
-          🍺
-        </div>
-        <strong>
-          League history is coming.
-        </strong>
-        <p>
-          Championships, playoff appearances,
-          career records and Beer Summit legends
-          will be added as we build the complete
-          league history.
-        </p>
-      </div>
-    `;
-  /* =======================================================
+  /* =========================
      PAGE TITLE
-  ======================================================= */
+  ========================= */
   document.title =
     `${manager.name} | Stillmeadow Beer Summit`;
-  /* =======================================================
+  /* =========================
      BUILD PAGE
-  ======================================================= */
+  ========================= */
   profile.innerHTML = `
-    <!-- PROFILE HERO -->
     <section class="manager-profile-hero">
       <div class="profile-photo-wrap">
         <img
           src="${manager.photo}"
           alt="${manager.name}"
           class="profile-photo"
+          onerror="this.style.display='none';"
         >
         <div class="profile-number">
           ${manager.number}
@@ -605,7 +516,6 @@ function renderProfile(teamData = null) {
         </div>
       </div>
     </section>
-    <!-- 2026 STATS -->
     <section class="profile-stats-section">
       <div class="profile-section-heading">
         <div>
@@ -648,7 +558,6 @@ function renderProfile(teamData = null) {
         </div>
       </div>
     </section>
-    <!-- MANAGER DETAILS -->
     <section class="profile-details-grid">
       <article class="profile-panel">
         <p class="eyebrow">
@@ -658,36 +567,20 @@ function renderProfile(teamData = null) {
           The Manager
         </h2>
         <div class="profile-detail-row">
-          <span>
-            Manager
-          </span>
-          <strong>
-            ${manager.name}
-          </strong>
+          <span>Manager</span>
+          <strong>${manager.name}</strong>
         </div>
         <div class="profile-detail-row">
-          <span>
-            Team
-          </span>
-          <strong>
-            ${manager.team}
-          </strong>
+          <span>Team</span>
+          <strong>${manager.team}</strong>
         </div>
         <div class="profile-detail-row">
-          <span>
-            Division
-          </span>
-          <strong>
-            ${manager.division}
-          </strong>
+          <span>Division</span>
+          <strong>${manager.division}</strong>
         </div>
         <div class="profile-detail-row">
-          <span>
-            League Role
-          </span>
-          <strong>
-            ${manager.role}
-          </strong>
+          <span>League Role</span>
+          <strong>${manager.role}</strong>
         </div>
       </article>
       <article class="profile-panel">
@@ -697,10 +590,37 @@ function renderProfile(teamData = null) {
         <h2>
           Career Resume
         </h2>
-        ${legacyContent}
+        <div class="legacy-stats">
+          <div class="legacy-stat">
+            <strong>
+              ${manager.legacy.playoffs}
+            </strong>
+            <span>
+              Playoff Resume
+            </span>
+          </div>
+          <div class="legacy-stat">
+            <strong>
+              ${manager.legacy.championships}
+            </strong>
+            <span>
+              Beer Boots
+            </span>
+          </div>
+          <div class="legacy-stat">
+            <strong>
+              ${manager.legacy.reputation}
+            </strong>
+            <span>
+              League Reputation
+            </span>
+          </div>
+        </div>
+        <p class="legacy-message">
+          ${manager.legacy.message}
+        </p>
       </article>
     </section>
-    <!-- SCOUTING REPORT -->
     <section class="profile-scouting-report">
       <p class="eyebrow">
         SCOUTING REPORT
@@ -746,7 +666,6 @@ function renderProfile(teamData = null) {
         “${quote}”
       </blockquote>
     </section>
-    <!-- THE STORY -->
     <section class="profile-story">
       <p class="eyebrow">
         THE STORY
@@ -761,7 +680,6 @@ function renderProfile(teamData = null) {
         Season VII is still being written.
       </p>
     </section>
-    <!-- BACK TO MANAGERS -->
     <div class="profile-bottom-link">
       <a
         href="index.html#managers"
@@ -775,32 +693,29 @@ function renderProfile(teamData = null) {
 /* =========================================================
    RENDER IMMEDIATELY
 ========================================================= */
-/*
-   IMPORTANT:
-   The manager profile is rendered BEFORE ESPN is contacted.
-   If ESPN is unavailable, the page still works.
-*/
+console.log(
+  "STILLMEADOW MANAGER.JS LOADED"
+);
+console.log(
+  "Manager:",
+  manager.name,
+  manager.team
+);
 renderProfile();
 /* =========================================================
-   LOAD LIVE ESPN DATA
+   LOAD ESPN DATA IN BACKGROUND
 ========================================================= */
 async function loadManagerData() {
   try {
     console.log(
-      `Loading ESPN data for ${manager.team}...`
+      "Attempting ESPN connection..."
     );
     const response = await fetch(
-      `${ESPN_BASE_URL}?view=mTeam`,
-      {
-        method: "GET",
-        headers: {
-          "Accept": "application/json"
-        }
-      }
+      `${ESPN_BASE_URL}?view=mTeam`
     );
     if (!response.ok) {
       throw new Error(
-        `ESPN request failed: ${response.status}`
+        `ESPN HTTP ${response.status}`
       );
     }
     const data =
@@ -810,12 +725,15 @@ async function loadManagerData() {
         ? data.teams
         : [];
     const teamData =
-      teams.find(
-        team =>
-          team.name &&
+      teams.find(team => {
+        if (!team.name) {
+          return false;
+        }
+        return (
           team.name.trim().toLowerCase() ===
           manager.team.trim().toLowerCase()
-      );
+        );
+      });
     if (!teamData) {
       console.warn(
         `ESPN team not found: ${manager.team}`
@@ -823,12 +741,13 @@ async function loadManagerData() {
       return;
     }
     console.log(
-      `ESPN data found for ${manager.team}`
+      "ESPN team found:",
+      teamData
     );
     renderProfile(teamData);
   } catch (error) {
     console.warn(
-      "ESPN data unavailable. Static profile remains active.",
+      "ESPN unavailable. Static manager profile remains active.",
       error
     );
   }
