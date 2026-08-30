@@ -612,30 +612,67 @@ function renderProfile(teamData = null) {
   const recordText =
     ties > 0 ? `${wins}-${losses}-${ties}` : `${wins}-${losses}`;
 
-  const legacyContent = `
+const legacyContent = manager.legacy
+
+  ? `
+
     <div class="legacy-stats">
+
       <div class="legacy-stat">
+
         <strong>${manager.legacy.playoffs}</strong>
-        <span>Career / Playoff Story</span>
+
+        <span>Playoff Resume</span>
+
       </div>
 
       <div class="legacy-stat">
+
         <strong>${manager.legacy.championships}</strong>
+
         <span>Beer Boots</span>
+
       </div>
 
       <div class="legacy-stat">
-        <strong>${manager.legacy.bestFinish}</strong>
-        <span>Career Highlight</span>
-      </div>
 
-      <div class="legacy-stat">
         <strong>${manager.legacy.reputation}</strong>
-        <span>League Reputation</span>
-      </div>
-    </div>
-  `;
 
+        <span>League Reputation</span>
+
+      </div>
+
+    </div>
+
+    <p class="legacy-message">
+
+      ${manager.legacy.message || "The resume is still being written."}
+
+    </p>
+
+  `
+
+  : `
+
+    <div class="legacy-placeholder">
+
+      <div class="legacy-icon">🍺</div>
+
+      <strong>League history is coming.</strong>
+
+      <p>
+
+        Championships, playoff appearances, career records
+
+        and Beer Summit legends will be added as we build
+
+        the complete league history.
+
+      </p>
+
+    </div>
+
+  `;
   document.title = `${manager.name} | Stillmeadow Beer Summit`;
 
   profile.innerHTML = `
