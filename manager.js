@@ -1486,10 +1486,15 @@ function buildCareerHistoryHTML() {
             data?.seasonId
           );
 
-        const teams =
-          Array.isArray(data?.teams)
-            ? data.teams
-            : [];
+        console.table(
+  teams.map(team => ({
+    ESPN_ID: team.id,
+    TEAM_NAME: team.name,
+    DIVISION: team.divisionId,
+    WINS: team.record?.overall?.wins,
+    LOSSES: team.record?.overall?.losses
+  }))
+);
 
         const team =
           findTeamByName(
