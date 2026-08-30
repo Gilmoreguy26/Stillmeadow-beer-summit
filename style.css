@@ -1759,24 +1759,19 @@ footer span {
 @media (max-width: 650px) {
 
   .weekly-awards {
-
     padding: 22px;
-
   }
 
   .weekly-awards-head {
-
     align-items: flex-start;
-
     gap: 15px;
-
   }
 
   .team-awards {
-
     grid-template-columns: 1fr;
-
   }
+
+} /* ← ADD THIS */
 
 .awards-coming-soon {
 
