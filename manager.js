@@ -595,91 +595,127 @@ const params = new URLSearchParams(window.location.search);
 const managerId = params.get("id") || "matt";
 const manager = managers[managerId] || managers.matt;
 
+
 /* =========================
    BUILD PROFILE
 ========================= */
 
 function renderProfile(teamData = null) {
+
   const profile = document.getElementById("manager-profile");
 
+  if (!profile) {
+    console.error("Manager profile container not found.");
+    return;
+  }
+
+  /* =========================
+     ESPN RECORD
+  ========================= */
+
   const record = teamData?.record?.overall || {};
-  const wins = record.wins ?? 0;
-  const losses = record.losses ?? 0;
-  const ties = record.ties ?? 0;
-  const pointsFor = record.pointsFor ?? 0;
-  const pointsAgainst = record.pointsAgainst ?? 0;
+
+  const wins = Number(record.wins ?? 0);
+  const losses = Number(record.losses ?? 0);
+  const ties = Number(record.ties ?? 0);
+
+  const pointsFor = Number(record.pointsFor ?? 0);
+  const pointsAgainst = Number(record.pointsAgainst ?? 0);
 
   const recordText =
-    ties > 0 ? `${wins}-${losses}-${ties}` : `${wins}-${losses}`;
+    ties > 0
+      ? `${wins}-${losses}-${ties}`
+      : `${wins}-${losses}`;
 
-const legacyContent = manager.legacy
 
-  ? `
+  /* =========================
+     LEGACY
+  ========================= */
 
-    <div class="legacy-stats">
+  const legacyContent = manager.legacy
+    ? `
+      <div class="legacy-stats">
 
-      <div class="legacy-stat">
+        <div class="legacy-stat">
+          <strong>${manager.legacy.playoffs}</strong>
+          <span>Playoff Resume</span>
+        </div>
 
-        <strong>${manager.legacy.playoffs}</strong>
+        <div class="legacy-stat">
+          <strong>${manager.legacy.championships}</strong>
+          <span>Beer Boots</span>
+        </div>
 
-        <span>Playoff Resume</span>
-
-      </div>
-
-      <div class="legacy-stat">
-
-        <strong>${manager.legacy.championships}</strong>
-
-        <span>Beer Boots</span>
-
-      </div>
-
-      <div class="legacy-stat">
-
-        <strong>${manager.legacy.reputation}</strong>
-
-        <span>League Reputation</span>
+        <div class="legacy-stat">
+          <strong>${manager.legacy.reputation}</strong>
+          <span>League Reputation</span>
+        </div>
 
       </div>
 
-    </div>
-
-    <p class="legacy-message">
-
-      ${manager.legacy.message || "The resume is still being written."}
-
-    </p>
-
-  `
-
-  : `
-
-    <div class="legacy-placeholder">
-
-      <div class="legacy-icon">🍺</div>
-
-      <strong>League history is coming.</strong>
-
-      <p>
-
-        Championships, playoff appearances, career records
-
-        and Beer Summit legends will be added as we build
-
-        the complete league history.
-
+      <p class="legacy-message">
+        ${manager.legacy.message || "The resume is still being written."}
       </p>
+    `
+    : `
+      <div class="legacy-placeholder">
 
-    </div>
+        <div class="legacy-icon">🍺</div>
 
-  `;
-  document.title = `${manager.name} | Stillmeadow Beer Summit`;
+        <strong>League history is coming.</strong>
+
+        <p>
+          Championships, playoff appearances, career records
+          and Beer Summit legends will be added as we build
+          the complete league history.
+        </p>
+
+      </div>
+    `;
+
+
+  /* =========================
+     OPTIONAL MANAGER DATA
+     Prevents missing fields from
+     breaking the page.
+  ========================= */
+
+  const nickname =
+    manager.nickname || manager.story?.title || "Stillmeadow Manager";
+
+  const traits = manager.traits || {
+    strength: "Competitive",
+    weakness: "Still chasing the Beer Boot",
+    signature: "Draft Day Chaos",
+    ability: "Never Counted Out"
+  };
+
+  const quote =
+    manager.quote ||
+    manager.legacy?.message ||
+    "Season VII is still being written.";
+
+
+  /* =========================
+     PAGE TITLE
+  ========================= */
+
+  document.title =
+    `${manager.name} | Stillmeadow Beer Summit`;
+
+
+  /* =========================
+     RENDER PROFILE
+  ========================= */
 
   profile.innerHTML = `
 
     <!-- PROFILE HERO -->
+
     <section class="manager-profile-hero">
+
       <div class="profile-photo-wrap">
+
         <img
           src="${manager.photo}"
           alt="${manager.name}"
@@ -689,21 +725,26 @@ const legacyContent = manager.legacy
         <div class="profile-number">
           ${manager.number}
         </div>
+
       </div>
 
+
       <div class="profile-identity">
+
         <p class="eyebrow">
           ${manager.role.toUpperCase()} • SEASON VII
         </p>
 
         <h1>${manager.team}</h1>
+
         <h2>${manager.name}</h2>
 
         <div class="manager-nickname">
-          ${manager.nickname}
+          ${nickname}
         </div>
 
         <div class="profile-tags">
+
           <span>${manager.division}</span>
 
           ${
@@ -711,194 +752,404 @@ const legacyContent = manager.legacy
               ? "<span>🍺 League Commissioner</span>"
               : "<span>🏈 Stillmeadow Beer Summit</span>"
           }
+
         </div>
+
       </div>
+
     </section>
 
+
     <!-- 2026 STATS -->
+
     <section class="profile-stats-section">
+
       <div class="profile-section-heading">
+
         <div>
-          <p class="eyebrow">LIVE FROM ESPN</p>
+
+          <p class="eyebrow">
+            LIVE FROM ESPN
+          </p>
+
           <h2>2026 Season</h2>
+
         </div>
 
         <span class="profile-live">
+
           <i></i>
+
           LIVE
+
         </span>
+
       </div>
+
 
       <div class="profile-stat-grid">
-        <div class="profile-stat">
-          <strong>${recordText}</strong>
-          <span>Record</span>
-        </div>
 
         <div class="profile-stat">
-          <strong>${Number(pointsFor).toFixed(1)}</strong>
-          <span>Points For</span>
+
+          <strong>
+            ${recordText}
+          </strong>
+
+          <span>
+            Record
+          </span>
+
         </div>
 
+
         <div class="profile-stat">
-          <strong>${Number(pointsAgainst).toFixed(1)}</strong>
-          <span>Points Against</span>
+
+          <strong>
+            ${pointsFor.toFixed(1)}
+          </strong>
+
+          <span>
+            Points For
+          </span>
+
         </div>
+
+
+        <div class="profile-stat">
+
+          <strong>
+            ${pointsAgainst.toFixed(1)}
+          </strong>
+
+          <span>
+            Points Against
+          </span>
+
+        </div>
+
       </div>
+
     </section>
+
 
     <!-- MANAGER DETAILS -->
+
     <section class="profile-details-grid">
+
+
       <article class="profile-panel">
-        <p class="eyebrow">TEAM DOSSIER</p>
-        <h2>The Manager</h2>
+
+        <p class="eyebrow">
+          TEAM DOSSIER
+        </p>
+
+        <h2>
+          The Manager
+        </h2>
+
 
         <div class="profile-detail-row">
-          <span>Manager</span>
-          <strong>${manager.name}</strong>
+
+          <span>
+            Manager
+          </span>
+
+          <strong>
+            ${manager.name}
+          </strong>
+
         </div>
 
-        <div class="profile-detail-row">
-          <span>Team</span>
-          <strong>${manager.team}</strong>
-        </div>
 
         <div class="profile-detail-row">
-          <span>Division</span>
-          <strong>${manager.division}</strong>
+
+          <span>
+            Team
+          </span>
+
+          <strong>
+            ${manager.team}
+          </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>League Role</span>
-          <strong>${manager.role}</strong>
+
+          <span>
+            Division
+          </span>
+
+          <strong>
+            ${manager.division}
+          </strong>
+
         </div>
+
+
+        <div class="profile-detail-row">
+
+          <span>
+            League Role
+          </span>
+
+          <strong>
+            ${manager.role}
+          </strong>
+
+        </div>
+
       </article>
 
+
       <article class="profile-panel">
-        <p class="eyebrow">LEAGUE LEGACY</p>
-        <h2>Career Resume</h2>
+
+        <p class="eyebrow">
+          LEAGUE LEGACY
+        </p>
+
+        <h2>
+          Career Resume
+        </h2>
+
         ${legacyContent}
+
       </article>
+
     </section>
+
 
     <!-- SCOUTING REPORT -->
+
     <section class="profile-scouting-report">
-      <p class="eyebrow">SCOUTING REPORT</p>
-      <h2>The ${manager.nickname}</h2>
+
+      <p class="eyebrow">
+        SCOUTING REPORT
+      </p>
+
+      <h2>
+        The ${nickname}
+      </h2>
+
 
       <div class="scouting-grid">
-        <div class="scouting-item">
-          <span>💪 Strength</span>
-          <strong>${manager.traits.strength}</strong>
-        </div>
+
 
         <div class="scouting-item">
-          <span>⚠️ Weakness</span>
-          <strong>${manager.traits.weakness}</strong>
+
+          <span>
+            💪 Strength
+          </span>
+
+          <strong>
+            ${traits.strength}
+          </strong>
+
         </div>
 
-        <div class="scouting-item">
-          <span>🎯 Signature Move</span>
-          <strong>${manager.traits.signature}</strong>
-        </div>
 
         <div class="scouting-item">
-          <span>⚡ Special Ability</span>
-          <strong>${manager.traits.ability}</strong>
+
+          <span>
+            ⚠️ Weakness
+          </span>
+
+          <strong>
+            ${traits.weakness}
+          </strong>
+
         </div>
+
+
+        <div class="scouting-item">
+
+          <span>
+            🎯 Signature Move
+          </span>
+
+          <strong>
+            ${traits.signature}
+          </strong>
+
+        </div>
+
+
+        <div class="scouting-item">
+
+          <span>
+            ⚡ Special Ability
+          </span>
+
+          <strong>
+            ${traits.ability}
+          </strong>
+
+        </div>
+
+
       </div>
 
+
       <blockquote class="manager-quote">
-        “${manager.quote}”
+
+        “${quote}”
+
       </blockquote>
+
     </section>
 
-  <!-- THE STORY -->
 
-<section class="profile-story">
+    <!-- THE STORY -->
 
-  <p class="eyebrow">THE STORY</p>
+    <section class="profile-story">
 
-  <h2>${manager.story.title}</h2>
+      <p class="eyebrow">
+        THE STORY
+      </p>
 
-  <div class="profile-story-text">
+      <h2>
+        ${manager.story.title}
+      </h2>
 
-    ${manager.story.text}
 
-  </div>
+      <div class="profile-story-text">
 
-  <p class="profile-coming-soon">
+        ${manager.story.text}
 
-    Season VII is still being written.
+      </div>
 
-  </p>
 
-</section>
+      <p class="profile-coming-soon">
+
+        Season VII is still being written.
+
+      </p>
+
+    </section>
+
 
     <!-- BACK TO MANAGERS -->
+
     <div class="profile-bottom-link">
-      <a href="index.html#managers" class="button primary">
+
+      <a
+        href="index.html#managers"
+        class="button primary"
+      >
         ← Back to All Managers
       </a>
-    <//* =========================
 
-   LOAD LIVE ESPN TEAM DATA
+    </div>
 
+  `;
+
+}
+
+
+/* =========================
+   INITIAL RENDER
 ========================= */
 
-/* Show the manager profile immediately.
-
-   ESPN stats will update when they are available. */
+/*
+   Render the profile immediately.
+   This means the page works even if
+   ESPN is temporarily unavailable.
+*/
 
 renderProfile();
+
+
+/* =========================
+   LOAD LIVE ESPN TEAM DATA
+========================= */
 
 async function loadManagerData() {
 
   try {
 
     const response = await fetch(
-
-      `${ESPN_BASE_URL}?view=mTeam`
-
+      `${ESPN_BASE_URL}?view=mTeam`,
+      {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      }
     );
+
 
     if (!response.ok) {
 
-      throw new Error("Could not connect to ESPN");
+      throw new Error(
+        `ESPN request failed: ${response.status}`
+      );
 
     }
 
+
     const data = await response.json();
 
-    const teams = data.teams || [];
+
+    const teams = Array.isArray(data.teams)
+      ? data.teams
+      : [];
+
+
+    /*
+       ESPN team names must match the team
+       name in our manager database.
+    */
 
     const teamData = teams.find(
-
-      (team) => team.name === manager.team
-
+      team =>
+        team.name &&
+        team.name.trim().toLowerCase() ===
+        manager.team.trim().toLowerCase()
     );
 
-    /* Re-render with live ESPN stats */
+
+    if (!teamData) {
+
+      console.warn(
+        `Could not find ESPN team: ${manager.team}`
+      );
+
+      return;
+
+    }
+
+
+    /*
+       Update the already-rendered profile
+       with ESPN's live information.
+    */
 
     renderProfile(teamData);
+
 
   } catch (error) {
 
     console.error(
-
       "Manager profile ESPN error:",
-
       error
-
     );
 
-    /* Keep the already-rendered profile visible */
+    /*
+       IMPORTANT:
+       Do not replace the profile with
+       "Loading..." or an error screen.
+
+       The static manager profile has
+       already been rendered.
+    */
 
   }
 
 }
 
-/* Load ESPN data in the background */
 
-loadManagerData();
+/* =========================
+   START ESPN LOAD
+========================= */
+
 loadManagerData();
