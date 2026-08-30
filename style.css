@@ -2704,11 +2704,13 @@ footer span {
 }
 .profile-story-text {
 
-  font-size: 1rem;
+  max-width: 800px;
+
+  color: #c2c2c2;
+
+  font-size: 1.05rem;
 
   line-height: 1.8;
-
-  color: inherit;
 
 }
 
@@ -2718,6 +2720,6 @@ footer span {
 
   content: "";
 
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.65rem;
 
 }
