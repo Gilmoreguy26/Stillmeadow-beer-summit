@@ -2576,11 +2576,34 @@ async function loadManagerData() {
     currentESPNData =
       data;
 
-    const teams =
-      Array.isArray(data?.teams)
-        ? data.teams
-        : [];
-
+   document.body.insertAdjacentHTML(
+  "beforeend",
+  `
+    <div style="
+      position:fixed;
+      bottom:10px;
+      left:10px;
+      right:10px;
+      z-index:99999;
+      background:#111;
+      color:#fff;
+      padding:20px;
+      border:3px solid #f5c542;
+      border-radius:12px;
+      font-family:monospace;
+      max-height:50vh;
+      overflow:auto;
+    ">
+      <h3>ESPN TEAM IDs</h3>
+      ${teams.map(team => `
+        <div style="margin:6px 0;">
+          ID: <strong>${team.id}</strong>
+          — ${team.name}
+        </div>
+      `).join("")}
+    </div>
+  `
+);
     console.log(
       `ESPN teams found: ${teams.length}`
     );
