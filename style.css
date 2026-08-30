@@ -1292,9 +1292,7 @@ footer span {
 
 }
 /* =========================
-
    LIVE WEEKLY MATCHUPS
-
 ========================== */
 
 .live-matchups {
@@ -1308,6 +1306,8 @@ footer span {
   border-radius: 16px;
 
   background: #18212d;
+
+  color: #f5f5f5;
 
 }
 
@@ -1328,6 +1328,8 @@ footer span {
   margin: 0;
 
   font-size: 1.5rem;
+
+  color: #ffffff;
 
 }
 
@@ -1363,6 +1365,8 @@ footer span {
 
   background: rgba(0, 0, 0, 0.18);
 
+  color: #f5f5f5;
+
 }
 
 .matchup-team {
@@ -1382,6 +1386,8 @@ footer span {
 .matchup-team span {
 
   font-weight: 700;
+
+  color: #f5f5f5;
 
 }
 
@@ -1405,7 +1411,9 @@ footer span {
 
   letter-spacing: 0.15em;
 
-  opacity: 0.45;
+  color: #8293a3;
+
+  opacity: 1;
 
 }
 
@@ -1417,7 +1425,7 @@ footer span {
 
   text-align: center;
 
-  color: #aaa;
+  color: #b8c2cc;
 
 }
 
