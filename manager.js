@@ -1,10 +1,13 @@
 const LEAGUE_ID = "4174174";
 const SEASON = "2026";
+
 const ESPN_BASE_URL =
   `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${SEASON}/segments/0/leagues/${LEAGUE_ID}`;
+
 /* =========================================================
    MANAGER DATABASE
 ========================================================= */
+
 const managers = {
   matt: {
     name: "Matt Gilmore",
@@ -42,6 +45,7 @@ const managers = {
       `
     }
   },
+
   dan: {
     name: "Dan Gilmore",
     team: "Mind Ur O's n Q's",
@@ -76,6 +80,7 @@ const managers = {
       `
     }
   },
+
   caufield: {
     name: "Mike Caufield",
     team: "CauFIELD of Dreams",
@@ -110,6 +115,7 @@ const managers = {
       `
     }
   },
+
   rob: {
     name: "Rob Robertson",
     team: "1-Tooth Willies Hillbillies",
@@ -144,6 +150,7 @@ const managers = {
       `
     }
   },
+
   tim: {
     name: "Tim Stough",
     team: "Waller in Misery",
@@ -178,6 +185,7 @@ const managers = {
       `
     }
   },
+
   jon: {
     name: "Jon Rohrbaugh",
     team: "Blink Juan82",
@@ -212,6 +220,7 @@ const managers = {
       `
     }
   },
+
   jeff: {
     name: "Jeff Fishel",
     team: "Just SKOL Baby!",
@@ -246,6 +255,7 @@ const managers = {
       `
     }
   },
+
   tyler: {
     name: "Tyler Gilmore",
     team: "Mid Draft Drunken Dropout",
@@ -280,6 +290,7 @@ const managers = {
       `
     }
   },
+
   dave: {
     name: "Dave Cox",
     team: "Whit’s Warriors",
@@ -314,6 +325,7 @@ const managers = {
       `
     }
   },
+
   daryl: {
     name: "Daryl Creager",
     team: "The Godfather Part II",
@@ -348,6 +360,7 @@ const managers = {
       `
     }
   },
+
   andy: {
     name: "Andy Rohrbaugh",
     team: "Gone in 60 Saquons",
@@ -382,6 +395,7 @@ const managers = {
       `
     }
   },
+
   ames: {
     name: "Mike Ames",
     team: "Won’t you be my Naber",
@@ -417,49 +431,619 @@ const managers = {
     }
   }
 };
+
 /* =========================================================
    GET MANAGER FROM URL
 ========================================================= */
+
 const params = new URLSearchParams(window.location.search);
+
 const managerId =
   params.get("id") || "matt";
+
 const manager =
   managers[managerId] || managers.matt;
+
+
+/* =========================================================
+   GLOBAL ESPN DATA
+========================================================= */
+
+let currentESPNData = null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function safeNumber(value, fallback = 0) {
+  const number = Number(value);
+  return Number.isFinite(number)
+    ? number
+    : fallback;
+}
+
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function getRecord(teamData) {
+  const record =
+    teamData?.record?.overall || {};
+
+  const wins =
+    safeNumber(record.wins);
+
+  const losses =
+    safeNumber(record.losses);
+
+  const ties =
+    safeNumber(record.ties);
+
+  return {
+    wins,
+    losses,
+    ties,
+    percentage:
+      safeNumber(record.percentage),
+    streakLength:
+      safeNumber(record.streakLength),
+    streakType:
+      record.streakType || "",
+    pointsFor:
+      safeNumber(record.pointsFor),
+    pointsAgainst:
+      safeNumber(record.pointsAgainst)
+  };
+}
+
+
+function formatRecord(record) {
+  if (record.ties > 0) {
+    return `${record.wins}-${record.losses}-${record.ties}`;
+  }
+
+  return `${record.wins}-${record.losses}`;
+}
+
+
+function formatStreak(record) {
+  if (!record.streakLength) {
+    return "—";
+  }
+
+  const type =
+    String(record.streakType || "")
+      .toUpperCase();
+
+  if (type.includes("WIN")) {
+    return `W${record.streakLength}`;
+  }
+
+  if (type.includes("LOSS")) {
+    return `L${record.streakLength}`;
+  }
+
+  return `${record.streakLength}`;
+}
+
+
+function findTeamByName(teams, teamName) {
+  if (!Array.isArray(teams)) {
+    return null;
+  }
+
+  const normalized =
+    String(teamName || "")
+      .trim()
+      .toLowerCase();
+
+  return (
+    teams.find(team =>
+      String(team?.name || "")
+        .trim()
+        .toLowerCase() === normalized
+    ) || null
+  );
+}
+
+
+function getDivisionTeams(teams, divisionId) {
+  if (!Array.isArray(teams)) {
+    return [];
+  }
+
+  return teams
+    .filter(team =>
+      team?.divisionId === divisionId
+    )
+    .sort((a, b) => {
+      const aRecord =
+        a?.record?.overall || {};
+
+      const bRecord =
+        b?.record?.overall || {};
+
+      const aWins =
+        safeNumber(aRecord.wins);
+
+      const bWins =
+        safeNumber(bRecord.wins);
+
+      if (bWins !== aWins) {
+        return bWins - aWins;
+      }
+
+      const aPF =
+        safeNumber(aRecord.pointsFor);
+
+      const bPF =
+        safeNumber(bRecord.pointsFor);
+
+      return bPF - aPF;
+    });
+}
+
+
+function getLeagueRank(teams, targetTeam) {
+  if (!Array.isArray(teams) || !targetTeam) {
+    return null;
+  }
+
+  const sorted =
+    [...teams].sort((a, b) => {
+      const aRecord =
+        a?.record?.overall || {};
+
+      const bRecord =
+        b?.record?.overall || {};
+
+      const aWins =
+        safeNumber(aRecord.wins);
+
+      const bWins =
+        safeNumber(bRecord.wins);
+
+      if (bWins !== aWins) {
+        return bWins - aWins;
+      }
+
+      const aPF =
+        safeNumber(aRecord.pointsFor);
+
+      const bPF =
+        safeNumber(bRecord.pointsFor);
+
+      return bPF - aPF;
+    });
+
+  const index =
+    sorted.findIndex(team =>
+      Number(team?.id) ===
+      Number(targetTeam?.id)
+    );
+
+  return index >= 0
+    ? index + 1
+    : null;
+}
+
+
+function getDivisionRank(teams, targetTeam) {
+  if (!targetTeam) {
+    return null;
+  }
+
+  const divisionTeams =
+    getDivisionTeams(
+      teams,
+      targetTeam.divisionId
+    );
+
+  const index =
+    divisionTeams.findIndex(team =>
+      Number(team?.id) ===
+      Number(targetTeam?.id)
+    );
+
+  return index >= 0
+    ? index + 1
+    : null;
+}
+
+
+function getPlayerName(entry) {
+  const player =
+    entry?.playerPoolEntry?.player ||
+    entry?.playerPoolEntry ||
+    entry?.player ||
+    {};
+
+  if (player.fullName) {
+    return player.fullName;
+  }
+
+  if (
+    player.firstName ||
+    player.lastName
+  ) {
+    return [
+      player.firstName,
+      player.lastName
+    ]
+      .filter(Boolean)
+      .join(" ");
+  }
+
+  return entry?.playerName ||
+    `Player #${entry?.playerId ?? "?"}`;
+}
+
+
+function getPlayerPosition(entry) {
+  const player =
+    entry?.playerPoolEntry?.player ||
+    entry?.playerPoolEntry ||
+    entry?.player ||
+    {};
+
+  return (
+    player.defaultPosition ||
+    player.position ||
+    entry?.position ||
+    "—"
+  );
+}
+
+
+function getPlayerPoints(entry) {
+  const pool =
+    entry?.playerPoolEntry || {};
+
+  return safeNumber(
+    pool.appliedStatTotal ??
+    pool.appliedStatTotalForScoringPeriod ??
+    entry?.appliedStatTotal ??
+    0
+  );
+}
+
+
+function getLineupLabel(lineupSlotId) {
+  const slots = {
+    0: "QB",
+    2: "RB",
+    3: "RB",
+    4: "WR",
+    5: "WR",
+    6: "TE",
+    16: "D/ST",
+    17: "K",
+    20: "Bench",
+    21: "IR",
+    23: "FLEX",
+    7: "FLEX"
+  };
+
+  return slots[lineupSlotId] ||
+    "Roster";
+}
+
+
+function getRosterEntries(teamData) {
+  return (
+    teamData?.roster?.entries ||
+    []
+  );
+}
+
+
+function getActiveRoster(teamData) {
+  return getRosterEntries(teamData)
+    .filter(entry =>
+      ![20, 21].includes(
+        Number(entry?.lineupSlotId)
+      )
+    );
+}
+
+
+function getBenchRoster(teamData) {
+  return getRosterEntries(teamData)
+    .filter(entry =>
+      [20, 21].includes(
+        Number(entry?.lineupSlotId)
+      )
+    );
+}
+
+
+/* =========================================================
+   BUILD ROSTER HTML
+========================================================= */
+
+function buildRosterHTML(teamData) {
+  const entries =
+    getActiveRoster(teamData);
+
+  const bench =
+    getBenchRoster(teamData);
+
+  if (!entries.length && !bench.length) {
+    return `
+      <div class="profile-empty-state">
+        Roster data is not currently available from ESPN.
+      </div>
+    `;
+  }
+
+  const buildRow = entry => {
+    const name =
+      escapeHTML(getPlayerName(entry));
+
+    const position =
+      escapeHTML(
+        getPlayerPosition(entry)
+      );
+
+    const slot =
+      escapeHTML(
+        getLineupLabel(
+          Number(entry?.lineupSlotId)
+        )
+      );
+
+    const points =
+      getPlayerPoints(entry)
+        .toFixed(1);
+
+    return `
+      <div class="manager-roster-row">
+        <div class="manager-roster-slot">
+          ${slot}
+        </div>
+
+        <div class="manager-roster-player">
+          <strong>${name}</strong>
+          <span>${position}</span>
+        </div>
+
+        <div class="manager-roster-points">
+          ${points}
+        </div>
+      </div>
+    `;
+  };
+
+  return `
+    <div class="manager-roster-columns">
+
+      <div class="manager-roster-column">
+        <div class="manager-roster-heading">
+          STARTING LINEUP
+        </div>
+
+        ${
+          entries.length
+            ? entries.map(buildRow).join("")
+            : `
+              <div class="profile-empty-state">
+                No starters available.
+              </div>
+            `
+        }
+      </div>
+
+      <div class="manager-roster-column">
+        <div class="manager-roster-heading">
+          BENCH
+        </div>
+
+        ${
+          bench.length
+            ? bench.map(buildRow).join("")
+            : `
+              <div class="profile-empty-state">
+                No bench players available.
+              </div>
+            `
+        }
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   BUILD SEASON RESULTS
+========================================================= */
+
+function buildScheduleHTML(
+  schedule,
+  targetTeamId
+) {
+  if (
+    !Array.isArray(schedule) ||
+    !targetTeamId
+  ) {
+    return `
+      <div class="profile-empty-state">
+        Weekly schedule data is not currently available.
+      </div>
+    `;
+  }
+
+  const games =
+    schedule
+      .filter(matchup => {
+        const homeId =
+          Number(matchup?.home?.teamId);
+
+        const awayId =
+          Number(matchup?.away?.teamId);
+
+        return (
+          homeId === Number(targetTeamId) ||
+          awayId === Number(targetTeamId)
+        );
+      })
+      .sort((a, b) =>
+        safeNumber(a?.matchupPeriodId) -
+        safeNumber(b?.matchupPeriodId)
+      );
+
+  if (!games.length) {
+    return `
+      <div class="profile-empty-state">
+        No weekly matchup data is available yet.
+      </div>
+    `;
+  }
+
+  const allTeams =
+    currentESPNData?.teams || [];
+
+  return games
+    .map(game => {
+      const matchupPeriod =
+        safeNumber(
+          game?.matchupPeriodId
+        );
+
+      const homeId =
+        Number(game?.home?.teamId);
+
+      const awayId =
+        Number(game?.away?.teamId);
+
+      const isHome =
+        homeId === Number(targetTeamId);
+
+      const me =
+        isHome
+          ? game.home
+          : game.away;
+
+      const opponentId =
+        isHome
+          ? awayId
+          : homeId;
+
+      const opponent =
+        allTeams.find(team =>
+          Number(team?.id) ===
+          opponentId
+        );
+
+      const myScore =
+        safeNumber(
+          me?.totalPoints
+        );
+
+      const opponentSide =
+        isHome
+          ? game.away
+          : game.home;
+
+      const opponentScore =
+        safeNumber(
+          opponentSide?.totalPoints
+        );
+
+      let result = "—";
+      let resultClass = "";
+
+      if (
+        myScore > 0 ||
+        opponentScore > 0
+      ) {
+        if (myScore > opponentScore) {
+          result = "WIN";
+          resultClass = "win";
+        } else if (
+          myScore < opponentScore
+        ) {
+          result = "LOSS";
+          resultClass = "loss";
+        } else {
+          result = "TIE";
+          resultClass = "tie";
+        }
+      }
+
+      return `
+        <div class="manager-week-row">
+
+          <div class="manager-week-number">
+            Wk ${matchupPeriod}
+          </div>
+
+          <div class="manager-week-opponent">
+            <span>
+              ${isHome ? "vs." : "at"}
+            </span>
+            <strong>
+              ${
+                escapeHTML(
+                  opponent?.name ||
+                  `Team #${opponentId}`
+                )
+              }
+            </strong>
+          </div>
+
+          <div class="manager-week-score">
+            ${myScore.toFixed(1)}
+            <span>-</span>
+            ${opponentScore.toFixed(1)}
+          </div>
+
+          <div class="manager-week-result ${resultClass}">
+            ${result}
+          </div>
+
+        </div>
+      `;
+    })
+    .join("");
+}
+
+
 /* =========================================================
    RENDER PROFILE
 ========================================================= */
+
 function renderProfile(teamData = null) {
   const profile =
-    document.getElementById("manager-profile");
+    document.getElementById(
+      "manager-profile"
+    );
+
   if (!profile) {
-    console.error("MANAGER ERROR: #manager-profile not found.");
+    console.error(
+      "MANAGER ERROR: #manager-profile not found."
+    );
     return;
   }
-  /* =========================
-     ESPN DATA
-  ========================= */
+
   const record =
-    teamData?.record?.overall || {};
-  const wins =
-    Number(record.wins ?? 0);
-  const losses =
-    Number(record.losses ?? 0);
-  const ties =
-    Number(record.ties ?? 0);
-  const pointsFor =
-    Number(record.pointsFor ?? 0);
-  const pointsAgainst =
-    Number(record.pointsAgainst ?? 0);
+    getRecord(teamData);
+
   const recordText =
-    ties > 0
-      ? `${wins}-${losses}-${ties}`
-      : `${wins}-${losses}`;
-  /* =========================
-     SAFE DATA
-  ========================= */
+    formatRecord(record);
+
   const nickname =
     manager.nickname ||
     "Stillmeadow Manager";
+
   const traits =
     manager.traits || {
       strength: "Competitive",
@@ -467,71 +1051,148 @@ function renderProfile(teamData = null) {
       signature: "Draft Day Chaos",
       ability: "Never Counted Out"
     };
+
   const quote =
     manager.quote ||
     "Season VII is still being written.";
-  /* =========================
-     PAGE TITLE
-  ========================= */
+
+  const teams =
+    currentESPNData?.teams || [];
+
+  const leagueRank =
+    getLeagueRank(
+      teams,
+      teamData
+    );
+
+  const divisionRank =
+    getDivisionRank(
+      teams,
+      teamData
+    );
+
+  const divisionName =
+    manager.division ||
+    "Division";
+
+  const streak =
+    formatStreak(record);
+
+  const rosterHTML =
+    teamData
+      ? buildRosterHTML(teamData)
+      : `
+        <div class="profile-empty-state">
+          ESPN roster loading...
+        </div>
+      `;
+
+  const scheduleHTML =
+    teamData
+      ? buildScheduleHTML(
+          currentESPNData?.schedule,
+          teamData.id
+        )
+      : `
+        <div class="profile-empty-state">
+          ESPN schedule loading...
+        </div>
+      `;
+
   document.title =
     `${manager.name} | Stillmeadow Beer Summit`;
-  /* =========================
-     BUILD PAGE
-  ========================= */
+
   profile.innerHTML = `
+
+    <!-- =============================================
+         HERO
+    ============================================== -->
+
     <section class="manager-profile-hero">
+
       <div class="profile-photo-wrap">
+
         <img
-          src="${manager.photo}"
-          alt="${manager.name}"
+          src="${escapeHTML(manager.photo)}"
+          alt="${escapeHTML(manager.name)}"
           class="profile-photo"
           onerror="this.style.display='none';"
         >
+
         <div class="profile-number">
-          ${manager.number}
+          ${escapeHTML(manager.number)}
         </div>
+
       </div>
+
       <div class="profile-identity">
+
         <p class="eyebrow">
-          ${manager.role.toUpperCase()} • SEASON VII
+          ${escapeHTML(manager.role).toUpperCase()}
+          • SEASON VII
         </p>
+
         <h1>
-          ${manager.team}
+          ${escapeHTML(manager.team)}
         </h1>
+
         <h2>
-          ${manager.name}
+          ${escapeHTML(manager.name)}
         </h2>
+
         <div class="manager-nickname">
-          ${nickname}
+          ${escapeHTML(nickname)}
         </div>
+
         <div class="profile-tags">
+
           <span>
-            ${manager.division}
+            ${escapeHTML(divisionName)}
           </span>
+
           ${
             manager.role === "Commissioner"
               ? "<span>🍺 League Commissioner</span>"
               : "<span>🏈 Stillmeadow Beer Summit</span>"
           }
+
         </div>
+
       </div>
+
     </section>
+
+
+    <!-- =============================================
+         LIVE ESPN STATS
+    ============================================== -->
+
     <section class="profile-stats-section">
+
       <div class="profile-section-heading">
+
         <div>
+
           <p class="eyebrow">
             LIVE FROM ESPN
           </p>
+
           <h2>
             2026 Season
           </h2>
+
         </div>
+
         <span class="profile-live">
           <i></i>
           LIVE
         </span>
+
       </div>
+
+
       <div class="profile-stat-grid">
+
         <div class="profile-stat">
           <strong>
             ${recordText}
@@ -540,219 +1201,502 @@ function renderProfile(teamData = null) {
             Record
           </span>
         </div>
+
         <div class="profile-stat">
           <strong>
-            ${pointsFor.toFixed(1)}
+            ${
+              leagueRank
+                ? `#${leagueRank}`
+                : "—"
+            }
+          </strong>
+          <span>
+            League Rank
+          </span>
+        </div>
+
+        <div class="profile-stat">
+          <strong>
+            ${
+              divisionRank
+                ? `#${divisionRank}`
+                : "—"
+            }
+          </strong>
+          <span>
+            Division Rank
+          </span>
+        </div>
+
+        <div class="profile-stat">
+          <strong>
+            ${record.pointsFor.toFixed(1)}
           </strong>
           <span>
             Points For
           </span>
         </div>
+
         <div class="profile-stat">
           <strong>
-            ${pointsAgainst.toFixed(1)}
+            ${record.pointsAgainst.toFixed(1)}
           </strong>
           <span>
             Points Against
           </span>
         </div>
+
+        <div class="profile-stat">
+          <strong>
+            ${streak}
+          </strong>
+          <span>
+            Current Streak
+          </span>
+        </div>
+
       </div>
+
     </section>
+
+
+    <!-- =============================================
+         TEAM DOSSIER / CAREER
+    ============================================== -->
+
     <section class="profile-details-grid">
+
       <article class="profile-panel">
+
         <p class="eyebrow">
           TEAM DOSSIER
         </p>
+
         <h2>
           The Manager
         </h2>
+
         <div class="profile-detail-row">
           <span>Manager</span>
-          <strong>${manager.name}</strong>
+          <strong>
+            ${escapeHTML(manager.name)}
+          </strong>
         </div>
+
         <div class="profile-detail-row">
           <span>Team</span>
-          <strong>${manager.team}</strong>
+          <strong>
+            ${escapeHTML(manager.team)}
+          </strong>
         </div>
+
         <div class="profile-detail-row">
           <span>Division</span>
-          <strong>${manager.division}</strong>
+          <strong>
+            ${escapeHTML(manager.division)}
+          </strong>
         </div>
+
         <div class="profile-detail-row">
           <span>League Role</span>
-          <strong>${manager.role}</strong>
+          <strong>
+            ${escapeHTML(manager.role)}
+          </strong>
         </div>
+
+        <div class="profile-detail-row">
+          <span>ESPN Team ID</span>
+          <strong>
+            ${
+              teamData?.id ??
+              "Loading..."
+            }
+          </strong>
+        </div>
+
       </article>
+
+
       <article class="profile-panel">
+
         <p class="eyebrow">
           LEAGUE LEGACY
         </p>
+
         <h2>
           Career Resume
         </h2>
+
         <div class="legacy-stats">
+
           <div class="legacy-stat">
             <strong>
-              ${manager.legacy.playoffs}
+              ${escapeHTML(manager.legacy.playoffs)}
             </strong>
             <span>
               Playoff Resume
             </span>
           </div>
+
           <div class="legacy-stat">
             <strong>
-              ${manager.legacy.championships}
+              ${escapeHTML(manager.legacy.championships)}
             </strong>
             <span>
               Beer Boots
             </span>
           </div>
+
           <div class="legacy-stat">
             <strong>
-              ${manager.legacy.reputation}
+              ${escapeHTML(manager.legacy.reputation)}
             </strong>
             <span>
               League Reputation
             </span>
           </div>
+
         </div>
+
         <p class="legacy-message">
-          ${manager.legacy.message}
+          ${escapeHTML(manager.legacy.message)}
         </p>
+
       </article>
+
     </section>
+
+
+    <!-- =============================================
+         SCOUTING REPORT
+    ============================================== -->
+
     <section class="profile-scouting-report">
+
       <p class="eyebrow">
         SCOUTING REPORT
       </p>
+
       <h2>
-        The ${nickname}
+        The ${escapeHTML(nickname)}
       </h2>
+
       <div class="scouting-grid">
+
         <div class="scouting-item">
           <span>
             💪 Strength
           </span>
           <strong>
-            ${traits.strength}
+            ${escapeHTML(traits.strength)}
           </strong>
         </div>
+
         <div class="scouting-item">
           <span>
             ⚠️ Weakness
           </span>
           <strong>
-            ${traits.weakness}
+            ${escapeHTML(traits.weakness)}
           </strong>
         </div>
+
         <div class="scouting-item">
           <span>
             🎯 Signature Move
           </span>
           <strong>
-            ${traits.signature}
+            ${escapeHTML(traits.signature)}
           </strong>
         </div>
+
         <div class="scouting-item">
           <span>
             ⚡ Special Ability
           </span>
           <strong>
-            ${traits.ability}
+            ${escapeHTML(traits.ability)}
           </strong>
         </div>
+
       </div>
+
       <blockquote class="manager-quote">
-        “${quote}”
+        “${escapeHTML(quote)}”
       </blockquote>
+
     </section>
+
+
+    <!-- =============================================
+         CURRENT ROSTER
+    ============================================== -->
+
+    <section class="profile-roster-section">
+
+      <div class="profile-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            ESPN ROSTER
+          </p>
+
+          <h2>
+            2026 Squad
+          </h2>
+
+        </div>
+
+        <span class="profile-live">
+          <i></i>
+          LIVE
+        </span>
+
+      </div>
+
+      ${rosterHTML}
+
+    </section>
+
+
+    <!-- =============================================
+         WEEKLY RESULTS
+    ============================================== -->
+
+    <section class="profile-schedule-section">
+
+      <div class="profile-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            SEASON VII
+          </p>
+
+          <h2>
+            Weekly Results
+          </h2>
+
+        </div>
+
+      </div>
+
+      <div class="manager-week-list">
+
+        ${scheduleHTML}
+
+      </div>
+
+    </section>
+
+
+    <!-- =============================================
+         STORY
+    ============================================== -->
+
     <section class="profile-story">
+
       <p class="eyebrow">
         THE STORY
       </p>
+
       <h2>
-        ${manager.story.title}
+        ${escapeHTML(manager.story.title)}
       </h2>
+
       <div class="profile-story-text">
         ${manager.story.text}
       </div>
+
       <p class="profile-coming-soon">
         Season VII is still being written.
       </p>
+
     </section>
+
+
+    <!-- =============================================
+         BACK
+    ============================================== -->
+
     <div class="profile-bottom-link">
+
       <a
         href="index.html#managers"
         class="button primary"
       >
         ← Back to All Managers
       </a>
+
     </div>
+
   `;
 }
+
+
 /* =========================================================
-   RENDER IMMEDIATELY
+   INITIAL RENDER
 ========================================================= */
+
 console.log(
   "STILLMEADOW MANAGER.JS LOADED"
 );
+
 console.log(
   "Manager:",
   manager.name,
   manager.team
 );
+
 renderProfile();
+
+
 /* =========================================================
-   LOAD ESPN DATA IN BACKGROUND
+   LOAD ESPN DATA
 ========================================================= */
+
 async function loadManagerData() {
+
   try {
+
     console.log(
       "Attempting ESPN connection..."
     );
-    const response = await fetch(
-      `${ESPN_BASE_URL}?view=mTeam`
+
+    /*
+      ESPN allows multiple views to be requested
+      by repeating ?view= parameters.
+
+      We request:
+        mTeam
+        mRoster
+        mSchedule
+        mStandings
+        mStatus
+
+      This gives us the foundation for the
+      manager dashboard.
+    */
+
+    const url =
+      `${ESPN_BASE_URL}` +
+      `?view=mTeam` +
+      `&view=mRoster` +
+      `&view=mSchedule` +
+      `&view=mStandings` +
+      `&view=mStatus`;
+
+    console.log(
+      "ESPN URL:",
+      url
     );
+
+    const response =
+      await fetch(url);
+
     if (!response.ok) {
       throw new Error(
         `ESPN HTTP ${response.status}`
       );
     }
+
     const data =
       await response.json();
+
+    console.log(
+      "ESPN league data received:",
+      data
+    );
+
+    currentESPNData = data;
+
     const teams =
-      Array.isArray(data.teams)
+      Array.isArray(data?.teams)
         ? data.teams
         : [];
+
+    console.log(
+      `ESPN teams found: ${teams.length}`
+    );
+
     const teamData =
-      teams.find(team => {
-        if (!team.name) {
-          return false;
-        }
-        return (
-          team.name.trim().toLowerCase() ===
-          manager.team.trim().toLowerCase()
-        );
-      });
+      findTeamByName(
+        teams,
+        manager.team
+      );
+
     if (!teamData) {
+
       console.warn(
         `ESPN team not found: ${manager.team}`
       );
+
+      /*
+        Do NOT break the page.
+
+        The static manager profile remains
+        visible if ESPN can't match the team.
+      */
+
       return;
     }
+
     console.log(
       "ESPN team found:",
       teamData
     );
+
+    console.log(
+      "ESPN team ID:",
+      teamData.id
+    );
+
+    console.log(
+      "ESPN record:",
+      teamData.record
+    );
+
+    console.log(
+      "ESPN roster:",
+      teamData.roster
+    );
+
+    console.log(
+      "ESPN schedule:",
+      data.schedule
+    );
+
+    /*
+      Re-render the profile with the live data.
+    */
+
     renderProfile(teamData);
+
   } catch (error) {
+
     console.warn(
       "ESPN unavailable. Static manager profile remains active.",
       error
     );
+
+    /*
+      IMPORTANT:
+
+      We intentionally do not replace the page
+      with an error message.
+
+      The manager profile that was rendered
+      immediately on page load stays visible.
+    */
+
   }
+
 }
+
+
 /* =========================================================
    START ESPN LOAD
 ========================================================= */
+
 loadManagerData();
