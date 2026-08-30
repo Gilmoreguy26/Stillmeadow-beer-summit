@@ -6,17 +6,22 @@ const ESPN_BASE_URL =
 
 /* =========================================================
    MANAGER DATABASE
+   ESPN TEAM IDs ARE PERMANENT IDENTIFIERS.
+   DO NOT MATCH TEAMS BY NAME.
 ========================================================= */
 
 const managers = {
+
   matt: {
     name: "Matt Gilmore",
     team: "Watt She Said",
+    espnTeamId: 1,
     division: "CHIEF Division",
     photo: "images/IMG_6482.jpeg",
     role: "Commissioner",
     number: "01",
     nickname: "Still Chasing the Boot",
+
     legacy: {
       playoffs: "4 of 6",
       championships: "0",
@@ -24,14 +29,17 @@ const managers = {
       message:
         "Four semifinal appearances. One giant question remains: when does the commissioner finally get his Beer Boot?"
     },
+
     traits: {
       strength: "Always in the Hunt",
       weakness: "Can't Finish the Job",
       signature: "Commissioner Chaos",
       ability: "Never Gives Up"
     },
+
     quote:
       "Four semifinals. Zero Beer Boots. Somebody has to fix that.",
+
     story: {
       title: "Still Chasing the Boot",
       text: `
@@ -46,14 +54,17 @@ const managers = {
     }
   },
 
+
   dan: {
     name: "Dan Gilmore",
     team: "Mind Ur O's n Q's",
+    espnTeamId: 3,
     division: "BEAR DOWN Division",
     photo: "images/IMG_6420.jpeg",
     role: "Manager",
     number: "12",
     nickname: "The Man Who Just Wings It",
+
     legacy: {
       playoffs: "Competitive",
       championships: "0",
@@ -61,14 +72,17 @@ const managers = {
       message:
         "No mock drafts. No elaborate preparation. Somehow he just shows up, drafts a competitive team, and makes everyone wonder why they worked so hard."
     },
+
     traits: {
       strength: "Natural Instinct",
       weakness: "Preparation",
       signature: "Wing It",
       ability: "Russian Dan"
     },
+
     quote:
       "Why spend three months preparing when you can just show up and draft?",
+
     story: {
       title: "The Man Who Just Wings It",
       text: `
@@ -81,14 +95,17 @@ const managers = {
     }
   },
 
+
   caufield: {
     name: "Mike Caufield",
     team: "CauFIELD of Dreams",
+    espnTeamId: 4,
     division: "BILLTROTS Division",
     photo: "images/IMG_6429.jpeg",
     role: "Manager",
     number: "05",
     nickname: "The Billtriots Prophet",
+
     legacy: {
       playoffs: "2nd Place Finish",
       championships: "0",
@@ -96,14 +113,17 @@ const managers = {
       message:
         "A runner-up finish last season shocked the losing-bracket legend. Was it the beginning of a dynasty—or just a perfectly smoked one-season run?"
     },
+
     traits: {
       strength: "Smoked Meat",
       weakness: "Losing Bracket History",
       signature: "The Perfect Rub",
       ability: "Playoff Surprise"
     },
+
     quote:
       "The smoker is hot. Maybe the fantasy team will be too.",
+
     story: {
       title: "The Billtriots Prophet",
       text: `
@@ -116,14 +136,17 @@ const managers = {
     }
   },
 
+
   rob: {
     name: "Rob Robertson",
     team: "1-Tooth Willies Hillbillies",
+    espnTeamId: 5,
     division: "BEAR DOWN Division",
     photo: "images/IMG_6422.jpeg",
     role: "Manager",
     number: "06",
     nickname: "The Legend Who Never Stops Talking",
+
     legacy: {
       playoffs: "Still Fighting",
       championships: "0",
@@ -131,14 +154,17 @@ const managers = {
       message:
         "What Rob lacks in wins, he more than makes up for in conversation. Just don't start a drinking game based on how often he talks about himself."
     },
+
     traits: {
       strength: "Confidence",
       weakness: "Knows Everything",
       signature: "The Rob Story",
       ability: "Never Runs Out of Words"
     },
+
     quote:
       "Eventually one of these stories has to end with a championship.",
+
     story: {
       title: "The Legend Who Never Stops Talking",
       text: `
@@ -151,14 +177,17 @@ const managers = {
     }
   },
 
+
   tim: {
     name: "Tim Stough",
     team: "Waller in Misery",
+    espnTeamId: 6,
     division: "BILLTROTS Division",
     photo: "images/IMG_6455.png",
     role: "Manager",
     number: "07",
     nickname: "The Guy Who Will Help Anyone",
+
     legacy: {
       playoffs: "League Veteran",
       championships: "0",
@@ -166,14 +195,17 @@ const managers = {
       message:
         "Need help with something? Tim is your guy. Need a running back? He might accidentally give you his best one."
     },
+
     traits: {
       strength: "Generosity",
       weakness: "Trade Offers",
       signature: "Helping Everyone",
       ability: "Always Has Your Back"
     },
+
     quote:
       "Need a player? I might have one I can give you.",
+
     story: {
       title: "The Guy Who Will Help Anyone",
       text: `
@@ -186,14 +218,58 @@ const managers = {
     }
   },
 
+
+  ames: {
+    name: "Mike Ames",
+    team: "Won’t you be my Naber",
+    espnTeamId: 7,
+    division: "CHIEF Division",
+    photo: "images/IMG_6427.jpeg",
+    role: "Manager",
+    number: "04",
+    nickname: "The Quiet Assassin",
+
+    legacy: {
+      playoffs: "Winning Ways",
+      championships: "1",
+      reputation: "Quiet Assassin",
+      message:
+        "He doesn't need to talk much. His teams usually do the talking for him—and somehow the risky moves almost always seem to work."
+    },
+
+    traits: {
+      strength: "Unconventional Strategy",
+      weakness: "Quiet Confidence",
+      signature: "Two Tight Ends",
+      ability: "Makes Risky Moves Work"
+    },
+
+    quote:
+      "It doesn't have to make sense if it works.",
+
+    story: {
+      title: "The Quiet Assassin",
+      text: `
+        Mike Ames doesn't need to talk a lot of trash. He prefers to quietly build a dangerous team and let the standings do the talking.
+        <br><br>
+        He's willing to take risks that most managers wouldn't consider, and somehow they often pay off. His championship season included starting two elite tight ends all season, with one sitting in the flex—a lineup strategy that didn't make sense until it absolutely did.
+        <br><br>
+        A fan of his Commanders players, Ames always seems to find room for a few of them in his lineup. It may not be conventional, but the Quiet Assassin has proven that conventional doesn't always win championships.
+      `
+    }
+  },
+
+
   jon: {
     name: "Jon Rohrbaugh",
     team: "Blink Juan82",
+    espnTeamId: 8,
     division: "BILLTROTS Division",
     photo: "images/IMG_6454.png",
     role: "Manager",
     number: "08",
     nickname: "The Lovable Loser",
+
     legacy: {
       playoffs: "Injury Survivor",
       championships: "0",
@@ -201,14 +277,17 @@ const managers = {
       message:
         "The injury bug keeps biting, the Turd Awards keep coming, and Jon somehow always has another unbelievable story to tell."
     },
+
     traits: {
       strength: "Storytelling",
       weakness: "Injuries",
       signature: "Casino Stories",
       ability: "Survive Anything"
     },
+
     quote:
       "The injuries can't stop me. Neither can the Turd Awards.",
+
     story: {
       title: "The Lovable Loser",
       text: `
@@ -221,14 +300,17 @@ const managers = {
     }
   },
 
+
   jeff: {
     name: "Jeff Fishel",
     team: "Just SKOL Baby!",
+    espnTeamId: 12,
     division: "BILLTROTS Division",
     photo: "images/IMG_6456.jpeg",
     role: "Manager",
     number: "09",
     nickname: "The Neighbor Who Wouldn't Leave",
+
     legacy: {
       playoffs: "Up & Down",
       championships: "0",
@@ -236,14 +318,17 @@ const managers = {
       message:
         "The beer knowledge is elite. The Vikings loyalty is unquestioned. The championship consistency is still a work in progress."
     },
+
     traits: {
       strength: "Beer Knowledge",
       weakness: "Vikings",
       signature: "SKOL",
       ability: "Always Shows Up"
     },
+
     quote:
       "SKOL, beer, and fantasy football. What else do you need?",
+
     story: {
       title: "The Neighbor Who Wouldn't Leave",
       text: `
@@ -256,14 +341,17 @@ const managers = {
     }
   },
 
+
   tyler: {
     name: "Tyler Gilmore",
     team: "Mid Draft Drunken Dropout",
+    espnTeamId: 13,
     division: "BEAR DOWN Division",
     photo: "images/IMG_6480.jpeg",
     role: "Manager",
     number: "10",
     nickname: "The Rookie Exterminator",
+
     legacy: {
       playoffs: "3rd Place Rookie",
       championships: "0",
@@ -271,14 +359,17 @@ const managers = {
       message:
         "He got so drunk at his first draft that he had to leave and come back—and still finished third. The competition may have a problem."
     },
+
     traits: {
       strength: "Preparation",
       weakness: "Draft Day Drinking",
       signature: "Mid-Draft Disappearance",
       ability: "Exterminate the Competition"
     },
+
     quote:
       "I may leave the draft, but I'm not leaving the standings.",
+
     story: {
       title: "The Rookie Exterminator",
       text: `
@@ -291,14 +382,17 @@ const managers = {
     }
   },
 
+
   dave: {
     name: "Dave Cox",
     team: "Whit’s Warriors",
+    espnTeamId: 11,
     division: "BEAR DOWN Division",
     photo: "images/IMG_6430.jpeg",
     role: "Manager",
     number: "11",
     nickname: "The Original Draft Researcher",
+
     legacy: {
       playoffs: "Bounce Back Season",
       championships: "0",
@@ -306,14 +400,17 @@ const managers = {
       message:
         "The only man still bringing draft magazines into the modern era. ESPN rankings aren't trusted here—Dave builds his own board."
     },
+
     traits: {
       strength: "Research",
       weakness: "Old School",
       signature: "Draft Magazine",
       ability: "Makes His Own Rankings"
     },
+
     quote:
       "ESPN rankings? I brought my own magazine.",
+
     story: {
       title: "The Original Draft Researcher",
       text: `
@@ -326,14 +423,17 @@ const managers = {
     }
   },
 
+
   daryl: {
     name: "Daryl Creager",
     team: "The Godfather Part II",
+    espnTeamId: 9,
     division: "CHIEF Division",
     photo: "images/IMG_6421.jpeg",
     role: "Manager",
     number: "03",
     nickname: "The Godfather",
+
     legacy: {
       playoffs: "2× Champion",
       championships: "2",
@@ -341,14 +441,17 @@ const managers = {
       message:
         "Preparation, preparation, preparation. The Godfather studies the draft board like it holds the secrets of the universe—and two Beer Boots suggest it might."
     },
+
     traits: {
       strength: "Preparation",
       weakness: "Overthinking",
       signature: "Mock Drafts",
       ability: "Draft Day Strategy"
     },
+
     quote:
       "I've already run this draft fifty times in my head.",
+
     story: {
       title: "The Godfather",
       text: `
@@ -361,14 +464,17 @@ const managers = {
     }
   },
 
+
   andy: {
     name: "Andy Rohrbaugh",
     team: "Gone in 60 Saquons",
+    espnTeamId: 10,
     division: "CHIEF Division",
     photo: "images/IMG_6423.jpeg",
     role: "Manager",
     number: "02",
     nickname: "The Championship-Chasing Ginger",
+
     legacy: {
       playoffs: "Never Missed",
       championships: "0",
@@ -376,14 +482,17 @@ const managers = {
       message:
         "He has never missed the playoffs, but last year's fourth-place finish remains the high-water mark. The Beer Boot is still the ultimate prize."
     },
+
     traits: {
       strength: "Consistency",
       weakness: "Championships",
       signature: "Playoff Push",
       ability: "Always Finds a Way In"
     },
+
     quote:
       "Eventually a playoff appearance has to turn into a championship.",
+
     story: {
       title: "The Championship-Chasing Ginger",
       text: `
@@ -394,49 +503,17 @@ const managers = {
         Andy has never missed the playoffs, yet somehow his best finish came last season with a fourth-place finish. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
       `
     }
-  },
-
-  ames: {
-    name: "Mike Ames",
-    team: "Won’t you be my Naber",
-    division: "CHIEF Division",
-    photo: "images/IMG_6427.jpeg",
-    role: "Manager",
-    number: "04",
-    nickname: "The Quiet Assassin",
-    legacy: {
-      playoffs: "Winning Ways",
-      championships: "1",
-      reputation: "Quiet Assassin",
-      message:
-        "He doesn't need to talk much. His teams usually do the talking for him—and somehow the risky moves almost always seem to work."
-    },
-    traits: {
-      strength: "Unconventional Strategy",
-      weakness: "Quiet Confidence",
-      signature: "Two Tight Ends",
-      ability: "Makes Risky Moves Work"
-    },
-    quote:
-      "It doesn't have to make sense if it works.",
-    story: {
-      title: "The Quiet Assassin",
-      text: `
-        Mike Ames doesn't need to talk a lot of trash. He prefers to quietly build a dangerous team and let the standings do the talking.
-        <br><br>
-        He's willing to take risks that most managers wouldn't consider, and somehow they often pay off. His championship season included starting two elite tight ends all season, with one sitting in the flex—a lineup strategy that didn't make sense until it absolutely did.
-        <br><br>
-        A fan of his Commanders players, Ames always seems to find room for a few of them in his lineup. It may not be conventional, but the Quiet Assassin has proven that conventional doesn't always win championships.
-      `
-    }
   }
+
 };
+
 
 /* =========================================================
    GET MANAGER FROM URL
 ========================================================= */
 
-const params = new URLSearchParams(window.location.search);
+const params =
+  new URLSearchParams(window.location.search);
 
 const managerId =
   params.get("id") || "matt";
@@ -457,7 +534,9 @@ let currentESPNData = null;
 ========================================================= */
 
 function safeNumber(value, fallback = 0) {
+
   const number = Number(value);
+
   return Number.isFinite(number)
     ? number
     : fallback;
@@ -465,6 +544,7 @@ function safeNumber(value, fallback = 0) {
 
 
 function escapeHTML(value) {
+
   return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -475,46 +555,54 @@ function escapeHTML(value) {
 
 
 function getRecord(teamData) {
+
   const record =
     teamData?.record?.overall || {};
 
-  const wins =
-    safeNumber(record.wins);
-
-  const losses =
-    safeNumber(record.losses);
-
-  const ties =
-    safeNumber(record.ties);
-
   return {
-    wins,
-    losses,
-    ties,
+
+    wins:
+      safeNumber(record.wins),
+
+    losses:
+      safeNumber(record.losses),
+
+    ties:
+      safeNumber(record.ties),
+
     percentage:
       safeNumber(record.percentage),
+
     streakLength:
       safeNumber(record.streakLength),
+
     streakType:
       record.streakType || "",
+
     pointsFor:
       safeNumber(record.pointsFor),
+
     pointsAgainst:
       safeNumber(record.pointsAgainst)
+
   };
+
 }
 
 
 function formatRecord(record) {
+
   if (record.ties > 0) {
     return `${record.wins}-${record.losses}-${record.ties}`;
   }
 
   return `${record.wins}-${record.losses}`;
+
 }
 
 
 function formatStreak(record) {
+
   if (!record.streakLength) {
     return "—";
   }
@@ -532,39 +620,49 @@ function formatStreak(record) {
   }
 
   return `${record.streakLength}`;
+
 }
 
 
-function findTeamByName(teams, teamName) {
+/* =========================================================
+   FIND TEAM BY ESPN TEAM ID
+   THIS IS THE IMPORTANT FIX.
+========================================================= */
+
+function findTeamById(teams, teamId) {
+
   if (!Array.isArray(teams)) {
     return null;
   }
 
-  const normalized =
-    String(teamName || "")
-      .trim()
-      .toLowerCase();
-
   return (
     teams.find(team =>
-      String(team?.name || "")
-        .trim()
-        .toLowerCase() === normalized
+      Number(team?.id) === Number(teamId)
     ) || null
   );
+
 }
 
 
+/* =========================================================
+   DIVISION / LEAGUE RANKINGS
+========================================================= */
+
 function getDivisionTeams(teams, divisionId) {
+
   if (!Array.isArray(teams)) {
     return [];
   }
 
   return teams
+
     .filter(team =>
-      team?.divisionId === divisionId
+      Number(team?.divisionId) ===
+      Number(divisionId)
     )
+
     .sort((a, b) => {
+
       const aRecord =
         a?.record?.overall || {};
 
@@ -588,17 +686,21 @@ function getDivisionTeams(teams, divisionId) {
         safeNumber(bRecord.pointsFor);
 
       return bPF - aPF;
+
     });
+
 }
 
 
 function getLeagueRank(teams, targetTeam) {
+
   if (!Array.isArray(teams) || !targetTeam) {
     return null;
   }
 
   const sorted =
     [...teams].sort((a, b) => {
+
       const aRecord =
         a?.record?.overall || {};
 
@@ -622,6 +724,7 @@ function getLeagueRank(teams, targetTeam) {
         safeNumber(bRecord.pointsFor);
 
       return bPF - aPF;
+
     });
 
   const index =
@@ -633,10 +736,12 @@ function getLeagueRank(teams, targetTeam) {
   return index >= 0
     ? index + 1
     : null;
+
 }
 
 
 function getDivisionRank(teams, targetTeam) {
+
   if (!targetTeam) {
     return null;
   }
@@ -656,10 +761,16 @@ function getDivisionRank(teams, targetTeam) {
   return index >= 0
     ? index + 1
     : null;
+
 }
 
 
+/* =========================================================
+   PLAYER HELPERS
+========================================================= */
+
 function getPlayerName(entry) {
+
   const player =
     entry?.playerPoolEntry?.player ||
     entry?.playerPoolEntry ||
@@ -674,20 +785,26 @@ function getPlayerName(entry) {
     player.firstName ||
     player.lastName
   ) {
+
     return [
       player.firstName,
       player.lastName
     ]
       .filter(Boolean)
       .join(" ");
+
   }
 
-  return entry?.playerName ||
-    `Player #${entry?.playerId ?? "?"}`;
+  return (
+    entry?.playerName ||
+    `Player #${entry?.playerId ?? "?"}`
+  );
+
 }
 
 
 function getPlayerPosition(entry) {
+
   const player =
     entry?.playerPoolEntry?.player ||
     entry?.playerPoolEntry ||
@@ -700,24 +817,31 @@ function getPlayerPosition(entry) {
     entry?.position ||
     "—"
   );
+
 }
 
 
 function getPlayerPoints(entry) {
+
   const pool =
     entry?.playerPoolEntry || {};
 
   return safeNumber(
+
     pool.appliedStatTotal ??
     pool.appliedStatTotalForScoringPeriod ??
     entry?.appliedStatTotal ??
     0
+
   );
+
 }
 
 
 function getLineupLabel(lineupSlotId) {
+
   const slots = {
+
     0: "QB",
     2: "RB",
     3: "RB",
@@ -730,46 +854,57 @@ function getLineupLabel(lineupSlotId) {
     21: "IR",
     23: "FLEX",
     7: "FLEX"
+
   };
 
-  return slots[lineupSlotId] ||
-    "Roster";
+  return (
+    slots[lineupSlotId] ||
+    "Roster"
+  );
+
 }
 
 
 function getRosterEntries(teamData) {
+
   return (
     teamData?.roster?.entries ||
     []
   );
+
 }
 
 
 function getActiveRoster(teamData) {
+
   return getRosterEntries(teamData)
     .filter(entry =>
       ![20, 21].includes(
         Number(entry?.lineupSlotId)
       )
     );
+
 }
 
 
 function getBenchRoster(teamData) {
+
   return getRosterEntries(teamData)
     .filter(entry =>
       [20, 21].includes(
         Number(entry?.lineupSlotId)
       )
     );
+
 }
 
 
 /* =========================================================
-   BUILD ROSTER HTML
+   BUILD ROSTER
 ========================================================= */
 
 function buildRosterHTML(teamData) {
+
   const entries =
     getActiveRoster(teamData);
 
@@ -777,16 +912,21 @@ function buildRosterHTML(teamData) {
     getBenchRoster(teamData);
 
   if (!entries.length && !bench.length) {
+
     return `
       <div class="profile-empty-state">
         Roster data is not currently available from ESPN.
       </div>
     `;
+
   }
 
   const buildRow = entry => {
+
     const name =
-      escapeHTML(getPlayerName(entry));
+      escapeHTML(
+        getPlayerName(entry)
+      );
 
     const position =
       escapeHTML(
@@ -805,7 +945,9 @@ function buildRosterHTML(teamData) {
         .toFixed(1);
 
     return `
+
       <div class="manager-roster-row">
+
         <div class="manager-roster-slot">
           ${slot}
         </div>
@@ -818,14 +960,19 @@ function buildRosterHTML(teamData) {
         <div class="manager-roster-points">
           ${points}
         </div>
+
       </div>
+
     `;
+
   };
 
   return `
+
     <div class="manager-roster-columns">
 
       <div class="manager-roster-column">
+
         <div class="manager-roster-heading">
           STARTING LINEUP
         </div>
@@ -839,9 +986,12 @@ function buildRosterHTML(teamData) {
               </div>
             `
         }
+
       </div>
 
+
       <div class="manager-roster-column">
+
         <div class="manager-roster-heading">
           BENCH
         </div>
@@ -855,35 +1005,43 @@ function buildRosterHTML(teamData) {
               </div>
             `
         }
+
       </div>
 
     </div>
+
   `;
+
 }
 
 
 /* =========================================================
-   BUILD SEASON RESULTS
+   BUILD WEEKLY SCHEDULE
 ========================================================= */
 
 function buildScheduleHTML(
   schedule,
   targetTeamId
 ) {
+
   if (
     !Array.isArray(schedule) ||
     !targetTeamId
   ) {
+
     return `
       <div class="profile-empty-state">
         Weekly schedule data is not currently available.
       </div>
     `;
+
   }
 
   const games =
     schedule
+
       .filter(matchup => {
+
         const homeId =
           Number(matchup?.home?.teamId);
 
@@ -894,25 +1052,31 @@ function buildScheduleHTML(
           homeId === Number(targetTeamId) ||
           awayId === Number(targetTeamId)
         );
+
       })
+
       .sort((a, b) =>
         safeNumber(a?.matchupPeriodId) -
         safeNumber(b?.matchupPeriodId)
       );
 
   if (!games.length) {
+
     return `
       <div class="profile-empty-state">
         No weekly matchup data is available yet.
       </div>
     `;
+
   }
 
   const allTeams =
     currentESPNData?.teams || [];
 
   return games
+
     .map(game => {
+
       const matchupPeriod =
         safeNumber(
           game?.matchupPeriodId
@@ -965,21 +1129,30 @@ function buildScheduleHTML(
         myScore > 0 ||
         opponentScore > 0
       ) {
+
         if (myScore > opponentScore) {
+
           result = "WIN";
           resultClass = "win";
+
         } else if (
           myScore < opponentScore
         ) {
+
           result = "LOSS";
           resultClass = "loss";
+
         } else {
+
           result = "TIE";
           resultClass = "tie";
+
         }
+
       }
 
       return `
+
         <div class="manager-week-row">
 
           <div class="manager-week-number">
@@ -987,9 +1160,11 @@ function buildScheduleHTML(
           </div>
 
           <div class="manager-week-opponent">
+
             <span>
               ${isHome ? "vs." : "at"}
             </span>
+
             <strong>
               ${
                 escapeHTML(
@@ -998,12 +1173,17 @@ function buildScheduleHTML(
                 )
               }
             </strong>
+
           </div>
 
           <div class="manager-week-score">
+
             ${myScore.toFixed(1)}
+
             <span>-</span>
+
             ${opponentScore.toFixed(1)}
+
           </div>
 
           <div class="manager-week-result ${resultClass}">
@@ -1011,9 +1191,13 @@ function buildScheduleHTML(
           </div>
 
         </div>
+
       `;
+
     })
+
     .join("");
+
 }
 
 
@@ -1022,16 +1206,20 @@ function buildScheduleHTML(
 ========================================================= */
 
 function renderProfile(teamData = null) {
+
   const profile =
     document.getElementById(
       "manager-profile"
     );
 
   if (!profile) {
+
     console.error(
       "MANAGER ERROR: #manager-profile not found."
     );
+
     return;
+
   }
 
   const record =
@@ -1046,10 +1234,19 @@ function renderProfile(teamData = null) {
 
   const traits =
     manager.traits || {
-      strength: "Competitive",
-      weakness: "Still Chasing the Beer Boot",
-      signature: "Draft Day Chaos",
-      ability: "Never Counted Out"
+
+      strength:
+        "Competitive",
+
+      weakness:
+        "Still Chasing the Beer Boot",
+
+      signature:
+        "Draft Day Chaos",
+
+      ability:
+        "Never Counted Out"
+
     };
 
   const quote =
@@ -1080,7 +1277,9 @@ function renderProfile(teamData = null) {
 
   const rosterHTML =
     teamData
+
       ? buildRosterHTML(teamData)
+
       : `
         <div class="profile-empty-state">
           ESPN roster loading...
@@ -1089,10 +1288,12 @@ function renderProfile(teamData = null) {
 
   const scheduleHTML =
     teamData
+
       ? buildScheduleHTML(
           currentESPNData?.schedule,
           teamData.id
         )
+
       : `
         <div class="profile-empty-state">
           ESPN schedule loading...
@@ -1125,6 +1326,7 @@ function renderProfile(teamData = null) {
 
       </div>
 
+
       <div class="profile-identity">
 
         <p class="eyebrow">
@@ -1152,7 +1354,9 @@ function renderProfile(teamData = null) {
 
           ${
             manager.role === "Commissioner"
+
               ? "<span>🍺 League Commissioner</span>"
+
               : "<span>🏈 Stillmeadow Beer Summit</span>"
           }
 
@@ -1194,15 +1398,20 @@ function renderProfile(teamData = null) {
       <div class="profile-stat-grid">
 
         <div class="profile-stat">
+
           <strong>
             ${recordText}
           </strong>
+
           <span>
             Record
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${
               leagueRank
@@ -1210,12 +1419,16 @@ function renderProfile(teamData = null) {
                 : "—"
             }
           </strong>
+
           <span>
             League Rank
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${
               divisionRank
@@ -1223,36 +1436,50 @@ function renderProfile(teamData = null) {
                 : "—"
             }
           </strong>
+
           <span>
             Division Rank
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${record.pointsFor.toFixed(1)}
           </strong>
+
           <span>
             Points For
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${record.pointsAgainst.toFixed(1)}
           </strong>
+
           <span>
             Points Against
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${streak}
           </strong>
+
           <span>
             Current Streak
           </span>
+
         </div>
 
       </div>
@@ -1277,41 +1504,71 @@ function renderProfile(teamData = null) {
         </h2>
 
         <div class="profile-detail-row">
-          <span>Manager</span>
+
+          <span>
+            Manager
+          </span>
+
           <strong>
             ${escapeHTML(manager.name)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>Team</span>
+
+          <span>
+            Team
+          </span>
+
           <strong>
             ${escapeHTML(manager.team)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>Division</span>
+
+          <span>
+            Division
+          </span>
+
           <strong>
             ${escapeHTML(manager.division)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>League Role</span>
+
+          <span>
+            League Role
+          </span>
+
           <strong>
             ${escapeHTML(manager.role)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>ESPN Team ID</span>
+
+          <span>
+            ESPN Team ID
+          </span>
+
           <strong>
             ${
               teamData?.id ??
+              manager.espnTeamId ??
               "Loading..."
             }
           </strong>
+
         </div>
 
       </article>
@@ -1330,30 +1587,41 @@ function renderProfile(teamData = null) {
         <div class="legacy-stats">
 
           <div class="legacy-stat">
+
             <strong>
               ${escapeHTML(manager.legacy.playoffs)}
             </strong>
+
             <span>
               Playoff Resume
             </span>
+
           </div>
 
+
           <div class="legacy-stat">
+
             <strong>
               ${escapeHTML(manager.legacy.championships)}
             </strong>
+
             <span>
               Beer Boots
             </span>
+
           </div>
 
+
           <div class="legacy-stat">
+
             <strong>
               ${escapeHTML(manager.legacy.reputation)}
             </strong>
+
             <span>
               League Reputation
             </span>
+
           </div>
 
         </div>
@@ -1384,42 +1652,58 @@ function renderProfile(teamData = null) {
       <div class="scouting-grid">
 
         <div class="scouting-item">
+
           <span>
             💪 Strength
           </span>
+
           <strong>
             ${escapeHTML(traits.strength)}
           </strong>
+
         </div>
 
+
         <div class="scouting-item">
+
           <span>
             ⚠️ Weakness
           </span>
+
           <strong>
             ${escapeHTML(traits.weakness)}
           </strong>
+
         </div>
 
+
         <div class="scouting-item">
+
           <span>
             🎯 Signature Move
           </span>
+
           <strong>
             ${escapeHTML(traits.signature)}
           </strong>
+
         </div>
 
+
         <div class="scouting-item">
+
           <span>
             ⚡ Special Ability
           </span>
+
           <strong>
             ${escapeHTML(traits.ability)}
           </strong>
+
         </div>
 
       </div>
+
 
       <blockquote class="manager-quote">
         “${escapeHTML(quote)}”
@@ -1482,6 +1766,7 @@ function renderProfile(teamData = null) {
 
       </div>
 
+
       <div class="manager-week-list">
 
         ${scheduleHTML}
@@ -1532,6 +1817,7 @@ function renderProfile(teamData = null) {
     </div>
 
   `;
+
 }
 
 
@@ -1545,8 +1831,12 @@ console.log(
 
 console.log(
   "Manager:",
-  manager.name,
-  manager.team
+  manager.name
+);
+
+console.log(
+  "Manager ESPN Team ID:",
+  manager.espnTeamId
 );
 
 renderProfile();
@@ -1565,18 +1855,13 @@ async function loadManagerData() {
     );
 
     /*
-      ESPN allows multiple views to be requested
-      by repeating ?view= parameters.
+      Request the league data.
 
-      We request:
-        mTeam
-        mRoster
-        mSchedule
-        mStandings
-        mStatus
+      IMPORTANT:
+      We are NOT searching by team name.
 
-      This gives us the foundation for the
-      manager dashboard.
+      The manager's ESPN team ID is used below
+      to identify the correct team.
     */
 
     const url =
@@ -1596,9 +1881,11 @@ async function loadManagerData() {
       await fetch(url);
 
     if (!response.ok) {
+
       throw new Error(
         `ESPN HTTP ${response.status}`
       );
+
     }
 
     const data =
@@ -1609,7 +1896,8 @@ async function loadManagerData() {
       data
     );
 
-    currentESPNData = data;
+    currentESPNData =
+      data;
 
     const teams =
       Array.isArray(data?.teams)
@@ -1620,36 +1908,50 @@ async function loadManagerData() {
       `ESPN teams found: ${teams.length}`
     );
 
+    /*
+      ============================================
+      FIND TEAM USING ESPN TEAM ID
+      ============================================
+    */
+
     const teamData =
-      findTeamByName(
+      findTeamById(
         teams,
-        manager.team
+        manager.espnTeamId
       );
 
     if (!teamData) {
 
-      console.warn(
-        `ESPN team not found: ${manager.team}`
+      console.error(
+        `ESPN team ID ${manager.espnTeamId} was not found.`
       );
 
-      /*
-        Do NOT break the page.
-
-        The static manager profile remains
-        visible if ESPN can't match the team.
-      */
+      console.log(
+        "Available ESPN teams:",
+        teams.map(team => ({
+          id: team?.id,
+          name: team?.name
+        }))
+      );
 
       return;
+
     }
 
+
     console.log(
-      "ESPN team found:",
+      "ESPN TEAM FOUND BY ID:",
       teamData
     );
 
     console.log(
       "ESPN team ID:",
       teamData.id
+    );
+
+    console.log(
+      "ESPN team name:",
+      teamData.name
     );
 
     console.log(
@@ -1667,28 +1969,28 @@ async function loadManagerData() {
       data.schedule
     );
 
+
     /*
-      Re-render the profile with the live data.
+      ============================================
+      RENDER WITH LIVE ESPN DATA
+      ============================================
     */
 
-    renderProfile(teamData);
+    renderProfile(
+      teamData
+    );
+
 
   } catch (error) {
 
-    console.warn(
-      "ESPN unavailable. Static manager profile remains active.",
+    console.error(
+      "ESPN DATA LOAD ERROR:",
       error
     );
 
-    /*
-      IMPORTANT:
-
-      We intentionally do not replace the page
-      with an error message.
-
-      The manager profile that was rendered
-      immediately on page load stays visible.
-    */
+    console.warn(
+      "Static manager profile remains active."
+    );
 
   }
 
