@@ -9,548 +9,584 @@ const ESPN_BASE_URL =
 ========================= */
 
 const managers = {
+
   matt: {
+
     name: "Matt Gilmore",
+
     team: "Watt She Said",
+
     division: "CHIEF Division",
+
     photo: "images/IMG_6482.jpeg",
+
     role: "Commissioner",
+
     number: "01",
-    nickname: "The Commissioner",
+
     legacy: {
-      playoffs: "League Founder",
+
+      playoffs: "4 of 6",
+
       championships: "0",
-      reputation: "Still Chasing the Boot",
-      bestFinish: "Championship Pending"
+
+      reputation: "Always in the Hunt",
+
+      message: "Four semifinal appearances. One giant question remains: when does the commissioner finally get his Beer Boot?"
+
     },
-    traits: {
-      strength: "Creativity, competitiveness and keeping the league alive",
-      weakness: "Turning a great season into a championship",
-      signature: "Creating another league feature while his lineup is still questionable",
-      ability: "Commissioner's Privilege"
-    },
-    quote:
-      "I built the league, bought the trophy, and wrote the history… I just haven't figured out how to win the damn thing.",
+
     story: {
+
       title: "Still Chasing the Boot",
+
       text: `
-        The man responsible for this entire mess. Matt started the Stillmeadow
-        Beer Summit with one simple goal: get a group of friends together and
-        beat the hell out of them in fantasy football.
+
+        Matt started the Stillmeadow Beer Summit with one simple goal: beat up on his friends in fantasy football and have a damn good time doing it. Somewhere along the way, that turned into draft parties, the legendary Beer Boot trophy, weekly breakdowns and predictions, Monday Night Lites, Studs, Duds and Oh Cruds, a league Facebook page, and now an entire website dedicated to this beautiful mess.
 
         <br><br>
 
-        Somewhere along the way, it became much bigger than that. Draft parties.
-        The legendary Beer Boot trophy. Weekly breakdowns and predictions.
-        Monday Night Lites. Studs, Duds & Oh Cruds. A league Facebook page built
-        to keep the trash talk flowing. And now an entire website dedicated to
-        the history and insanity of the league.
+        All that creativity and competitiveness has produced plenty of memorable moments—and absolutely zero championships. Four semifinal appearances in six seasons prove he's always around when things get serious, but the Beer Boot has somehow remained just out of reach.
 
         <br><br>
 
-        Competitive, creative, and apparently willing to do almost anything to
-        make the league better—except build a championship-caliber team.
-        Despite consistently being in the hunt, the Commissioner is still
-        chasing his first Beer Boot.
+        A district manager by trade, Matt is used to keeping a group of people organized, informed, and occasionally reined in—which makes him perfectly qualified to run this collection of degenerates. A die-hard Steelers fan, proud owner of a brand-new Bronco that he promises wasn't purchased with league dues, and known to drink almost anyone under the table, the commissioner remains committed to one thing above all else: eventually winning the damn trophy he created.
 
-        <br><br>
-
-        A die-hard Steelers fan, proud owner of a brand-new Bronco that he swears
-        was not purchased with league dues, and capable of drinking almost anyone
-        under the table, Matt remains one championship away from completing his
-        ultimate fantasy football resume.
       `
+
     }
+
   },
 
   andy: {
+
     name: "Andy Rohrbaugh",
+
     team: "Bed Bath and Bijan",
+
     division: "CHIEF Division",
+
     photo: "images/IMG_6423.jpeg",
+
     role: "Manager",
+
     number: "02",
-    nickname: "The Ginger Grinder",
+
     legacy: {
+
       playoffs: "Never Missed",
+
       championships: "0",
-      reputation: "Always in the Hunt",
-      bestFinish: "4th Place"
+
+      reputation: "Playoff Regular",
+
+      message: "He has never missed the playoffs, but last year's fourth-place finish remains the high-water mark. The Beer Boot is still the ultimate prize."
+
     },
-    traits: {
-      strength: "Fiercely competitive and consistently in the hunt",
-      weakness: "Finishing the job",
-      signature: "Making the playoffs look easy",
-      ability: "Ginger Persistence"
-    },
-    quote:
-      "I'd sell my soul for a championship... but apparently I don't have one to trade.",
+
     story: {
-      title: "The Hunt for the First Boot",
+
+      title: "The Championship-Chasing Ginger",
+
       text: `
-        The Commissioner's friend since third grade and one of the fiercest
-        competitors in the Stillmeadow Beer Summit. Andy doesn't know how to
-        half-ass anything—whether it's fantasy football or tossing his balls into
-        the air so grown men can hit them with sticks as a softball pitcher.
+
+        Andy has been the commissioner's friend since third grade, which means the league has been putting up with his competitive nature for decades. He loves to compete, whether it's fantasy football or tossing his balls into the air so grown men can hit them with sticks as a softball pitcher.
 
         <br><br>
 
-        He's a ginger, but don't let that fool you. What he lacks in pigmentation,
-        he also lacks in championships… although he makes up for it with
-        intelligence, competitiveness, and a legendary "try anything once" spirit.
-        Or twice. Maybe three times. Who's counting?
+        He's a ginger, but don't let that fool you. What he lacks in pigmentation, he also lacks in championships... although he makes up for it with intelligence and an enthusiastic "try anything once" spirit. Or twice. Maybe three times. Who's counting?
 
         <br><br>
 
-        Despite never missing the playoffs, Andy is still waiting for his first
-        trip to the top. His fourth-place finish remains the pinnacle of his
-        Stillmeadow Beer Summit career. This year, he's coming for the Beer Boot.
+        Andy has never missed the playoffs, yet somehow his best finish came last season with a fourth-place finish. He would trade his soul for a championship—if gingers had souls, of course. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
+
       `
+
     }
+
   },
 
   daryl: {
+
     name: "Daryl Creager",
+
     team: "Ames is Ahole!",
+
     division: "CHIEF Division",
+
     photo: "images/IMG_6421.jpeg",
+
     role: "Manager",
+
     number: "03",
-    nickname: "The Godfather",
+
     legacy: {
-      playoffs: "Championship Pedigree",
+
+      playoffs: "2× Champion",
+
       championships: "2",
+
       reputation: "Mock Draft King",
-      bestFinish: "🏆 League Champion"
+
+      message: "Preparation, preparation, preparation. The Godfather studies the draft board like it holds the secrets of the universe—and two Beer Boots suggest it might."
+
     },
-    traits: {
-      strength: "Preparation and championship roster building",
-      weakness: "Believing every trade offer is perfectly fair",
-      signature: "The Trade You Can Refuse",
-      ability: "Mock Draft Mastermind"
-    },
-    quote:
-      "I've already done seventeen mock drafts. Your trade offer still sucks.",
+
     story: {
-      title: "An Offer You Can Refuse",
+
+      title: "The Godfather",
+
       text: `
-        The self-proclaimed Godfather of the Stillmeadow Beer Summit and the
-        undisputed King of the Mock Draft. Daryl leaves nothing to chance,
-        studying, drafting, and preparing for every possible scenario before
-        the real draft even begins.
+
+        Self-proclaimed Godfather of the Stillmeadow Beer Summit, Daryl has built a reputation as one of the league's most successful—and most prepared—managers. A two-time Beer Boot champion, he approaches fantasy football like a full-time job and mock drafts like a sacred ritual.
 
         <br><br>
 
-        With two Beer Boots on his résumé, it's hard to argue with the results.
-        Just be careful when a trade offer hits your inbox. The Godfather has a
-        habit of making deals that seem to benefit one particular manager more
-        than everyone else.
+        Nobody overprepares quite like Daryl. Rankings are studied, strategies are tested, and mock drafts are completed at a rate that would make most fantasy analysts uncomfortable. Then draft day arrives and everyone finds out whether all that preparation was worth it.
 
         <br><br>
 
-        Overprepared? Absolutely. Overconfident? Occasionally. Successful?
-        Two championships say yes.
+        Of course, the Godfather is also known for sending out trade offers that may be just slightly more beneficial to Daryl than the person receiving them. But when you have two championships, confidence comes with the territory.
+
       `
+
     }
+
   },
 
   ames: {
+
     name: "Mike Ames",
+
     team: "The Price is Right",
+
     division: "CHIEF Division",
+
     photo: "images/IMG_6427.jpeg",
+
     role: "Manager",
+
     number: "04",
-    nickname: "The Quiet Assassin",
+
     legacy: {
-      playoffs: "When He Makes It, He Wins",
-      championships: "3",
-      reputation: "Lets the Trophies Talk",
-      bestFinish: "🏆 League Champion"
+
+      playoffs: "Winning Ways",
+
+      championships: "1",
+
+      reputation: "Quiet Assassin",
+
+      message: "He doesn't need to talk much. His teams usually do the talking for him—and somehow the risky moves almost always seem to work."
+
     },
-    traits: {
-      strength: "Calculated risks that somehow keep paying off",
-      weakness: "Trusting Commanders players a little too much",
-      signature: "Starting two tight ends because why not?",
-      ability: "It Just Works"
-    },
-    quote: "He doesn't say much. He doesn't need to. Check the trophy case.",
+
     story: {
-      title: "Let the Winning Do the Talking",
+
+      title: "The Quiet Assassin",
+
       text: `
-        The Quiet Assassin doesn't need to tell you he's coming for the Beer
-        Boot—he'll let the standings do the talking. Mike takes chances other
-        managers wouldn't dare to make, and somehow they almost always pay off.
+
+        Mike Ames doesn't need to talk a lot of trash. He prefers to quietly build a dangerous team and let the standings do the talking. While everyone else is busy making excuses, Ames is usually finding another way to make an unconventional strategy work.
 
         <br><br>
 
-        He trusts his instincts, trusts his guys, and has no problem slipping
-        a few Commanders players into his lineup. He once built a championship
-        season around two top tight ends, starting one in the flex. It wasn't
-        conventional. It didn't matter.
+        He's willing to take risks that most managers wouldn't consider, and somehow they often pay off. His championship season included starting two elite tight ends all season, with one sitting in the flex—a lineup strategy that didn't make sense until it absolutely did.
 
         <br><br>
 
-        While everyone else debates strategy and talks trash, Ames quietly
-        keeps stacking wins.
+        A fan of his Commanders players, Ames always seems to find room for a few of them in his lineup. It may not be the conventional way to build a roster, but the Quiet Assassin has proven that conventional doesn't always win championships.
+
       `
+
     }
+
   },
 
   caufield: {
+
     name: "Mike Caufield",
+
     team: "CauFIELD of Dreams",
+
     division: "BILLTROTS Division",
+
     photo: "images/IMG_6429.jpeg",
+
     role: "Manager",
+
     number: "05",
-    nickname: "The Smokin' Implant",
+
     legacy: {
-      playoffs: "Building Momentum",
+
+      playoffs: "2nd Place Finish",
+
       championships: "0",
-      reputation: "Losing Bracket Legend",
-      bestFinish: "🥈 2nd Place"
+
+      reputation: "Smoked Meat Specialist",
+
+      message: "A runner-up finish last season shocked the losing-bracket legend. Was it the beginning of a dynasty—or just a perfectly smoked one-season run?"
+
     },
-    traits: {
-      strength: "Patience and low-and-slow execution",
-      weakness: "Consistency and occasionally team loyalty",
-      signature: "Switching allegiances when the other team gets good",
-      ability: "Low & Slow"
-    },
-    quote: "Trust the process. Keep it low, keep it slow… and pass the sausage.",
+
     story: {
-      title: "From the Losing Bracket to the Championship Hunt",
+
+      title: "The Billtriots Prophet",
+
       text: `
-        One of the Stillmeadow implants, Caufield was lucky enough to marry his
-        way into this collection of misfits. His wife had known the crew for
-        years, and somehow Michael was allowed through security.
+
+        Caufield was lucky enough to marry into this collection of misfits, with his wife being a longtime friend of the Stillmeadow crew. Somehow, the group decided he could stay—and fantasy football has been feeding the rivalry ever since.
 
         <br><br>
 
-        When he's not managing a fantasy roster, he can usually be found smoking
-        meats, perfecting his rub, and preparing enough food to feed the entire
-        league. He's also a Bills fan… unless the Patriots are good. Then things
-        can get a little complicated. Hence the legendary Billtriots Division.
+        He enjoys smoking meats, getting the rub just right, and a good smoked sausage. His football allegiance is a little more complicated. He's a Bills fan... unless the Patriots are good, in which case the loyalty occasionally shifts faster than his fantasy team. Hence, the Billtrots Division.
 
         <br><br>
 
-        A longtime losing-bracket legend, Caufield shocked everyone with a
-        second-place finish last season. Is it the beginning of a new era or a
-        temporary hot streak? The smoker—and the season—will eventually tell.
+        Last season's second-place finish was a rare bright spot for this losing-bracket legend. Is it a sign of things to come, or will Caufield return to his natural habitat near the bottom of the standings? Only time—and the smoker—will tell.
+
       `
+
     }
+
   },
 
   rob: {
+
     name: "Rob Robertson",
+
     team: "1-Tooth Willies Hillbillies",
+
     division: "BEAR DOWN Division",
+
     photo: "images/IMG_6422.jpeg",
+
     role: "Manager",
+
     number: "06",
-    nickname: "The Human Podcast",
+
     legacy: {
-      playoffs: "Still Talking About It",
+
+      playoffs: "Still Fighting",
+
       championships: "0",
-      reputation: "Hall of Fame Storyteller",
-      bestFinish: "The Conversation Continues"
+
+      reputation: "Talks a Big Game",
+
+      message: "What Rob lacks in wins, he more than makes up for in conversation. Just don't start a drinking game based on how often he talks about himself."
+
     },
-    traits: {
-      strength: "Loyalty, friendship and unlimited dialogue",
-      weakness: "Replacing underperforming players",
-      signature: "Talking about himself until someone needs a refill",
-      ability: "Unlimited Dialogue"
-    },
-    quote: "But enough about me. What do you think about what I just said about me?",
+
     story: {
-      title: "The Conversation Never Ends",
+
+      title: "The Legend Who Never Stops Talking",
+
       text: `
-        The Commissioner's best friend since their school days and proof that
-        fantasy football success isn't required to have a Hall of Fame personality.
+
+        Rob has been the commissioner's best friend since their school years, and their friendship has survived decades of fantasy football, questionable decisions, and conversations that usually revolve back around Rob.
 
         <br><br>
 
-        What Rob lacks in wins, he more than makes up for in words. The league
-        once tried turning his conversations into a drinking game, but the game
-        had to be retired for the safety of everyone involved.
+        At one point, the group attempted a drinking game where everyone took a drink whenever Rob talked about himself. They had to stop because somebody was eventually going to get alcohol poisoning. That may be the greatest testament to his ability to keep a conversation going.
 
         <br><br>
 
-        A high school teacher, great dad, loyal friend, and genuinely good guy…
-        just don't expect him to stop talking long enough to make a waiver-wire
-        move. He needs to replace players on his roster about as badly as he
-        needs a hip replacement.
+        A high school teacher, good dad, and friend to just about anyone, Rob brings plenty of personality to the Beer Summit. His fantasy teams may need new players about as badly as he needs a hip replacement, but the man never runs out of confidence—or things to say.
+
       `
+
     }
+
   },
 
   tim: {
+
     name: "Tim Stough",
+
     team: "Waller in Misery",
+
     division: "BILLTROTS Division",
+
     photo: "images/IMG_6455.png",
+
     role: "Manager",
+
     number: "07",
-    nickname: "The Helpful Heist",
+
     legacy: {
-      playoffs: "Always Willing to Help",
+
+      playoffs: "League Veteran",
+
       championships: "0",
-      reputation: "The Guy You Can Count On",
-      bestFinish: "Still Writing the Story"
+
+      reputation: "Trade Partner",
+
+      message: "Need help with something? Tim is your guy. Need a running back? He might accidentally give you his best one."
+
     },
-    traits: {
-      strength: "Helping with absolutely anything",
-      weakness: "Being a little too generous in trades",
-      signature: "Sure, you can have my best running back",
-      ability: "Anything You Need"
-    },
-    quote: "Sure, I can help with that. Wait… you want my best player too?",
+
     story: {
-      title: "The Guy Who Will Help With Anything",
+
+      title: "The Guy Who Will Help Anyone",
+
       text: `
-        The first replacement brought in after the legendary Kidwell Purge, Tim
-        wasn't exactly a stranger. He'd already spent years coaching the church
-        softball team back when everyone still believed they were twenty years
-        old and could actually ball.
+
+        Tim was the first replacement brought in after the legendary Kidwell Purge, but he had been around the Stillmeadow crew long before officially joining the league. As a coach on the church softball team back when everyone still thought they were 20 and capable of balling, he was already part of the chaos.
 
         <br><br>
 
-        Tim is the kind of guy who will help with absolutely anything. Need a
-        pop-up tent? He's got you. Need help moving something? No problem. Need
-        a running back? Apparently, you can have his best one too.
+        Tim is the kind of guy who will help with anything. Need a pop-up tent? You got it. Need somebody to lend a hand? He's probably already on his way. Need a running back for your fantasy team? Well... he might even give you his best one.
 
         <br><br>
 
-        A die-hard Eagles fan, Tim remains one of the most dependable people in
-        the league—unless you count protecting his fantasy roster, where his
-        generosity can occasionally get the better of him.
+        A die-hard Eagles fan, Tim brings loyalty, generosity, and questionable trade decisions to the Beer Summit. His prize possessions include his sports car and his guns, but the Beer Boot remains the prize still missing from the collection.
+
       `
+
     }
+
   },
 
   jon: {
+
     name: "Jon Rohrbaugh",
+
     team: "Blink Juan82",
+
     division: "BILLTROTS Division",
+
     photo: "images/IMG_6454.png",
+
     role: "Manager",
+
     number: "08",
-    nickname: "The Lovable Loser",
+
     legacy: {
-      playoffs: "Injuries Pending",
+
+      playoffs: "Injury Survivor",
+
       championships: "0",
-      reputation: "Turd Award Magnet",
-      bestFinish: "The Stories Were Better"
+
+      reputation: "Lovable Loser",
+
+      message: "The injury bug keeps biting, the Turd Awards keep coming, and Jon somehow always has another unbelievable story to tell."
+
     },
-    traits: {
-      strength: "Always entertaining",
-      weakness: "Keeping his roster healthy",
-      signature: "Blaming the injury bug",
-      ability: "Jackpot Recovery"
-    },
-    quote: "My team would be undefeated if healthy… and if I stopped starting injured players.",
+
     story: {
-      title: "The Injury Report Is His Arch Nemesis",
+
+      title: "The Lovable Loser",
+
       text: `
-        Every league needs a guy who can lose another matchup, collect another
-        Turd Award, and still somehow be one of the most entertaining people at
-        the draft. That's Jon.
+
+        Jon may not always be at the top of the standings, but he is almost always at the center of a good story. His teams seem to come down with a case of the injury bug every season, and recovering from it has proven to be almost as difficult as turning down another trip to the casino.
 
         <br><br>
 
-        A Navy veteran, casino jackpot survivor, and lifelong victim of the
-        fantasy football injury bug, Jon's teams always seem to find a new and
-        creative way to suffer. But he'll have a great story about it—and
-        probably an even better story about what happened at the casino afterward.
+        While stacking up Turd Awards and questionable injury reports, Jon somehow manages to keep the league entertained. If his fantasy team is struggling, there's a decent chance he's got a casino jackpot story ready to distract everyone.
 
         <br><br>
 
-        His fantasy team may be dead, but the stories are always alive.
+        A Navy veteran and a man with stories that somehow get better with every telling, Jon remains one of the league's most lovable managers. The championship drought may continue, but at least the stories are always championship caliber.
+
       `
+
     }
+
   },
 
   jeff: {
+
     name: "Jeff Fishel",
+
     team: "Just SKOL Baby!",
+
     division: "BILLTROTS Division",
+
     photo: "images/IMG_6456.jpeg",
+
     role: "Manager",
+
     number: "09",
-    nickname: "The Beer Professor",
+
     legacy: {
-      playoffs: "Still Brewing",
+
+      playoffs: "Up & Down",
+
       championships: "0",
-      reputation: "Beer Summit Specialist",
-      bestFinish: "Bounce Back Candidate"
+
+      reputation: "SKOL Specialist",
+
+      message: "The beer knowledge is elite. The Vikings loyalty is unquestioned. The championship consistency is still a work in progress."
+
     },
-    traits: {
-      strength: "Beer knowledge and persistence",
-      weakness: "Consistency",
-      signature: "Showing up until nobody remembers you weren't invited",
-      ability: "Nordic Resilience"
-    },
-    quote: "I wasn't invited. I was just here long enough to become a member.",
+
     story: {
+
       title: "The Neighbor Who Wouldn't Leave",
+
       text: `
-        Jeff didn't grow up in Stillmeadow. He simply lived next to the Godfather,
-        started showing up, and eventually weaseled his way into both the group
-        and the league.
+
+        Jeff is the Godfather's neighbor and somehow managed to weasel his way into both the group's hearts and the Stillmeadow Beer Summit simply by continuing to show up. Eventually, everyone gave up and gave him a team.
 
         <br><br>
 
-        As one of the members of the Great League Expansion of 2023, Jeff quickly
-        established himself as an essential part of the Beer Summit thanks to an
-        impressive knowledge of beer and an unwavering devotion to the Minnesota
-        Vikings.
+        One of the members added during the great league expansion of 2023, Jeff has become a key part of the league through his knowledge of beer, his unwavering Vikings fandom, and his willingness to embrace the chaos.
 
         <br><br>
 
-        His fantasy seasons have been a little like the Vikings themselves—full
-        of hope, unexpected turns, highs, lows, and the occasional question of
-        what the hell just happened. But he always comes back ready for another
-        round.
+        His fantasy seasons have been up and down, but Season VII presents another opportunity for a bounce-back campaign. If knowledge of beer and Vikings trivia counted toward the standings, he'd already have the Beer Boot.
+
       `
+
     }
+
   },
 
   tyler: {
+
     name: "Tyler Gilmore",
+
     team: "Mid Draft Drunken Dropout",
+
     division: "BEAR DOWN Division",
+
     photo: "images/IMG_6480.jpeg",
+
     role: "Manager",
+
     number: "10",
-    nickname: "The Rookie Exterminator",
+
     legacy: {
-      playoffs: "Rookie Year Statement",
+
+      playoffs: "3rd Place Rookie",
+
       championships: "0",
-      reputation: "Immediate Threat",
-      bestFinish: "🥉 3rd Place Rookie Season"
+
+      reputation: "Draft Day Survivor",
+
+      message: "He got so drunk at his first draft that he had to leave and come back—and still finished third. The competition may have a problem."
+
     },
-    traits: {
-      strength: "Studies the players and prepares for the draft",
-      weakness: "Possibly too much draft-day beer",
-      signature: "Leaving his own draft and still finishing third",
-      ability: "Pest Control"
-    },
-    quote: "Blackout drafting is apparently a viable strategy.",
+
     story: {
-      title: "The Rookie Who Made a Statement",
+
+      title: "The Rookie Exterminator",
+
       text: `
-        The Commissioner's oldest son and the newest member of the Stillmeadow
-        Beer Summit. Tyler took over for original league member Heather Hallmando
-        and immediately made his presence felt with an impressive third-place
-        finish in his rookie campaign.
+
+        Tyler is the commissioner's oldest son and the newest Gilmore to enter the Stillmeadow Beer Summit. He replaced original member Heather Hallmando and wasted absolutely no time making his presence known.
 
         <br><br>
 
-        By trade, he's an exterminator—but apparently his biggest pests are
-        veteran fantasy managers. Unlike the Commissioner, Tyler actually studies
-        the players and prepares for the draft, taking a page out of the
-        Godfather's over-prepared playbook.
+        Tyler studies players more like the Godfather than the commissioner, taking the preparation side of fantasy football seriously. That made his first-season performance even more impressive when he finished third place.
 
         <br><br>
 
-        His first season nearly ended before it started when he got so drunk at
-        the draft that he left partway through and had to come back to finish.
-        Somehow, it worked out.
+        Of course, the season began with an unforgettable draft-day performance. Tyler got so drunk that he actually left partway through the draft and had to come back. Somehow, even a temporary drunken disappearance couldn't stop him from exterminating the competition. Apparently, exterminators are good at getting rid of pests—and bad fantasy teams.
+
       `
+
     }
+
   },
 
   dave: {
+
     name: "Dave Cox",
+
     team: "Whit’s Warriors",
+
     division: "BEAR DOWN Division",
+
     photo: "images/IMG_6430.jpeg",
+
     role: "Manager",
+
     number: "11",
-    nickname: "The Draft Room Traditionalist",
+
     legacy: {
-      playoffs: "Bounce Back Loading",
+
+      playoffs: "Bounce Back Season",
+
       championships: "0",
-      reputation: "Trusts His Own Rankings",
-      bestFinish: "Still Building"
+
+      reputation: "Magazine Man",
+
+      message: "The only man still bringing draft magazines into the modern era. ESPN rankings aren't trusted here—Dave builds his own board."
+
     },
-    traits: {
-      strength: "Preparation and independent thinking",
-      weakness: "Hosting the draft while trying to draft",
-      signature: "Ignoring ESPN because his magazine knows better",
-      ability: "Old-School Research"
-    },
-    quote: "I don't care what ESPN says. My magazine has him ranked higher.",
+
     story: {
-      title: "The Last Man With a Draft Magazine",
+
+      title: "The Original Draft Researcher",
+
       text: `
-        Dave waited patiently for his opportunity to join the Stillmeadow Beer
-        Summit, spending years hanging around draft day and helping Andy and Jon
-        prepare their teams before finally getting his own shot.
+
+        Dave may have officially joined during the great league expansion of 2023, but he had been hanging around the Stillmeadow drafts long before receiving his own team. He spent plenty of time helping Andy and Jon draft while patiently waiting for his turn.
 
         <br><br>
 
-        While everyone else trusts ESPN rankings, Dave comes prepared with
-        something the rest of the league apparently considers ancient technology:
-        a draft magazine. He doesn't trust the experts, doesn't trust the rankings,
-        and would rather make his own damn list.
+        When that turn finally came, Dave brought his own approach. He's the only manager who still brings a draft magazine to the draft. ESPN rankings? Not trusted. Dave makes his own rankings and follows his own plan.
 
         <br><br>
 
-        Last season was rough, but Dave had a legitimate excuse—he was busy hosting
-        the draft and apparently forgot he was supposed to build a good fantasy
-        team too. When he's not managing his roster, he can usually be found in
-        his garage firing up the golf simulator. GO BLUE.
+        Last season was a down year, possibly because he was too busy hosting the draft to actually draft a good team. A stay-at-home dad, Michigan supporter, golf simulator enthusiast, and firm believer that IPAs are for bitches, Dave is due for a bounce-back campaign.
+
       `
+
     }
+
   },
 
   dan: {
+
     name: "Dan Gilmore",
+
     team: "Chase-n da Boot",
+
     division: "BEAR DOWN Division",
+
     photo: "images/IMG_6420.jpeg",
+
     role: "Manager",
+
     number: "12",
-    nickname: "The Winging-It Professor",
+
     legacy: {
-      playoffs: "Competitive Without a Plan",
-      championships: "1",
-      reputation: "No Preparation Required",
-      bestFinish: "🏆 League Champion"
+
+      playoffs: "Competitive",
+
+      championships: "0",
+
+      reputation: "Wings It",
+
+      message: "No mock drafts. No elaborate preparation. Somehow he just shows up, drafts a competitive team, and makes everyone wonder why they worked so hard."
+
     },
-    traits: {
-      strength: "Showing up unprepared and still building a competitive team",
-      weakness: "Planning ahead",
-      signature: "Walking into the draft with absolutely no mock drafts",
-      ability: "Russian Dan"
-    },
-    quote: "Mock drafts are for people who need a plan.",
+
     story: {
-      title: "Making Winging It an Art Form",
+
+      title: "The Man Who Just Wings It",
+
       text: `
-        The Commissioner's big brother, longtime childhood bully, and childhood
-        best friend of the Godfather. Dan has somehow turned winging it into an art
-        form.
+
+        Dan is the commissioner's big brother, longtime childhood bully, and the Godfather's childhood best friend. His approach to fantasy football is beautifully simple: show up and figure it out.
 
         <br><br>
 
-        While everyone else is studying rankings and completing mock draft number
-        seventeen, Dan simply shows up, drafts a competitive team, and acts like
-        this was the plan all along.
+        While Daryl is completing his fiftieth mock draft and everyone else is studying rankings, Dan is proving that winging it can apparently be an art form. He doesn't need elaborate preparation to walk into the draft and come out with a competitive roster.
 
         <br><br>
 
-        He's a Doctor—but not the kind you want examining your injury. This Doctor
-        specializes in higher learning. After a few too many drinks, however, the
-        league gets introduced to his alter ego: Russian Dan. At that point, the
-        accent comes out and everyone in his phone contacts should probably prepare
-        for a call.
+        Dan is a Doctor—but not the kind who prescribes medicine. He's one of those higher-learning Doctors. After a few too many drinks, however, the academic credentials give way to "Russian Dan," an alter ego who suddenly develops an accent and starts calling everyone in his phone contacts.
+
       `
-    }
-  }
-};
 
+    }
+
+  }
+
+};
 /* =========================
    GET MANAGER FROM URL
 ========================= */
