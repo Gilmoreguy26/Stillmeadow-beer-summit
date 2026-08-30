@@ -844,10 +844,67 @@ const legacyContent = manager.legacy
   `;
 }
 
-/* =========================
+//* =========================
+
    LOAD LIVE ESPN TEAM DATA
+
 ========================= */
 
+/* Show the manager profile immediately.
+
+   ESPN stats will update when they are available. */
+
+renderProfile();
+
+async function loadManagerData() {
+
+  try {
+
+    const response = await fetch(
+
+      `${ESPN_BASE_URL}?view=mTeam`
+
+    );
+
+    if (!response.ok) {
+
+      throw new Error("Could not connect to ESPN");
+
+    }
+
+    const data = await response.json();
+
+    const teams = data.teams || [];
+
+    const teamData = teams.find(
+
+      (team) => team.name === manager.team
+
+    );
+
+    /* Re-render with live ESPN stats */
+
+    renderProfile(teamData);
+
+  } catch (error) {
+
+    console.error(
+
+      "Manager profile ESPN error:",
+
+      error
+
+    );
+
+    /* Keep the already-rendered profile visible */
+
+  }
+
+}
+
+/* Load ESPN data in the background */
+
+loadManagerData();
 async function loadManagerData() {
   try {
     const response = await fetch(
