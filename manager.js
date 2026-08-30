@@ -451,6 +451,19 @@ const manager =
 
 let currentESPNData = null;
 
+let historicalSeasons = [];
+
+let historicalLeagueData = [];
+
+let currentTeamData = null;
+
+
+/* =========================================================
+   HISTORICAL SEASON RANGE
+========================================================= */
+
+const FIRST_LEAGUE_SEASON = 2020;
+
 
 /* =========================================================
    HELPERS
@@ -458,6 +471,7 @@ let currentESPNData = null;
 
 function safeNumber(value, fallback = 0) {
   const number = Number(value);
+
   return Number.isFinite(number)
     ? number
     : fallback;
@@ -475,48 +489,60 @@ function escapeHTML(value) {
 
 
 function getRecord(teamData) {
+
   const record =
     teamData?.record?.overall || {};
 
-  const wins =
-    safeNumber(record.wins);
-
-  const losses =
-    safeNumber(record.losses);
-
-  const ties =
-    safeNumber(record.ties);
-
   return {
-    wins,
-    losses,
-    ties,
+
+    wins:
+      safeNumber(record.wins),
+
+    losses:
+      safeNumber(record.losses),
+
+    ties:
+      safeNumber(record.ties),
+
     percentage:
       safeNumber(record.percentage),
+
     streakLength:
       safeNumber(record.streakLength),
+
     streakType:
       record.streakType || "",
+
     pointsFor:
       safeNumber(record.pointsFor),
+
     pointsAgainst:
       safeNumber(record.pointsAgainst)
+
   };
+
 }
 
 
 function formatRecord(record) {
+
   if (record.ties > 0) {
+
     return `${record.wins}-${record.losses}-${record.ties}`;
+
   }
 
   return `${record.wins}-${record.losses}`;
+
 }
 
 
 function formatStreak(record) {
+
   if (!record.streakLength) {
+
     return "—";
+
   }
 
   const type =
@@ -524,20 +550,35 @@ function formatStreak(record) {
       .toUpperCase();
 
   if (type.includes("WIN")) {
+
     return `W${record.streakLength}`;
+
   }
 
   if (type.includes("LOSS")) {
+
     return `L${record.streakLength}`;
+
   }
 
   return `${record.streakLength}`;
+
 }
 
 
-function findTeamByName(teams, teamName) {
+/* =========================================================
+   FIND TEAM
+========================================================= */
+
+function findTeamByName(
+  teams,
+  teamName
+) {
+
   if (!Array.isArray(teams)) {
+
     return null;
+
   }
 
   const normalized =
@@ -546,83 +587,91 @@ function findTeamByName(teams, teamName) {
       .toLowerCase();
 
   return (
+
     teams.find(team =>
+
       String(team?.name || "")
         .trim()
         .toLowerCase() === normalized
+
     ) || null
+
   );
+
 }
 
 
-function getDivisionTeams(teams, divisionId) {
-  if (!Array.isArray(teams)) {
-    return [];
-  }
+/* =========================================================
+   SORT TEAMS BY RECORD
+========================================================= */
 
-  return teams
-    .filter(team =>
-      team?.divisionId === divisionId
-    )
-    .sort((a, b) => {
-      const aRecord =
-        a?.record?.overall || {};
+function sortTeamsByRecord(teams) {
 
-      const bRecord =
-        b?.record?.overall || {};
+  return [...teams].sort((a, b) => {
 
-      const aWins =
-        safeNumber(aRecord.wins);
+    const aRecord =
+      a?.record?.overall || {};
 
-      const bWins =
-        safeNumber(bRecord.wins);
+    const bRecord =
+      b?.record?.overall || {};
 
-      if (bWins !== aWins) {
-        return bWins - aWins;
-      }
+    const aWins =
+      safeNumber(aRecord.wins);
 
-      const aPF =
-        safeNumber(aRecord.pointsFor);
+    const bWins =
+      safeNumber(bRecord.wins);
 
-      const bPF =
-        safeNumber(bRecord.pointsFor);
+    if (bWins !== aWins) {
 
-      return bPF - aPF;
-    });
+      return bWins - aWins;
+
+    }
+
+    const aLosses =
+      safeNumber(aRecord.losses);
+
+    const bLosses =
+      safeNumber(bRecord.losses);
+
+    if (aLosses !== bLosses) {
+
+      return aLosses - bLosses;
+
+    }
+
+    const aPF =
+      safeNumber(aRecord.pointsFor);
+
+    const bPF =
+      safeNumber(bRecord.pointsFor);
+
+    return bPF - aPF;
+
+  });
+
 }
 
 
-function getLeagueRank(teams, targetTeam) {
-  if (!Array.isArray(teams) || !targetTeam) {
+/* =========================================================
+   LEAGUE RANK
+========================================================= */
+
+function getLeagueRank(
+  teams,
+  targetTeam
+) {
+
+  if (
+    !Array.isArray(teams) ||
+    !targetTeam
+  ) {
+
     return null;
+
   }
 
   const sorted =
-    [...teams].sort((a, b) => {
-      const aRecord =
-        a?.record?.overall || {};
-
-      const bRecord =
-        b?.record?.overall || {};
-
-      const aWins =
-        safeNumber(aRecord.wins);
-
-      const bWins =
-        safeNumber(bRecord.wins);
-
-      if (bWins !== aWins) {
-        return bWins - aWins;
-      }
-
-      const aPF =
-        safeNumber(aRecord.pointsFor);
-
-      const bPF =
-        safeNumber(bRecord.pointsFor);
-
-      return bPF - aPF;
-    });
+    sortTeamsByRecord(teams);
 
   const index =
     sorted.findIndex(team =>
@@ -633,22 +682,41 @@ function getLeagueRank(teams, targetTeam) {
   return index >= 0
     ? index + 1
     : null;
+
 }
 
 
-function getDivisionRank(teams, targetTeam) {
+/* =========================================================
+   DIVISION RANK
+========================================================= */
+
+function getDivisionRank(
+  teams,
+  targetTeam
+) {
+
   if (!targetTeam) {
+
     return null;
+
   }
 
+  const divisionId =
+    targetTeam.divisionId;
+
   const divisionTeams =
-    getDivisionTeams(
-      teams,
-      targetTeam.divisionId
+    teams
+      .filter(team =>
+        team?.divisionId === divisionId
+      );
+
+  const sorted =
+    sortTeamsByRecord(
+      divisionTeams
     );
 
   const index =
-    divisionTeams.findIndex(team =>
+    sorted.findIndex(team =>
       Number(team?.id) ===
       Number(targetTeam?.id)
     );
@@ -656,10 +724,16 @@ function getDivisionRank(teams, targetTeam) {
   return index >= 0
     ? index + 1
     : null;
+
 }
 
 
+/* =========================================================
+   PLAYER HELPERS
+========================================================= */
+
 function getPlayerName(entry) {
+
   const player =
     entry?.playerPoolEntry?.player ||
     entry?.playerPoolEntry ||
@@ -667,27 +741,35 @@ function getPlayerName(entry) {
     {};
 
   if (player.fullName) {
+
     return player.fullName;
+
   }
 
   if (
     player.firstName ||
     player.lastName
   ) {
+
     return [
       player.firstName,
       player.lastName
     ]
       .filter(Boolean)
       .join(" ");
+
   }
 
-  return entry?.playerName ||
-    `Player #${entry?.playerId ?? "?"}`;
+  return (
+    entry?.playerName ||
+    `Player #${entry?.playerId ?? "?"}`
+  );
+
 }
 
 
 function getPlayerPosition(entry) {
+
   const player =
     entry?.playerPoolEntry?.player ||
     entry?.playerPoolEntry ||
@@ -700,10 +782,12 @@ function getPlayerPosition(entry) {
     entry?.position ||
     "—"
   );
+
 }
 
 
 function getPlayerPoints(entry) {
+
   const pool =
     entry?.playerPoolEntry || {};
 
@@ -713,80 +797,117 @@ function getPlayerPoints(entry) {
     entry?.appliedStatTotal ??
     0
   );
+
 }
 
 
-function getLineupLabel(lineupSlotId) {
+function getLineupLabel(
+  lineupSlotId
+) {
+
   const slots = {
+
     0: "QB",
+
     2: "RB",
+
     3: "RB",
+
     4: "WR",
+
     5: "WR",
+
     6: "TE",
+
     16: "D/ST",
+
     17: "K",
+
     20: "Bench",
+
     21: "IR",
+
     23: "FLEX",
+
     7: "FLEX"
+
   };
 
-  return slots[lineupSlotId] ||
-    "Roster";
+  return (
+    slots[lineupSlotId] ||
+    "Roster"
+  );
+
 }
 
 
 function getRosterEntries(teamData) {
+
   return (
     teamData?.roster?.entries ||
     []
   );
+
 }
 
 
 function getActiveRoster(teamData) {
+
   return getRosterEntries(teamData)
     .filter(entry =>
       ![20, 21].includes(
         Number(entry?.lineupSlotId)
       )
     );
+
 }
 
 
 function getBenchRoster(teamData) {
+
   return getRosterEntries(teamData)
     .filter(entry =>
       [20, 21].includes(
         Number(entry?.lineupSlotId)
       )
     );
+
 }
 
 
 /* =========================================================
-   BUILD ROSTER HTML
+   ROSTER HTML
 ========================================================= */
 
-function buildRosterHTML(teamData) {
+function buildRosterHTML(
+  teamData
+) {
+
   const entries =
     getActiveRoster(teamData);
 
   const bench =
     getBenchRoster(teamData);
 
-  if (!entries.length && !bench.length) {
+  if (
+    !entries.length &&
+    !bench.length
+  ) {
+
     return `
       <div class="profile-empty-state">
         Roster data is not currently available from ESPN.
       </div>
     `;
+
   }
 
   const buildRow = entry => {
+
     const name =
-      escapeHTML(getPlayerName(entry));
+      escapeHTML(
+        getPlayerName(entry)
+      );
 
     const position =
       escapeHTML(
@@ -805,132 +926,184 @@ function buildRosterHTML(teamData) {
         .toFixed(1);
 
     return `
+
       <div class="manager-roster-row">
+
         <div class="manager-roster-slot">
           ${slot}
         </div>
 
         <div class="manager-roster-player">
-          <strong>${name}</strong>
-          <span>${position}</span>
+
+          <strong>
+            ${name}
+          </strong>
+
+          <span>
+            ${position}
+          </span>
+
         </div>
 
         <div class="manager-roster-points">
           ${points}
         </div>
+
       </div>
+
     `;
+
   };
 
   return `
+
     <div class="manager-roster-columns">
 
       <div class="manager-roster-column">
+
         <div class="manager-roster-heading">
           STARTING LINEUP
         </div>
 
         ${
           entries.length
-            ? entries.map(buildRow).join("")
+            ? entries
+                .map(buildRow)
+                .join("")
             : `
               <div class="profile-empty-state">
                 No starters available.
               </div>
             `
         }
+
       </div>
 
+
       <div class="manager-roster-column">
+
         <div class="manager-roster-heading">
           BENCH
         </div>
 
         ${
           bench.length
-            ? bench.map(buildRow).join("")
+            ? bench
+                .map(buildRow)
+                .join("")
             : `
               <div class="profile-empty-state">
                 No bench players available.
               </div>
             `
         }
+
       </div>
 
     </div>
+
   `;
+
 }
 
 
 /* =========================================================
-   BUILD SEASON RESULTS
+   WEEKLY SCHEDULE
 ========================================================= */
 
 function buildScheduleHTML(
   schedule,
-  targetTeamId
+  targetTeamId,
+  teams
 ) {
+
   if (
     !Array.isArray(schedule) ||
     !targetTeamId
   ) {
+
     return `
       <div class="profile-empty-state">
         Weekly schedule data is not currently available.
       </div>
     `;
+
   }
 
   const games =
     schedule
       .filter(matchup => {
+
         const homeId =
-          Number(matchup?.home?.teamId);
+          Number(
+            matchup?.home?.teamId
+          );
 
         const awayId =
-          Number(matchup?.away?.teamId);
+          Number(
+            matchup?.away?.teamId
+          );
 
         return (
-          homeId === Number(targetTeamId) ||
-          awayId === Number(targetTeamId)
+          homeId ===
+            Number(targetTeamId) ||
+          awayId ===
+            Number(targetTeamId)
         );
+
       })
       .sort((a, b) =>
-        safeNumber(a?.matchupPeriodId) -
-        safeNumber(b?.matchupPeriodId)
+
+        safeNumber(
+          a?.matchupPeriodId
+        ) -
+        safeNumber(
+          b?.matchupPeriodId
+        )
+
       );
 
   if (!games.length) {
+
     return `
       <div class="profile-empty-state">
         No weekly matchup data is available yet.
       </div>
     `;
-  }
 
-  const allTeams =
-    currentESPNData?.teams || [];
+  }
 
   return games
     .map(game => {
-      const matchupPeriod =
+
+      const week =
         safeNumber(
           game?.matchupPeriodId
         );
 
       const homeId =
-        Number(game?.home?.teamId);
+        Number(
+          game?.home?.teamId
+        );
 
       const awayId =
-        Number(game?.away?.teamId);
+        Number(
+          game?.away?.teamId
+        );
 
       const isHome =
-        homeId === Number(targetTeamId);
+        homeId ===
+        Number(targetTeamId);
 
       const me =
         isHome
           ? game.home
           : game.away;
+
+      const opponentSide =
+        isHome
+          ? game.away
+          : game.home;
 
       const opponentId =
         isHome
@@ -938,7 +1111,7 @@ function buildScheduleHTML(
           : homeId;
 
       const opponent =
-        allTeams.find(team =>
+        teams.find(team =>
           Number(team?.id) ===
           opponentId
         );
@@ -948,48 +1121,56 @@ function buildScheduleHTML(
           me?.totalPoints
         );
 
-      const opponentSide =
-        isHome
-          ? game.away
-          : game.home;
-
       const opponentScore =
         safeNumber(
           opponentSide?.totalPoints
         );
 
       let result = "—";
+
       let resultClass = "";
 
       if (
+        myScore > opponentScore
+      ) {
+
+        result = "WIN";
+
+        resultClass = "win";
+
+      } else if (
+        myScore < opponentScore
+      ) {
+
+        result = "LOSS";
+
+        resultClass = "loss";
+
+      } else if (
         myScore > 0 ||
         opponentScore > 0
       ) {
-        if (myScore > opponentScore) {
-          result = "WIN";
-          resultClass = "win";
-        } else if (
-          myScore < opponentScore
-        ) {
-          result = "LOSS";
-          resultClass = "loss";
-        } else {
-          result = "TIE";
-          resultClass = "tie";
-        }
+
+        result = "TIE";
+
+        resultClass = "tie";
+
       }
 
       return `
+
         <div class="manager-week-row">
 
           <div class="manager-week-number">
-            Wk ${matchupPeriod}
+            Wk ${week}
           </div>
 
           <div class="manager-week-opponent">
+
             <span>
               ${isHome ? "vs." : "at"}
             </span>
+
             <strong>
               ${
                 escapeHTML(
@@ -998,22 +1179,634 @@ function buildScheduleHTML(
                 )
               }
             </strong>
+
           </div>
 
           <div class="manager-week-score">
+
             ${myScore.toFixed(1)}
+
             <span>-</span>
+
             ${opponentScore.toFixed(1)}
+
           </div>
 
-          <div class="manager-week-result ${resultClass}">
+          <div
+            class="manager-week-result ${resultClass}"
+          >
             ${result}
           </div>
 
         </div>
+
       `;
+
     })
     .join("");
+
+}
+
+
+/* =========================================================
+   HISTORICAL DATA
+========================================================= */
+
+async function fetchHistoricalSeason(
+  season
+) {
+
+  const url =
+    `https://lm-api-reads.fantasy.espn.com` +
+    `/apis/v3/games/ffl` +
+    `/leagueHistory/${LEAGUE_ID}` +
+    `?seasonId=${season}` +
+    `&view=mTeam`;
+
+  console.log(
+    `Fetching historical season ${season}...`
+  );
+
+  try {
+
+    const response =
+      await fetch(url);
+
+    if (!response.ok) {
+
+      console.warn(
+        `Historical ${season}: HTTP ${response.status}`
+      );
+
+      return null;
+
+    }
+
+    const raw =
+      await response.json();
+
+    /*
+      ESPN's historical endpoint normally
+      returns an array containing one league.
+    */
+
+    const data =
+      Array.isArray(raw)
+        ? raw[0]
+        : raw;
+
+    if (!data) {
+
+      return null;
+
+    }
+
+    console.log(
+      `Historical ${season} loaded.`,
+      data
+    );
+
+    return data;
+
+  } catch (error) {
+
+    console.warn(
+      `Historical ${season} failed:`,
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   DISCOVER AVAILABLE HISTORICAL SEASONS
+========================================================= */
+
+async function discoverHistoricalSeasons(
+  currentData
+) {
+
+  const previous =
+    currentData?.status?.previousSeasons;
+
+  let seasons = [];
+
+  if (
+    Array.isArray(previous) &&
+    previous.length
+  ) {
+
+    seasons =
+      previous
+        .map(Number)
+        .filter(year =>
+          Number.isFinite(year)
+        );
+
+  }
+
+  /*
+    Always make sure our known league history
+    beginning with Season I is represented.
+
+    The API will simply fail gracefully if a
+    particular season isn't available.
+  */
+
+  for (
+    let year = FIRST_LEAGUE_SEASON;
+    year < Number(SEASON);
+    year++
+  ) {
+
+    if (!seasons.includes(year)) {
+
+      seasons.push(year);
+
+    }
+
+  }
+
+  seasons =
+    seasons
+      .filter(year =>
+        year >= FIRST_LEAGUE_SEASON &&
+        year < Number(SEASON)
+      )
+      .sort((a, b) => a - b);
+
+  console.log(
+    "Historical seasons discovered:",
+    seasons
+  );
+
+  return seasons;
+
+}
+
+
+/* =========================================================
+   LOAD ALL HISTORICAL SEASONS
+========================================================= */
+
+async function loadHistoricalData(
+  currentData
+) {
+
+  try {
+
+    historicalSeasons =
+      await discoverHistoricalSeasons(
+        currentData
+      );
+
+    if (!historicalSeasons.length) {
+
+      console.log(
+        "No historical seasons reported by ESPN."
+      );
+
+      return;
+
+    }
+
+    /*
+      Fetch in parallel.
+
+      There are only six historical seasons
+      for Season VII, so this is reasonable.
+    */
+
+    const results =
+      await Promise.all(
+        historicalSeasons.map(
+          fetchHistoricalSeason
+        )
+      );
+
+    historicalLeagueData =
+      results
+        .filter(Boolean)
+        .sort(
+          (a, b) =>
+            safeNumber(a?.seasonId) -
+            safeNumber(b?.seasonId)
+        );
+
+    console.log(
+      "Historical league data:",
+      historicalLeagueData
+    );
+
+    /*
+      Refresh the profile once history has
+      finished loading.
+    */
+
+    renderProfile(
+      currentTeamData
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Historical ESPN data unavailable:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   BUILD CAREER HISTORY
+========================================================= */
+
+function buildCareerHistoryHTML() {
+
+  /*
+    Current season + historical seasons.
+  */
+
+  const seasons = [
+    ...historicalLeagueData
+      .map(data => data)
+      .filter(Boolean)
+  ];
+
+  /*
+    Current season is not included here because
+    it already has its own live section.
+  */
+
+  if (!seasons.length) {
+
+    return `
+
+      <div class="profile-history-unavailable">
+
+        <strong>
+          Career history is not currently available from ESPN.
+        </strong>
+
+        <span>
+          Your historical league information is still preserved
+          in the manager profile.
+        </span>
+
+      </div>
+
+    `;
+
+  }
+
+  let totalWins = 0;
+  let totalLosses = 0;
+  let totalTies = 0;
+  let totalPointsFor = 0;
+  let totalPointsAgainst = 0;
+
+  let championships = 0;
+
+  let playoffAppearances = 0;
+
+  let bestFinish = null;
+
+  const seasonRows =
+    seasons
+      .map(data => {
+
+        const year =
+          safeNumber(
+            data?.seasonId
+          );
+
+        const teams =
+          Array.isArray(data?.teams)
+            ? data.teams
+            : [];
+
+        const team =
+          findTeamByName(
+            teams,
+            manager.team
+          );
+
+        if (!team) {
+
+          return null;
+
+        }
+
+        const record =
+          getRecord(team);
+
+        const finalRank =
+          getLeagueRank(
+            teams,
+            team
+          );
+
+        const divisionRank =
+          getDivisionRank(
+            teams,
+            team
+          );
+
+        totalWins +=
+          record.wins;
+
+        totalLosses +=
+          record.losses;
+
+        totalTies +=
+          record.ties;
+
+        totalPointsFor +=
+          record.pointsFor;
+
+        totalPointsAgainst +=
+          record.pointsAgainst;
+
+        /*
+          A final rank of 1 represents a championship.
+        */
+
+        if (
+          finalRank === 1
+        ) {
+
+          championships++;
+
+        }
+
+        /*
+          ESPN's historical team data may include
+          playoff standings/records. We use final
+          placement as the fallback indicator.
+        */
+
+        if (
+          finalRank &&
+          finalRank <= 6
+        ) {
+
+          playoffAppearances++;
+
+        }
+
+        if (
+          finalRank &&
+          (
+            bestFinish === null ||
+            finalRank < bestFinish
+          )
+        ) {
+
+          bestFinish =
+            finalRank;
+
+        }
+
+        return {
+
+          year,
+
+          record,
+
+          finalRank,
+
+          divisionRank,
+
+          team
+
+        };
+
+      })
+      .filter(Boolean);
+
+  /*
+    If ESPN returned no matching team names,
+    don't replace the existing profile.
+  */
+
+  if (!seasonRows.length) {
+
+    return `
+
+      <div class="profile-history-unavailable">
+
+        <strong>
+          ESPN historical seasons were found,
+          but the team names could not be matched.
+        </strong>
+
+        <span>
+          Your existing league legacy information remains active.
+        </span>
+
+      </div>
+
+    `;
+
+  }
+
+  const careerRecord =
+    totalTies > 0
+      ? `${totalWins}-${totalLosses}-${totalTies}`
+      : `${totalWins}-${totalLosses}`;
+
+  return `
+
+    <div class="career-summary-grid">
+
+      <div class="career-summary-stat">
+
+        <strong>
+          ${careerRecord}
+        </strong>
+
+        <span>
+          Career Record
+        </span>
+
+      </div>
+
+      <div class="career-summary-stat">
+
+        <strong>
+          ${totalPointsFor.toFixed(1)}
+        </strong>
+
+        <span>
+          Career Points For
+        </span>
+
+      </div>
+
+      <div class="career-summary-stat">
+
+        <strong>
+          ${totalPointsAgainst.toFixed(1)}
+        </strong>
+
+        <span>
+          Career Points Against
+        </span>
+
+      </div>
+
+      <div class="career-summary-stat">
+
+        <strong>
+          ${championships}
+        </strong>
+
+        <span>
+          ESPN Championships
+        </span>
+
+      </div>
+
+      <div class="career-summary-stat">
+
+        <strong>
+          ${playoffAppearances}
+        </strong>
+
+        <span>
+          Playoff Seasons*
+        </span>
+
+      </div>
+
+      <div class="career-summary-stat">
+
+        <strong>
+          ${
+            bestFinish
+              ? `#${bestFinish}`
+              : "—"
+          }
+        </strong>
+
+        <span>
+          Best Finish
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="career-history-table">
+
+      <div class="career-history-header">
+
+        <span>
+          SEASON
+        </span>
+
+        <span>
+          RECORD
+        </span>
+
+        <span>
+          FINISH
+        </span>
+
+        <span>
+          DIVISION
+        </span>
+
+        <span>
+          POINTS
+        </span>
+
+      </div>
+
+
+      ${
+        seasonRows
+          .map(row => {
+
+            const finish =
+              row.finalRank
+                ? `#${row.finalRank}`
+                : "—";
+
+            const division =
+              row.divisionRank
+                ? `#${row.divisionRank}`
+                : "—";
+
+            const recordText =
+              formatRecord(
+                row.record
+              );
+
+            return `
+
+              <div class="career-history-row">
+
+                <strong>
+                  ${row.year}
+                </strong>
+
+                <span>
+                  ${recordText}
+                </span>
+
+                <span
+                  class="${
+                    row.finalRank === 1
+                      ? "career-champion"
+                      : ""
+                  }"
+                >
+
+                  ${
+                    row.finalRank === 1
+                      ? "🏆 "
+                      : ""
+                  }
+
+                  ${finish}
+
+                </span>
+
+                <span>
+                  ${division}
+                </span>
+
+                <span>
+                  ${row.record.pointsFor.toFixed(1)}
+                </span>
+
+              </div>
+
+            `;
+
+          })
+          .join("")
+      }
+
+    </div>
+
+
+    <p class="career-history-note">
+      *Playoff count is an ESPN-derived estimate based on
+      final league placement and may be refined once we
+      pull each season's complete playoff bracket.
+    </p>
+
+  `;
+
 }
 
 
@@ -1021,21 +1814,33 @@ function buildScheduleHTML(
    RENDER PROFILE
 ========================================================= */
 
-function renderProfile(teamData = null) {
+function renderProfile(
+  teamData = null
+) {
+
   const profile =
     document.getElementById(
       "manager-profile"
     );
 
   if (!profile) {
+
     console.error(
       "MANAGER ERROR: #manager-profile not found."
     );
+
     return;
+
   }
 
+  currentTeamData =
+    teamData ||
+    currentTeamData;
+
   const record =
-    getRecord(teamData);
+    getRecord(
+      currentTeamData
+    );
 
   const recordText =
     formatRecord(record);
@@ -1046,10 +1851,18 @@ function renderProfile(teamData = null) {
 
   const traits =
     manager.traits || {
+
       strength: "Competitive",
-      weakness: "Still Chasing the Beer Boot",
-      signature: "Draft Day Chaos",
-      ability: "Never Counted Out"
+
+      weakness:
+        "Still Chasing the Beer Boot",
+
+      signature:
+        "Draft Day Chaos",
+
+      ability:
+        "Never Counted Out"
+
     };
 
   const quote =
@@ -1062,42 +1875,48 @@ function renderProfile(teamData = null) {
   const leagueRank =
     getLeagueRank(
       teams,
-      teamData
+      currentTeamData
     );
 
   const divisionRank =
     getDivisionRank(
       teams,
-      teamData
+      currentTeamData
     );
-
-  const divisionName =
-    manager.division ||
-    "Division";
 
   const streak =
     formatStreak(record);
 
   const rosterHTML =
-    teamData
-      ? buildRosterHTML(teamData)
+    currentTeamData
+      ? buildRosterHTML(
+          currentTeamData
+        )
       : `
+
         <div class="profile-empty-state">
           ESPN roster loading...
         </div>
+
       `;
 
   const scheduleHTML =
-    teamData
+    currentTeamData
       ? buildScheduleHTML(
           currentESPNData?.schedule,
-          teamData.id
+          currentTeamData.id,
+          teams
         )
       : `
+
         <div class="profile-empty-state">
           ESPN schedule loading...
         </div>
+
       `;
+
+  const careerHTML =
+    buildCareerHistoryHTML();
 
   document.title =
     `${manager.name} | Stillmeadow Beer Summit`;
@@ -1125,6 +1944,7 @@ function renderProfile(teamData = null) {
 
       </div>
 
+
       <div class="profile-identity">
 
         <p class="eyebrow">
@@ -1147,7 +1967,7 @@ function renderProfile(teamData = null) {
         <div class="profile-tags">
 
           <span>
-            ${escapeHTML(divisionName)}
+            ${escapeHTML(manager.division)}
           </span>
 
           ${
@@ -1164,7 +1984,7 @@ function renderProfile(teamData = null) {
 
 
     <!-- =============================================
-         LIVE ESPN STATS
+         LIVE 2026
     ============================================== -->
 
     <section class="profile-stats-section">
@@ -1184,8 +2004,11 @@ function renderProfile(teamData = null) {
         </div>
 
         <span class="profile-live">
+
           <i></i>
+
           LIVE
+
         </span>
 
       </div>
@@ -1194,15 +2017,20 @@ function renderProfile(teamData = null) {
       <div class="profile-stat-grid">
 
         <div class="profile-stat">
+
           <strong>
             ${recordText}
           </strong>
+
           <span>
             Record
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${
               leagueRank
@@ -1210,12 +2038,16 @@ function renderProfile(teamData = null) {
                 : "—"
             }
           </strong>
+
           <span>
             League Rank
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${
               divisionRank
@@ -1223,36 +2055,50 @@ function renderProfile(teamData = null) {
                 : "—"
             }
           </strong>
+
           <span>
             Division Rank
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${record.pointsFor.toFixed(1)}
           </strong>
+
           <span>
             Points For
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${record.pointsAgainst.toFixed(1)}
           </strong>
+
           <span>
             Points Against
           </span>
+
         </div>
 
+
         <div class="profile-stat">
+
           <strong>
             ${streak}
           </strong>
+
           <span>
             Current Streak
           </span>
+
         </div>
 
       </div>
@@ -1261,7 +2107,7 @@ function renderProfile(teamData = null) {
 
 
     <!-- =============================================
-         TEAM DOSSIER / CAREER
+         TEAM DOSSIER / LEGACY
     ============================================== -->
 
     <section class="profile-details-grid">
@@ -1276,42 +2122,72 @@ function renderProfile(teamData = null) {
           The Manager
         </h2>
 
+
         <div class="profile-detail-row">
-          <span>Manager</span>
+
+          <span>
+            Manager
+          </span>
+
           <strong>
             ${escapeHTML(manager.name)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>Team</span>
+
+          <span>
+            Team
+          </span>
+
           <strong>
             ${escapeHTML(manager.team)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>Division</span>
+
+          <span>
+            Division
+          </span>
+
           <strong>
             ${escapeHTML(manager.division)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>League Role</span>
+
+          <span>
+            League Role
+          </span>
+
           <strong>
             ${escapeHTML(manager.role)}
           </strong>
+
         </div>
 
+
         <div class="profile-detail-row">
-          <span>ESPN Team ID</span>
+
+          <span>
+            ESPN Team ID
+          </span>
+
           <strong>
             ${
-              teamData?.id ??
+              currentTeamData?.id ??
               "Loading..."
             }
           </strong>
+
         </div>
 
       </article>
@@ -1327,39 +2203,60 @@ function renderProfile(teamData = null) {
           Career Resume
         </h2>
 
+
         <div class="legacy-stats">
 
           <div class="legacy-stat">
+
             <strong>
-              ${escapeHTML(manager.legacy.playoffs)}
+              ${escapeHTML(
+                manager.legacy.playoffs
+              )}
             </strong>
+
             <span>
               Playoff Resume
             </span>
+
           </div>
 
+
           <div class="legacy-stat">
+
             <strong>
-              ${escapeHTML(manager.legacy.championships)}
+              ${escapeHTML(
+                manager.legacy.championships
+              )}
             </strong>
+
             <span>
               Beer Boots
             </span>
+
           </div>
 
+
           <div class="legacy-stat">
+
             <strong>
-              ${escapeHTML(manager.legacy.reputation)}
+              ${escapeHTML(
+                manager.legacy.reputation
+              )}
             </strong>
+
             <span>
               League Reputation
             </span>
+
           </div>
 
         </div>
 
+
         <p class="legacy-message">
-          ${escapeHTML(manager.legacy.message)}
+          ${escapeHTML(
+            manager.legacy.message
+          )}
         </p>
 
       </article>
@@ -1381,49 +2278,112 @@ function renderProfile(teamData = null) {
         The ${escapeHTML(nickname)}
       </h2>
 
+
       <div class="scouting-grid">
 
         <div class="scouting-item">
+
           <span>
             💪 Strength
           </span>
+
           <strong>
-            ${escapeHTML(traits.strength)}
+            ${escapeHTML(
+              traits.strength
+            )}
           </strong>
+
         </div>
 
+
         <div class="scouting-item">
+
           <span>
             ⚠️ Weakness
           </span>
+
           <strong>
-            ${escapeHTML(traits.weakness)}
+            ${escapeHTML(
+              traits.weakness
+            )}
           </strong>
+
         </div>
 
+
         <div class="scouting-item">
+
           <span>
             🎯 Signature Move
           </span>
+
           <strong>
-            ${escapeHTML(traits.signature)}
+            ${escapeHTML(
+              traits.signature
+            )}
           </strong>
+
         </div>
 
+
         <div class="scouting-item">
+
           <span>
             ⚡ Special Ability
           </span>
+
           <strong>
-            ${escapeHTML(traits.ability)}
+            ${escapeHTML(
+              traits.ability
+            )}
           </strong>
+
         </div>
 
       </div>
 
+
       <blockquote class="manager-quote">
+
         “${escapeHTML(quote)}”
+
       </blockquote>
+
+    </section>
+
+
+    <!-- =============================================
+         CAREER HISTORY
+    ============================================== -->
+
+    <section class="profile-career-section">
+
+      <div class="profile-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            STILLMEADOW HISTORY
+          </p>
+
+          <h2>
+            Career Record
+          </h2>
+
+        </div>
+
+        <span class="profile-live">
+
+          <i></i>
+
+          ESPN HISTORY
+
+        </span>
+
+      </div>
+
+
+      ${careerHTML}
 
     </section>
 
@@ -1449,11 +2409,15 @@ function renderProfile(teamData = null) {
         </div>
 
         <span class="profile-live">
+
           <i></i>
+
           LIVE
+
         </span>
 
       </div>
+
 
       ${rosterHTML}
 
@@ -1482,6 +2446,7 @@ function renderProfile(teamData = null) {
 
       </div>
 
+
       <div class="manager-week-list">
 
         ${scheduleHTML}
@@ -1502,12 +2467,18 @@ function renderProfile(teamData = null) {
       </p>
 
       <h2>
-        ${escapeHTML(manager.story.title)}
+        ${escapeHTML(
+          manager.story.title
+        )}
       </h2>
 
+
       <div class="profile-story-text">
+
         ${manager.story.text}
+
       </div>
+
 
       <p class="profile-coming-soon">
         Season VII is still being written.
@@ -1532,6 +2503,7 @@ function renderProfile(teamData = null) {
     </div>
 
   `;
+
 }
 
 
@@ -1553,7 +2525,7 @@ renderProfile();
 
 
 /* =========================================================
-   LOAD ESPN DATA
+   LOAD CURRENT ESPN DATA
 ========================================================= */
 
 async function loadManagerData() {
@@ -1563,21 +2535,6 @@ async function loadManagerData() {
     console.log(
       "Attempting ESPN connection..."
     );
-
-    /*
-      ESPN allows multiple views to be requested
-      by repeating ?view= parameters.
-
-      We request:
-        mTeam
-        mRoster
-        mSchedule
-        mStandings
-        mStatus
-
-      This gives us the foundation for the
-      manager dashboard.
-    */
 
     const url =
       `${ESPN_BASE_URL}` +
@@ -1596,20 +2553,23 @@ async function loadManagerData() {
       await fetch(url);
 
     if (!response.ok) {
+
       throw new Error(
         `ESPN HTTP ${response.status}`
       );
+
     }
 
     const data =
       await response.json();
 
     console.log(
-      "ESPN league data received:",
+      "ESPN current-season data received:",
       data
     );
 
-    currentESPNData = data;
+    currentESPNData =
+      data;
 
     const teams =
       Array.isArray(data?.teams)
@@ -1632,15 +2592,12 @@ async function loadManagerData() {
         `ESPN team not found: ${manager.team}`
       );
 
-      /*
-        Do NOT break the page.
-
-        The static manager profile remains
-        visible if ESPN can't match the team.
-      */
-
       return;
+
     }
+
+    currentTeamData =
+      teamData;
 
     console.log(
       "ESPN team found:",
@@ -1667,11 +2624,24 @@ async function loadManagerData() {
       data.schedule
     );
 
+
     /*
-      Re-render the profile with the live data.
+      Render current data immediately.
     */
 
-    renderProfile(teamData);
+    renderProfile(
+      teamData
+    );
+
+
+    /*
+      Then begin historical data.
+    */
+
+    await loadHistoricalData(
+      data
+    );
+
 
   } catch (error) {
 
@@ -1679,16 +2649,6 @@ async function loadManagerData() {
       "ESPN unavailable. Static manager profile remains active.",
       error
     );
-
-    /*
-      IMPORTANT:
-
-      We intentionally do not replace the page
-      with an error message.
-
-      The manager profile that was rendered
-      immediately on page load stays visible.
-    */
 
   }
 
