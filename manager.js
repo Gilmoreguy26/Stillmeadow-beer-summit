@@ -498,7 +498,7 @@ const managers = {
       text: `
         Andy has been the commissioner's friend since third grade, which means the league has been putting up with his competitive nature for decades.
         <br><br>
-        He's a ginger, but don't let that fool you. What he lacks in pigmentation, he also lacks in championships... although he makes up for it with intelligence and an enthusiastic "try anything once" spirit.
+        He's a ginger, but don't let that fool you. What he lacks in pigmentation, he also lacks in championships... although he makes up for it with intelligence and an enthusiastic "try anything once" spirit. Or twice, or three times, who's counting?
         <br><br>
         Andy has never missed the playoffs, yet somehow his best finish came last season with a fourth-place finish. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
       `
