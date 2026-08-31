@@ -4,9 +4,10 @@ const SEASON = "2026";
 const ESPN_BASE_URL =
   `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${SEASON}/segments/0/leagues/${LEAGUE_ID}`;
 
+
 /* =========================================================
    MANAGER DATABASE
-   ESPN TEAM IDs ARE PERMANENT IDENTIFIERS.
+   ESPN TEAM IDs ARE THE PERMANENT IDENTIFIERS.
    DO NOT MATCH TEAMS BY NAME.
 ========================================================= */
 
@@ -22,13 +23,16 @@ const managers = {
     number: "01",
     nickname: "Still Chasing the Boot",
 
-    legacy: {
-      playoffs: "4 of 6",
-      championships: "0",
-      reputation: "Always in the Hunt",
-      message:
-        "Four semifinal appearances. One giant question remains: when does the commissioner finally get his Beer Boot?"
-    },
+    championships: 0,
+
+    history: [
+      { season: 2020, wins: 10, losses: 3, finish: 3 },
+      { season: 2021, wins: 8, losses: 6, finish: 2 },
+      { season: 2022, wins: 9, losses: 5, finish: 3 },
+      { season: 2023, wins: 4, losses: 10, finish: 7 },
+      { season: 2024, wins: 8, losses: 6, finish: 4 },
+      { season: 2025, wins: 7, losses: 7, finish: 5 }
+    ],
 
     traits: {
       strength: "Always in the Hunt",
@@ -49,7 +53,7 @@ const managers = {
         <br><br>
         All that creativity and competitiveness has produced plenty of memorable moments—and absolutely zero championships. Four semifinal appearances in six seasons prove he's always around when things get serious, but the Beer Boot has somehow remained just out of reach.
         <br><br>
-        A district manager by trade, Matt is used to keeping a group of people organized, informed, and occasionally reined in—which makes him perfectly qualified to run this collection of degenerates. A die-hard Steelers fan, proud owner of a brand-new Bronco that he swears he didn's use league dues to purchase, and known to drink almost anyone under the table, the commissioner remains committed to one thing above all else: eventually winning the damn trophy he created.
+        A district manager by trade, Matt is used to keeping a group of people organized, informed, and occasionally reined in—which makes him perfectly qualified to run this collection of degenerates. A die-hard Steelers fan, proud owner of a brand-new Bronco that he swears he didn't use league dues to purchase, and known to drink almost anyone under the table, the commissioner remains committed to one thing above all else: eventually winning the damn trophy he created.
       `
     }
   },
@@ -65,13 +69,16 @@ const managers = {
     number: "12",
     nickname: "The Man Who Just Wings It",
 
-    legacy: {
-      playoffs: "Competitive",
-      championships: "0",
-      reputation: "Wings It",
-      message:
-        "No mock drafts. No elaborate preparation. Somehow he just shows up, drafts a competitive team, and makes everyone wonder why they worked so hard."
-    },
+    championships: 1,
+
+    history: [
+      { season: 2020, wins: 5, losses: 8, finish: 8 },
+      { season: 2021, wins: 8, losses: 6, finish: 3 },
+      { season: 2022, wins: 9, losses: 5, finish: 2 },
+      { season: 2023, wins: 8, losses: 6, finish: 1 },
+      { season: 2024, wins: 9, losses: 5, finish: 6 },
+      { season: 2025, wins: 4, losses: 10, finish: 11 }
+    ],
 
     traits: {
       strength: "Natural Instinct",
@@ -106,13 +113,16 @@ const managers = {
     number: "05",
     nickname: "The Billtriots Prophet",
 
-    legacy: {
-      playoffs: "2nd Place Finish",
-      championships: "0",
-      reputation: "Smoked Meat Specialist",
-      message:
-        "A runner-up finish last season shocked the losing-bracket legend. Was it the beginning of a dynasty—or just a perfectly smoked one-season run?"
-    },
+    championships: 0,
+
+    history: [
+      { season: 2020, wins: 3, losses: 10, finish: 10, turd: true },
+      { season: 2021, wins: 6, losses: 8, finish: 8 },
+      { season: 2022, wins: 5, losses: 9, finish: 9 },
+      { season: 2023, wins: 8, losses: 6, finish: 6 },
+      { season: 2024, wins: 3, losses: 11, finish: 7 },
+      { season: 2025, wins: 10, losses: 4, finish: 2 }
+    ],
 
     traits: {
       strength: "Smoked Meat",
@@ -147,23 +157,24 @@ const managers = {
     number: "06",
     nickname: "The Legend Who Never Stops Talking",
 
-    legacy: {
-      playoffs: "Still Fighting",
-      championships: "0",
-      reputation: "Talks a Big Game",
-      message:
-        "What Rob lacks in wins, he more than makes up for in conversation. Just don't start a drinking game based on how often he talks about himself."
-    },
+    championships: 0,
+
+    history: [
+      { season: 2022, wins: 7, losses: 7, finish: 4 },
+      { season: 2023, wins: 5, losses: 9, finish: 8 },
+      { season: 2024, wins: 6, losses: 8, finish: 12, turd: true },
+      { season: 2025, wins: 7, losses: 7, finish: 10 }
+    ],
 
     traits: {
       strength: "Confidence",
       weakness: "Knows Everything",
-      signature: "chair breaker",
+      signature: "Chair Breaker",
       ability: "Never Runs Out of Words"
     },
 
     quote:
-      "Enough about me, what do you think about what I said about me?.",
+      "Enough about me, what do you think about what I said about me?",
 
     story: {
       title: "The Legend Who Never Stops Talking",
@@ -188,13 +199,15 @@ const managers = {
     number: "07",
     nickname: "The Guy Who Will Help Anyone",
 
-    legacy: {
-      playoffs: "League Veteran",
-      championships: "0",
-      reputation: "Trade Partner",
-      message:
-        "Need help with something? Tim is your guy. Need a running back? He might accidentally give you his best one."
-    },
+    championships: 0,
+
+    history: [
+      { season: 2021, wins: 8, losses: 6, finish: 5 },
+      { season: 2022, wins: 5, losses: 9, finish: 7 },
+      { season: 2023, wins: 7, losses: 7, finish: 11 },
+      { season: 2024, wins: 5, losses: 9, finish: 8 },
+      { season: 2025, wins: 3, losses: 11, finish: 9 }
+    ],
 
     traits: {
       strength: "Generosity",
@@ -229,13 +242,16 @@ const managers = {
     number: "04",
     nickname: "The Quiet Assassin",
 
-    legacy: {
-      playoffs: "Winning Ways",
-      championships: "1",
-      reputation: "Quiet Assassin",
-      message:
-        "He doesn't need to talk much. His teams usually do the talking for him—and somehow the risky moves almost always seem to work."
-    },
+    championships: 3,
+
+    history: [
+      { season: 2020, wins: 10, losses: 3, finish: 1 },
+      { season: 2021, wins: 9, losses: 5, finish: 1 },
+      { season: 2022, wins: 5, losses: 9, finish: 10, turd: true },
+      { season: 2023, wins: 6, losses: 8, finish: 9 },
+      { season: 2024, wins: 8, losses: 6, finish: 1 },
+      { season: 2025, wins: 5, losses: 9, finish: 7 }
+    ],
 
     traits: {
       strength: "Unconventional Strategy",
@@ -252,7 +268,7 @@ const managers = {
       text: `
         Mike Ames doesn't need to talk a lot of trash. He prefers to quietly build a dangerous team and let the standings do the talking.
         <br><br>
-        He's willing to take risks that most managers wouldn't consider, and somehow they often pay off. His championship season included starting two elite tight ends all season, with one sitting in the flex—a lineup strategy that didn't make sense until it absolutely did.
+        He's willing to take risks that most managers wouldn't consider, and somehow they often pay off. His championship seasons included unconventional lineup strategies that didn't make sense until they absolutely did.
         <br><br>
         A fan of his Commanders players, Ames always seems to find room for a few of them in his lineup. It may not be conventional, but the Quiet Assassin has proven that conventional doesn't always win championships.
       `
@@ -270,13 +286,16 @@ const managers = {
     number: "08",
     nickname: "The Lovable Loser",
 
-    legacy: {
-      playoffs: "Injury Survivor",
-      championships: "0",
-      reputation: "Lovable Loser",
-      message:
-        "The injury bug keeps biting, the Turd Awards keep coming, and Jon somehow always has another unbelievable story to tell."
-    },
+    championships: 0,
+
+    history: [
+      { season: 2020, wins: 4, losses: 9, finish: 9 },
+      { season: 2021, wins: 8, losses: 6, finish: 4 },
+      { season: 2022, wins: 6, losses: 8, finish: 8 },
+      { season: 2023, wins: 3, losses: 11, finish: 12, turd: true },
+      { season: 2024, wins: 5, losses: 9, finish: 9 },
+      { season: 2025, wins: 4, losses: 10, finish: 12, turd: true }
+    ],
 
     traits: {
       strength: "Storytelling",
@@ -301,129 +320,6 @@ const managers = {
   },
 
 
-  jeff: {
-    name: "Jeff Fishel",
-    team: "Just SKOL Baby!",
-    espnTeamId: 12,
-    division: "BILLTROTS Division",
-    photo: "images/IMG_6456.jpeg",
-    role: "Manager",
-    number: "09",
-    nickname: "The Neighbor Who Wouldn't Leave",
-
-    legacy: {
-      playoffs: "Up & Down",
-      championships: "0",
-      reputation: "SKOL Specialist",
-      message:
-        "The beer knowledge is elite. The Vikings loyalty is unquestioned. The championship consistency is still a work in progress."
-    },
-
-    traits: {
-      strength: "Beer Knowledge",
-      weakness: "Vikings",
-      signature: "SKOL",
-      ability: "Always Shows Up"
-    },
-
-    quote:
-      "SKOL, beer, and fantasy football. What else do you need?",
-
-    story: {
-      title: "The Neighbor Who Wouldn't Leave",
-      text: `
-        Jeff is the Godfather's neighbor and somehow managed to weasel his way into both the group's hearts and the Stillmeadow Beer Summit simply by continuing to show up. Eventually, everyone gave up and gave him a team.
-        <br><br>
-        One of the members added during the great league expansion of 2023, Jeff has become a key part of the league through his knowledge of beer, his unwavering Vikings fandom, and his willingness to embrace the chaos.
-        <br><br>
-        His fantasy seasons have been up and down, but Season VII presents another opportunity for a bounce-back campaign.
-      `
-    }
-  },
-
-
-  tyler: {
-    name: "Tyler Gilmore",
-    team: "Mid Draft Drunken Dropout",
-    espnTeamId: 13,
-    division: "BEAR DOWN Division",
-    photo: "images/IMG_6480.jpeg",
-    role: "Manager",
-    number: "10",
-    nickname: "The Rookie Exterminator",
-
-    legacy: {
-      playoffs: "3rd Place Rookie",
-      championships: "0",
-      reputation: "Draft Day Survivor",
-      message:
-        "He got so drunk at his first draft that he had to leave and come back—and still finished third. The competition may have a problem."
-    },
-
-    traits: {
-      strength: "Preparation",
-      weakness: "Draft Day Drinking",
-      signature: "Mid-Draft Disappearance",
-      ability: "Exterminate the Competition"
-    },
-
-    quote:
-      "I may leave the draft, but I'm not leaving the standings.",
-
-    story: {
-      title: "The Rookie Exterminator",
-      text: `
-        Tyler is the commissioner's oldest son and the newest Gilmore to enter the Stillmeadow Beer Summit. He replaced original member Heather Hallmando and wasted absolutely no time making his presence known.
-        <br><br>
-        Tyler studies players more like the Godfather than the commissioner, taking the preparation side of fantasy football seriously. That made his first-season performance even more impressive when he finished third place.
-        <br><br>
-        Of course, the season began with an unforgettable draft-day performance. Tyler got so drunk that he actually left partway through the draft and had to come back. Somehow, even a temporary drunken disappearance couldn't stop him from exterminating the competition.
-      `
-    }
-  },
-
-
-  dave: {
-    name: "Dave Cox",
-    team: "Whit’s Warriors",
-    espnTeamId: 11,
-    division: "BEAR DOWN Division",
-    photo: "images/IMG_6430.jpeg",
-    role: "Manager",
-    number: "11",
-    nickname: "The Original Draft Crasher",
-
-    legacy: {
-      playoffs: "Bounce Back Season",
-      championships: "0",
-      reputation: "Magazine Man",
-      message:
-        "The only man still bringing draft magazines into the modern era. ESPN rankings aren't trusted here—Dave builds his own board."
-    },
-
-    traits: {
-      strength: "Research",
-      weakness: "Old School",
-      signature: "Draft Magazine",
-      ability: "Makes His Own Rankings"
-    },
-
-    quote:
-      "ESPN rankings are for libtards. I brought my own magazine.",
-
-    story: {
-      title: "The Original Draft Researcher",
-      text: `
-        Dave may have officially joined during the great league expansion of 2023, but he had been hanging around the Stillmeadow drafts long before receiving his own team.
-        <br><br>
-        When that turn finally came, Dave brought his own approach. He's the only manager who still brings a draft magazine to the draft. ESPN rankings? Not trusted. Dave makes his own rankings and follows his own plan.
-        <br><br>
-        Last season was a down year, possibly because he was too busy hosting the draft to actually draft a good team. You can find Dave in his garage smacking his balls while wearing his old wresting singlet. A stay-at-home dad,,, Michigan supporter,,, and firm believer that IPAs are for bitches,,, Dave is due for a bounce-back campaign.
-      `
-    }
-  },
-
-
   daryl: {
     name: "Daryl Creager",
     team: "The Godfather II",
@@ -434,13 +330,16 @@ const managers = {
     number: "03",
     nickname: "The Godfather",
 
-    legacy: {
-      playoffs: "2× Champion",
-      championships: "2",
-      reputation: "Mock Draft King",
-      message:
-        "Preparation, preparation, preparation. The Godfather studies the draft board like it holds the secrets of the universe—and two Beer Boots suggest it might."
-    },
+    championships: 2,
+
+    history: [
+      { season: 2020, wins: 8, losses: 5, finish: 4 },
+      { season: 2021, wins: 7, losses: 7, finish: 7 },
+      { season: 2022, wins: 10, losses: 4, finish: 1 },
+      { season: 2023, wins: 7, losses: 7, finish: 5 },
+      { season: 2024, wins: 7, losses: 7, finish: 10 },
+      { season: 2025, wins: 9, losses: 5, finish: 1 }
+    ],
 
     traits: {
       strength: "Preparation",
@@ -475,13 +374,16 @@ const managers = {
     number: "02",
     nickname: "The Championship-Chasing Ginger",
 
-    legacy: {
-      playoffs: "Never Missed",
-      championships: "0",
-      reputation: "Playoff Regular",
-      message:
-        "He has never missed the playoffs, but last year's fourth-place finish remains the high-water mark. The Beer Boot is still the ultimate prize."
-    },
+    championships: 0,
+
+    history: [
+      { season: 2020, wins: 6, losses: 7, finish: 6 },
+      { season: 2021, wins: 8, losses: 6, finish: 6 },
+      { season: 2022, wins: 8, losses: 6, finish: 5 },
+      { season: 2023, wins: 9, losses: 5, finish: 4 },
+      { season: 2024, wins: 8, losses: 6, finish: 5 },
+      { season: 2025, wins: 12, losses: 2, finish: 4 }
+    ],
 
     traits: {
       strength: "Consistency",
@@ -500,7 +402,128 @@ const managers = {
         <br><br>
         He's a ginger, but don't let that fool you. What he lacks in pigmentation, he also lacks in championships... although he makes up for it with intelligence and an enthusiastic "try anything once" spirit. Or twice, or three times, who's counting?
         <br><br>
-        Andy has never missed the playoffs, yet somehow his best finish came last season with a fourth-place finish. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
+        Andy has never missed the playoffs, yet somehow his best finish came with a fourth-place finish. His incredible 12-2 regular season in 2025 showed just how dangerous he can be. Season VII might finally be his chance to prove that playoff appearances eventually mean something.
+      `
+    }
+  },
+
+
+  dave: {
+    name: "Dave Cox",
+    team: "Whit’s Warriors",
+    espnTeamId: 11,
+    division: "BEAR DOWN Division",
+    photo: "images/IMG_6430.jpeg",
+    role: "Manager",
+    number: "11",
+    nickname: "The Original Draft Crasher",
+
+    championships: 0,
+
+    history: [
+      { season: 2023, wins: 12, losses: 2, finish: 3 },
+      { season: 2024, wins: 5, losses: 9, finish: 11 },
+      { season: 2025, wins: 6, losses: 8, finish: 8 }
+    ],
+
+    traits: {
+      strength: "Research",
+      weakness: "Old School",
+      signature: "Draft Magazine",
+      ability: "Makes His Own Rankings"
+    },
+
+    quote:
+      "ESPN rankings are for libtards. I brought my own magazine.",
+
+    story: {
+      title: "The Original Draft Researcher",
+      text: `
+        Dave may have officially joined during the great league expansion of 2023, but he had been hanging around the Stillmeadow drafts long before receiving his own team.
+        <br><br>
+        When that turn finally came, Dave brought his own approach. He's the only manager who still brings a draft magazine to the draft. ESPN rankings? Not trusted. Dave makes his own rankings and follows his own plan.
+        <br><br>
+        Last season was a down year, possibly because he was too busy hosting the draft to actually draft a good team. You can find Dave in his garage smacking his balls while wearing his old wrestling singlet. A stay-at-home dad, Michigan supporter, and firm believer that IPAs are for bitches, Dave is due for a bounce-back campaign.
+      `
+    }
+  },
+
+
+  jeff: {
+    name: "Jeff Fishel",
+    team: "Just SKOL Baby!",
+    espnTeamId: 12,
+    division: "BILLTROTS Division",
+    photo: "images/IMG_6456.jpeg",
+    role: "Manager",
+    number: "09",
+    nickname: "The Neighbor Who Wouldn't Leave",
+
+    championships: 0,
+
+    history: [
+      { season: 2023, wins: 7, losses: 7, finish: 10 },
+      { season: 2024, wins: 11, losses: 3, finish: 2 },
+      { season: 2025, wins: 7, losses: 7, finish: 6 }
+    ],
+
+    traits: {
+      strength: "Beer Knowledge",
+      weakness: "Vikings",
+      signature: "SKOL",
+      ability: "Always Shows Up"
+    },
+
+    quote:
+      "SKOL, beer, and fantasy football. What else do you need?",
+
+    story: {
+      title: "The Neighbor Who Wouldn't Leave",
+      text: `
+        Jeff is the Godfather's neighbor and somehow managed to weasel his way into both the group's hearts and the Stillmeadow Beer Summit simply by continuing to show up. Eventually, everyone gave up and gave him a team.
+        <br><br>
+        One of the members added during the great league expansion of 2023, Jeff has become a key part of the league through his knowledge of beer, his unwavering Vikings fandom, and his willingness to embrace the chaos.
+        <br><br>
+        His fantasy seasons have been up and down, but a second-place finish in 2024 proved that Jeff can make a serious run when everything comes together.
+      `
+    }
+  },
+
+
+  tyler: {
+    name: "Tyler Gilmore",
+    team: "Mid Draft Drunken Dropout",
+    espnTeamId: 13,
+    division: "BEAR DOWN Division",
+    photo: "images/IMG_6480.jpeg",
+    role: "Manager",
+    number: "10",
+    nickname: "The Rookie Exterminator",
+
+    championships: 0,
+
+    history: [
+      { season: 2025, wins: 10, losses: 4, finish: 4 }
+    ],
+
+    traits: {
+      strength: "Preparation",
+      weakness: "Draft Day Drinking",
+      signature: "Mid-Draft Disappearance",
+      ability: "Exterminate the Competition"
+    },
+
+    quote:
+      "I may leave the draft, but I'm not leaving the standings.",
+
+    story: {
+      title: "The Rookie Exterminator",
+      text: `
+        Tyler is the commissioner's oldest son and the newest Gilmore to enter the Stillmeadow Beer Summit. He replaced original member Heather Hallmando and wasted absolutely no time making his presence known.
+        <br><br>
+        Tyler studies players more like the Godfather than the commissioner, taking the preparation side of fantasy football seriously. That made his first-season performance even more impressive when he finished fourth place.
+        <br><br>
+        Of course, the season began with an unforgettable draft-day performance. Tyler got so drunk that he actually left partway through the draft and had to come back. Somehow, even a temporary drunken disappearance couldn't stop him from exterminating the competition.
       `
     }
   }
@@ -540,6 +563,7 @@ function safeNumber(value, fallback = 0) {
   return Number.isFinite(number)
     ? number
     : fallback;
+
 }
 
 
@@ -551,6 +575,7 @@ function escapeHTML(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+
 }
 
 
@@ -625,8 +650,490 @@ function formatStreak(record) {
 
 
 /* =========================================================
+   CAREER RESUME CALCULATIONS
+========================================================= */
+
+function getCareerStats(history) {
+
+  if (!Array.isArray(history) || !history.length) {
+
+    return {
+      seasons: 0,
+      wins: 0,
+      losses: 0,
+      ties: 0,
+      games: 0,
+      winPct: 0,
+      championships: 0,
+      bestFinish: null,
+      worstFinish: null,
+      averageFinish: 0,
+      turds: 0,
+      firstPlace: 0,
+      topThree: 0,
+      topSix: 0,
+      bestRecord: null,
+      mostWins: 0
+    };
+
+  }
+
+  const wins =
+    history.reduce(
+      (sum, season) =>
+        sum + safeNumber(season.wins),
+      0
+    );
+
+  const losses =
+    history.reduce(
+      (sum, season) =>
+        sum + safeNumber(season.losses),
+      0
+    );
+
+  const ties =
+    history.reduce(
+      (sum, season) =>
+        sum + safeNumber(season.ties),
+      0
+    );
+
+  const games =
+    wins + losses + ties;
+
+  const finishes =
+    history
+      .map(season =>
+        safeNumber(season.finish)
+      )
+      .filter(finish => finish > 0);
+
+  const bestFinish =
+    finishes.length
+      ? Math.min(...finishes)
+      : null;
+
+  const worstFinish =
+    finishes.length
+      ? Math.max(...finishes)
+      : null;
+
+  const averageFinish =
+    finishes.length
+      ? finishes.reduce(
+          (sum, finish) =>
+            sum + finish,
+          0
+        ) / finishes.length
+      : 0;
+
+  const turds =
+    history.filter(
+      season => season.turd === true
+    ).length;
+
+  const firstPlace =
+    history.filter(
+      season => season.finish === 1
+    ).length;
+
+  const topThree =
+    history.filter(
+      season => season.finish <= 3
+    ).length;
+
+  const topSix =
+    history.filter(
+      season => season.finish <= 6
+    ).length;
+
+  const bestRecord =
+    [...history].sort((a, b) => {
+
+      const aWins =
+        safeNumber(a.wins);
+
+      const bWins =
+        safeNumber(b.wins);
+
+      if (bWins !== aWins) {
+        return bWins - aWins;
+      }
+
+      const aLosses =
+        safeNumber(a.losses);
+
+      const bLosses =
+        safeNumber(b.losses);
+
+      return aLosses - bLosses;
+
+    })[0] || null;
+
+  const mostWins =
+    Math.max(
+      ...history.map(
+        season =>
+          safeNumber(season.wins)
+      )
+    );
+
+  return {
+
+    seasons:
+      history.length,
+
+    wins,
+
+    losses,
+
+    ties,
+
+    games,
+
+    winPct:
+      games
+        ? (wins / games) * 100
+        : 0,
+
+    championships:
+      safeNumber(manager.championships),
+
+    bestFinish,
+
+    worstFinish,
+
+    averageFinish,
+
+    turds,
+
+    firstPlace,
+
+    topThree,
+
+    topSix,
+
+    bestRecord,
+
+    mostWins
+
+  };
+
+}
+
+
+function getFinishLabel(finish) {
+
+  if (!finish) {
+    return "—";
+  }
+
+  if (finish === 1) {
+    return "1st";
+  }
+
+  if (finish === 2) {
+    return "2nd";
+  }
+
+  if (finish === 3) {
+    return "3rd";
+  }
+
+  return `${finish}th`;
+
+}
+
+
+function getCareerResumeHTML() {
+
+  const history =
+    manager.history || [];
+
+  const stats =
+    getCareerStats(history);
+
+  if (!history.length) {
+
+    return `
+      <div class="profile-empty-state">
+        No historical career data available.
+      </div>
+    `;
+
+  }
+
+  const championshipText =
+    stats.championships === 1
+      ? "1 Beer Boot"
+      : `${stats.championships} Beer Boots`;
+
+  const bestRecordText =
+    stats.bestRecord
+      ? `${stats.bestRecord.wins}-${stats.bestRecord.losses}`
+      : "—";
+
+  const seasonRows =
+    [...history]
+      .sort((a, b) =>
+        a.season - b.season
+      )
+      .map(season => {
+
+        const record =
+          season.ties
+            ? `${season.wins}-${season.losses}-${season.ties}`
+            : `${season.wins}-${season.losses}`;
+
+        const finish =
+          getFinishLabel(
+            season.finish
+          );
+
+        const finishClass =
+          season.finish === 1
+            ? "champion"
+            : season.turd
+              ? "turd"
+              : season.finish <= 3
+                ? "podium"
+                : season.finish <= 6
+                  ? "top-six"
+                  : "";
+
+        return `
+
+          <div class="career-season-row">
+
+            <div class="career-season-year">
+              ${season.season}
+            </div>
+
+            <div class="career-season-record">
+              ${record}
+            </div>
+
+            <div class="career-season-finish ${finishClass}">
+              ${finish}
+              ${
+                season.finish === 1
+                  ? " 🏆"
+                  : ""
+              }
+              ${
+                season.turd
+                  ? " 💩"
+                  : ""
+              }
+            </div>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+  return `
+
+    <div class="career-resume">
+
+      <div class="career-summary-grid">
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${stats.seasons}
+          </strong>
+
+          <span>
+            Seasons
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${stats.wins}-${stats.losses}
+          </strong>
+
+          <span>
+            Career Record
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${stats.winPct.toFixed(1)}%
+          </strong>
+
+          <span>
+            Career Win %
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${championshipText}
+          </strong>
+
+          <span>
+            Championships
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${getFinishLabel(stats.bestFinish)}
+          </strong>
+
+          <span>
+            Best Finish
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${stats.averageFinish.toFixed(1)}
+          </strong>
+
+          <span>
+            Average Finish
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${stats.topThree}
+          </strong>
+
+          <span>
+            Top 3 Finishes
+          </span>
+
+        </div>
+
+
+        <div class="career-stat-card">
+
+          <strong>
+            ${stats.turds}
+          </strong>
+
+          <span>
+            Turd Awards
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="career-record-highlights">
+
+        <div class="career-highlight">
+
+          <span>
+            Best Regular Season
+          </span>
+
+          <strong>
+            ${bestRecordText}
+          </strong>
+
+        </div>
+
+
+        <div class="career-highlight">
+
+          <span>
+            Most Wins
+          </span>
+
+          <strong>
+            ${stats.mostWins}
+          </strong>
+
+        </div>
+
+
+        <div class="career-highlight">
+
+          <span>
+            1st Place Finishes
+          </span>
+
+          <strong>
+            ${stats.firstPlace}
+          </strong>
+
+        </div>
+
+
+        <div class="career-highlight">
+
+          <span>
+            Top-6 Finishes
+          </span>
+
+          <strong>
+            ${stats.topSix}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="career-history">
+
+        <div class="career-history-heading">
+
+          <span>
+            SEASON
+          </span>
+
+          <span>
+            RECORD
+          </span>
+
+          <span>
+            FINISH
+          </span>
+
+        </div>
+
+        ${seasonRows}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
    FIND TEAM BY ESPN TEAM ID
-   THIS IS THE IMPORTANT FIX.
 ========================================================= */
 
 function findTeamById(teams, teamId) {
@@ -1300,6 +1807,9 @@ function renderProfile(teamData = null) {
         </div>
       `;
 
+  const careerHTML =
+    getCareerResumeHTML();
+
   document.title =
     `${manager.name} | Stillmeadow Beer Summit`;
 
@@ -1488,7 +1998,7 @@ function renderProfile(teamData = null) {
 
 
     <!-- =============================================
-         TEAM DOSSIER / CAREER
+         TEAM DOSSIER
     ============================================== -->
 
     <section class="profile-details-grid">
@@ -1574,6 +2084,10 @@ function renderProfile(teamData = null) {
       </article>
 
 
+      <!-- ===========================================
+           LEGACY
+      ============================================ -->
+
       <article class="profile-panel">
 
         <p class="eyebrow">
@@ -1584,51 +2098,7 @@ function renderProfile(teamData = null) {
           Career Resume
         </h2>
 
-        <div class="legacy-stats">
-
-          <div class="legacy-stat">
-
-            <strong>
-              ${escapeHTML(manager.legacy.playoffs)}
-            </strong>
-
-            <span>
-              Playoff Resume
-            </span>
-
-          </div>
-
-
-          <div class="legacy-stat">
-
-            <strong>
-              ${escapeHTML(manager.legacy.championships)}
-            </strong>
-
-            <span>
-              Beer Boots
-            </span>
-
-          </div>
-
-
-          <div class="legacy-stat">
-
-            <strong>
-              ${escapeHTML(manager.legacy.reputation)}
-            </strong>
-
-            <span>
-              League Reputation
-            </span>
-
-          </div>
-
-        </div>
-
-        <p class="legacy-message">
-          ${escapeHTML(manager.legacy.message)}
-        </p>
+        ${careerHTML}
 
       </article>
 
@@ -1907,6 +2377,7 @@ async function loadManagerData() {
     console.log(
       `ESPN teams found: ${teams.length}`
     );
+
 
     /*
       ============================================
