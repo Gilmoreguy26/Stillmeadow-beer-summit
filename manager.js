@@ -38,7 +38,7 @@ const managers = {
     },
 
     quote:
-      "Four semifinals. Zero Beer Boots. Somebody has to fix that.",
+      "Could'a, would'a, should'a.",
 
     story: {
       title: "Still Chasing the Boot",
@@ -49,7 +49,7 @@ const managers = {
         <br><br>
         All that creativity and competitiveness has produced plenty of memorable moments—and absolutely zero championships. Four semifinal appearances in six seasons prove he's always around when things get serious, but the Beer Boot has somehow remained just out of reach.
         <br><br>
-        A district manager by trade, Matt is used to keeping a group of people organized, informed, and occasionally reined in—which makes him perfectly qualified to run this collection of degenerates. A die-hard Steelers fan, proud owner of a brand-new Bronco, and known to drink almost anyone under the table, the commissioner remains committed to one thing above all else: eventually winning the damn trophy he created.
+        A district manager by trade, Matt is used to keeping a group of people organized, informed, and occasionally reined in—which makes him perfectly qualified to run this collection of degenerates. A die-hard Steelers fan, proud owner of a brand-new Bronco that he swears he didn's use league dues to purchase, and known to drink almost anyone under the table, the commissioner remains committed to one thing above all else: eventually winning the damn trophy he created.
       `
     }
   },
@@ -409,7 +409,7 @@ const managers = {
     },
 
     quote:
-      "ESPN rankings? I brought my own magazine.",
+      "ESPN rankings are for libtards. I brought my own magazine.",
 
     story: {
       title: "The Original Draft Researcher",
@@ -418,7 +418,7 @@ const managers = {
         <br><br>
         When that turn finally came, Dave brought his own approach. He's the only manager who still brings a draft magazine to the draft. ESPN rankings? Not trusted. Dave makes his own rankings and follows his own plan.
         <br><br>
-        Last season was a down year, possibly because he was too busy hosting the draft to actually draft a good team. A stay-at-home dad, Michigan supporter, golf simulator enthusiast, and firm believer that IPAs are for bitches, Dave is due for a bounce-back campaign.
+        Last season was a down year, possibly because he was too busy hosting the draft to actually draft a good team. You can find Dave in his garage smacking his balls while wearing his old wresting singlet. A stay-at-home dad,,, Michigan supporter,,, and firm believer that IPAs are for bitches,,, Dave is due for a bounce-back campaign.
       `
     }
   },
