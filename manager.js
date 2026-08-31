@@ -122,7 +122,7 @@ const managers = {
     },
 
     quote:
-      "The smoker is hot. Maybe the fantasy team will be too.",
+      "The smoker is hot. I'll smoke you and your meat.",
 
     story: {
       title: "The Billtriots Prophet",
@@ -158,12 +158,12 @@ const managers = {
     traits: {
       strength: "Confidence",
       weakness: "Knows Everything",
-      signature: "The Rob Story",
+      signature: "chair breaker",
       ability: "Never Runs Out of Words"
     },
 
     quote:
-      "Eventually one of these stories has to end with a championship.",
+      "Enough about me, what do you think about what I said about me?.",
 
     story: {
       title: "The Legend Who Never Stops Talking",
@@ -221,7 +221,7 @@ const managers = {
 
   ames: {
     name: "Mike Ames",
-    team: "Won’t you be my Naber",
+    team: "The Price is Right",
     espnTeamId: 7,
     division: "CHIEF Division",
     photo: "images/IMG_6427.jpeg",
@@ -281,12 +281,12 @@ const managers = {
     traits: {
       strength: "Storytelling",
       weakness: "Injuries",
-      signature: "Casino Stories",
+      signature: "Committed Stories",
       ability: "Survive Anything"
     },
 
     quote:
-      "The injuries can't stop me. Neither can the Turd Awards.",
+      "I was committed, to the turd award.",
 
     story: {
       title: "The Lovable Loser",
@@ -391,7 +391,7 @@ const managers = {
     photo: "images/IMG_6430.jpeg",
     role: "Manager",
     number: "11",
-    nickname: "The Original Draft Researcher",
+    nickname: "The Original Draft Crasher",
 
     legacy: {
       playoffs: "Bounce Back Season",
@@ -426,7 +426,7 @@ const managers = {
 
   daryl: {
     name: "Daryl Creager",
-    team: "The Godfather Part II",
+    team: "The Godfather II",
     espnTeamId: 9,
     division: "CHIEF Division",
     photo: "images/IMG_6421.jpeg",
@@ -467,7 +467,7 @@ const managers = {
 
   andy: {
     name: "Andy Rohrbaugh",
-    team: "Gone in 60 Saquons",
+    team: "Bed Bath and Bijan",
     espnTeamId: 10,
     division: "CHIEF Division",
     photo: "images/IMG_6423.jpeg",
@@ -485,13 +485,13 @@ const managers = {
 
     traits: {
       strength: "Consistency",
-      weakness: "Championships",
+      weakness: "Pigmentation",
       signature: "Playoff Push",
       ability: "Always Finds a Way In"
     },
 
     quote:
-      "Eventually a playoff appearance has to turn into a championship.",
+      "I'd give my soul for a championship, if I had one.",
 
     story: {
       title: "The Championship-Chasing Ginger",
