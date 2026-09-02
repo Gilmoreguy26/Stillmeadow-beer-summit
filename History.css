@@ -1,1 +1,1793 @@
+/* =========================================================
+   STILLMEADOW BEER SUMMIT
+   HISTORY PAGE STYLES
+   Seasons I–VI / 2020–2025
+========================================================= */
 
+
+/* =========================================================
+   PAGE FOUNDATION
+========================================================= */
+
+.history-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+
+/* =========================================================
+   HISTORY HERO
+========================================================= */
+
+.history-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -24px;
+  min-height: 390px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.08),
+      transparent 55%
+    ),
+    linear-gradient(
+      135deg,
+      #111827,
+      #090d14 65%,
+      #05070a
+    );
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+
+/* subtle background texture */
+
+.history-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 36px 36px;
+
+  pointer-events: none;
+}
+
+
+.history-hero-content {
+  position: relative;
+  z-index: 1;
+
+  max-width: 850px;
+  padding: 70px 24px;
+}
+
+
+.history-kicker {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.22em;
+
+  text-transform: uppercase;
+
+  opacity: 0.7;
+}
+
+
+.history-hero h1 {
+  margin: 0;
+
+  font-size:
+    clamp(52px, 9vw, 108px);
+
+  line-height: 0.95;
+
+  font-weight: 900;
+
+  letter-spacing: -0.05em;
+
+  text-transform: uppercase;
+}
+
+
+.history-hero p {
+  max-width: 600px;
+
+  margin: 26px auto 18px;
+
+  font-size: 18px;
+  line-height: 1.6;
+
+  opacity: 0.75;
+}
+
+
+.history-years {
+  display: inline-block;
+
+  margin-top: 12px;
+  padding: 9px 18px;
+
+  border:
+    1px solid rgba(255,255,255,0.15);
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
+}
+
+
+/* =========================================================
+   SECTION STRUCTURE
+========================================================= */
+
+.history-section {
+  margin-top: 80px;
+}
+
+
+.section-heading {
+  margin-bottom: 30px;
+}
+
+
+.section-kicker {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
+
+  opacity: 0.55;
+}
+
+
+.section-heading h2 {
+  margin: 0;
+
+  font-size:
+    clamp(28px, 5vw, 46px);
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -0.035em;
+}
+
+
+.section-heading p {
+  max-width: 650px;
+
+  margin: 12px 0 0;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  opacity: 0.65;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.history-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+.history-stat-card {
+  position: relative;
+
+  min-height: 160px;
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255,255,255,0.09);
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.025)
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.18);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.history-stat-card:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(255,255,255,0.18);
+}
+
+
+.history-stat-label {
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+
+  opacity: 0.55;
+}
+
+
+.history-stat-card strong {
+  margin: 7px 0;
+
+  font-size: 42px;
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.history-stat-card small {
+  font-size: 11px;
+
+  line-height: 1.4;
+
+  opacity: 0.55;
+}
+
+
+/* =========================================================
+   CHAMPIONSHIP HISTORY
+========================================================= */
+
+.championship-history-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+.championship-card {
+  position: relative;
+
+  overflow: hidden;
+
+  min-height: 420px;
+
+  padding: 25px;
+
+  border:
+    1px solid rgba(255,255,255,0.09);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      155deg,
+      rgba(255,255,255,0.07),
+      rgba(255,255,255,0.025)
+    );
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.2);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.championship-card:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(255,255,255,0.18);
+}
+
+
+.championship-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -90px;
+  right: -90px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.035);
+}
+
+
+.latest-championship {
+  border-color:
+    rgba(255,255,255,0.2);
+}
+
+
+.championship-card-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.championship-season {
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+
+  opacity: 0.55;
+
+  text-transform: uppercase;
+}
+
+
+.championship-year {
+  font-size: 24px;
+
+  font-weight: 900;
+
+  opacity: 0.35;
+}
+
+
+.championship-trophy {
+  margin: 28px 0 18px;
+
+  font-size: 48px;
+
+  line-height: 1;
+}
+
+
+.championship-label,
+.championship-runner-up > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+
+  opacity: 0.45;
+}
+
+
+.championship-winner h3 {
+  margin: 0;
+
+  font-size: 27px;
+
+  line-height: 1.05;
+
+  font-weight: 900;
+}
+
+
+.championship-winner p {
+  margin: 7px 0 0;
+
+  font-size: 12px;
+
+  opacity: 0.55;
+}
+
+
+.championship-score {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 25px 0;
+
+  font-size: 28px;
+
+  font-weight: 900;
+}
+
+
+.championship-score span {
+  opacity: 0.25;
+}
+
+
+.championship-runner-up {
+  padding-top: 18px;
+
+  border-top:
+    1px solid rgba(255,255,255,0.08);
+}
+
+
+.championship-runner-up strong {
+  display: block;
+
+  font-size: 15px;
+}
+
+
+.championship-runner-up small {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  opacity: 0.5;
+}
+
+
+.championship-margin {
+  margin-top: 20px;
+
+  font-size: 10px;
+
+  opacity: 0.5;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+
+.championship-margin strong {
+  margin-left: 5px;
+
+  font-size: 12px;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+.history-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255,255,255,0.025);
+
+  -webkit-overflow-scrolling: touch;
+}
+
+
+.history-table {
+  width: 100%;
+
+  min-width: 800px;
+
+  border-collapse: collapse;
+}
+
+
+.history-table th {
+  padding: 15px 14px;
+
+  text-align: left;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+
+  white-space: nowrap;
+
+  color: inherit;
+
+  opacity: 0.45;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+
+.history-table td {
+  padding: 15px 14px;
+
+  font-size: 12px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.055);
+}
+
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+.history-table tbody tr {
+  transition:
+    background 0.15s ease;
+}
+
+
+.history-table tbody tr:hover {
+  background:
+    rgba(255,255,255,0.035);
+}
+
+
+.history-rank {
+  width: 45px;
+
+  font-weight: 900;
+}
+
+
+.history-manager strong {
+  font-size: 13px;
+}
+
+
+.history-titles {
+  font-weight: 900;
+}
+
+
+.has-championship {
+  background:
+    rgba(255,255,255,0.025);
+}
+
+
+.has-championship .history-manager strong {
+  font-weight: 900;
+}
+
+
+.historical-champion {
+  background:
+    rgba(255,255,255,0.045);
+}
+
+
+.historical-runner-up {
+  background:
+    rgba(255,255,255,0.018);
+}
+
+
+.positive {
+  font-weight: 800;
+
+  opacity: 0.9;
+}
+
+
+.negative {
+  font-weight: 800;
+
+  opacity: 0.6;
+}
+
+
+/* =========================================================
+   LEAGUE RECORDS
+========================================================= */
+
+.league-records-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+.record-card {
+  position: relative;
+
+  min-height: 270px;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      150deg,
+      rgba(255,255,255,0.055),
+      rgba(255,255,255,0.02)
+    );
+}
+
+
+.record-icon {
+  font-size: 30px;
+
+  margin-bottom: 22px;
+}
+
+
+.record-label {
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 0.16em;
+
+  opacity: 0.45;
+}
+
+
+.record-value {
+  display: block;
+
+  margin: 6px 0 15px;
+
+  font-size: 35px;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.record-card h3 {
+  margin: 0;
+
+  font-size: 17px;
+}
+
+
+.record-card p {
+  margin: 4px 0;
+
+  font-size: 11px;
+
+  opacity: 0.55;
+}
+
+
+.record-card small {
+  display: block;
+
+  margin-top: 16px;
+
+  font-size: 10px;
+
+  opacity: 0.4;
+}
+
+
+/* =========================================================
+   SEASON SELECTOR
+========================================================= */
+
+.history-season-selector {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 25px;
+}
+
+
+.history-season-button {
+  min-width: 105px;
+
+  padding: 12px 16px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255,255,255,0.025);
+
+  color: inherit;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.history-season-button:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(255,255,255,0.2);
+}
+
+
+.history-season-button span {
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  opacity: 0.5;
+}
+
+
+.history-season-button strong {
+  font-size: 15px;
+
+  font-weight: 900;
+}
+
+
+.history-season-button.active {
+  background:
+    rgba(255,255,255,0.1);
+
+  border-color:
+    rgba(255,255,255,0.25);
+}
+
+
+.history-season-button.active span {
+  opacity: 0.85;
+}
+
+
+/* =========================================================
+   SEASON HISTORY HEADER
+========================================================= */
+
+.season-history-container {
+  min-height: 300px;
+}
+
+
+.season-history-header {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 25px;
+}
+
+
+.season-history-header h3 {
+  margin: 0;
+
+  font-size: 34px;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.season-history-champion {
+  min-width: 220px;
+
+  padding: 15px 18px;
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,0.035);
+}
+
+
+.season-history-champion span {
+  display: block;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.45;
+}
+
+
+.season-history-champion strong {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 15px;
+}
+
+
+.season-history-champion small {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 10px;
+
+  opacity: 0.45;
+}
+
+
+/* =========================================================
+   SEASON SUMMARY BAR
+========================================================= */
+
+.season-summary-bar {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  margin-bottom: 20px;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+
+.season-summary-bar > div {
+  padding: 17px 20px;
+
+  border-right:
+    1px solid rgba(255,255,255,0.07);
+}
+
+
+.season-summary-bar > div:last-child {
+  border-right: none;
+}
+
+
+.season-summary-bar span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.4;
+}
+
+
+.season-summary-bar strong {
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   SEASON CHAMPIONSHIP PANEL
+========================================================= */
+
+.season-championship-panel {
+  margin-top: 25px;
+
+  padding: 25px;
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.02)
+    );
+}
+
+
+.season-championship-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 25px;
+}
+
+
+.season-championship-heading > span {
+  font-size: 32px;
+}
+
+
+.season-championship-heading small {
+  display: block;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.4;
+}
+
+
+.season-championship-heading h3 {
+  margin: 3px 0 0;
+
+  font-size: 20px;
+
+  font-weight: 900;
+}
+
+
+.season-final {
+  display: grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 25px;
+}
+
+
+.final-team {
+  padding: 22px;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+
+.final-team.champion {
+  background:
+    rgba(255,255,255,0.045);
+}
+
+
+.final-team span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.45;
+}
+
+
+.final-team strong {
+  display: block;
+
+  font-size: 20px;
+
+  line-height: 1.1;
+}
+
+
+.final-team small {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 10px;
+
+  opacity: 0.45;
+}
+
+
+.final-team b {
+  display: block;
+
+  margin-top: 15px;
+
+  font-size: 32px;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.final-vs {
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+
+  opacity: 0.3;
+}
+
+
+/* =========================================================
+   HISTORICAL PLAYOFFS
+========================================================= */
+
+.playoff-history-header {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 30px;
+}
+
+
+.playoff-history-header h3 {
+  margin: 0;
+
+  font-size: 34px;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.playoff-champion-badge {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 12px 16px;
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,0.035);
+}
+
+
+.playoff-champion-badge span {
+  margin-left: 3px;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.4;
+}
+
+
+.playoff-champion-badge strong {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   PLAYOFF ROUNDS
+========================================================= */
+
+.historical-playoff-rounds {
+  display: grid;
+
+  gap: 25px;
+}
+
+
+.playoff-round {
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,0.02);
+}
+
+
+.playoff-round-header {
+  padding: 15px 20px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.07);
+
+  background:
+    rgba(255,255,255,0.035);
+}
+
+
+.playoff-round-header span {
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.17em;
+
+  text-transform: uppercase;
+
+  opacity: 0.6;
+}
+
+
+.playoff-games {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+
+  padding: 18px;
+}
+
+
+.playoff-game {
+  position: relative;
+
+  padding: 14px;
+
+  border:
+    1px solid rgba(255,255,255,0.07);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,0.025);
+}
+
+
+.playoff-team {
+  display: grid;
+
+  grid-template-columns:
+    34px 1fr auto;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  opacity: 0.55;
+
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.playoff-team.winner {
+  opacity: 1;
+
+  background:
+    rgba(255,255,255,0.06);
+}
+
+
+.playoff-seed {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  border-radius: 7px;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  opacity: 0.5;
+}
+
+
+.playoff-team-info strong {
+  display: block;
+
+  font-size: 12px;
+}
+
+
+.playoff-team-info small {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+
+  line-height: 1.2;
+
+  opacity: 0.45;
+}
+
+
+.playoff-score {
+  font-size: 18px;
+
+  font-weight: 900;
+}
+
+
+.playoff-vs {
+  margin: 4px 0;
+
+  text-align: center;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.25;
+}
+
+
+.playoff-result {
+  margin-top: 9px;
+
+  padding-top: 9px;
+
+  border-top:
+    1px solid rgba(255,255,255,0.06);
+
+  text-align: center;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  opacity: 0.55;
+}
+
+
+/* =========================================================
+   PLAYOFF BYES
+========================================================= */
+
+.playoff-byes {
+  padding: 18px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.06);
+}
+
+
+.playoff-byes > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.4;
+}
+
+
+.playoff-byes > div {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+
+.playoff-bye {
+  display: grid;
+
+  grid-template-columns:
+    35px 1fr;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px;
+
+  border:
+    1px solid rgba(255,255,255,0.07);
+
+  border-radius: 9px;
+}
+
+
+.playoff-bye strong {
+  font-size: 11px;
+}
+
+
+.playoff-bye span {
+  font-size: 11px;
+
+  font-weight: 800;
+}
+
+
+.playoff-bye small {
+  grid-column: 2;
+
+  margin-top: -5px;
+
+  font-size: 9px;
+
+  opacity: 0.4;
+}
+
+
+/* =========================================================
+   EMPTY / LOADING STATES
+========================================================= */
+
+.history-empty,
+.history-loading {
+  padding: 40px;
+
+  text-align: center;
+
+  border:
+    1px dashed rgba(255,255,255,0.12);
+
+  border-radius: 14px;
+
+  font-size: 12px;
+
+  opacity: 0.5;
+}
+
+
+/* =========================================================
+   FOOTER CTA
+========================================================= */
+
+.history-footer {
+  margin: 100px -24px 0;
+
+  padding: 80px 24px;
+
+  text-align: center;
+
+  border-top:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.04),
+      rgba(255,255,255,0.015)
+    );
+}
+
+
+.history-footer-content {
+  max-width: 700px;
+
+  margin: 0 auto;
+}
+
+
+.history-footer h2 {
+  margin: 0;
+
+  font-size:
+    clamp(30px, 6vw, 58px);
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -0.04em;
+}
+
+
+.history-footer p {
+  margin: 15px 0 25px;
+
+  font-size: 14px;
+
+  opacity: 0.55;
+}
+
+
+.history-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 0 22px;
+
+  border:
+    1px solid rgba(255,255,255,0.15);
+
+  border-radius: 9px;
+
+  color: inherit;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.history-button:hover {
+  transform: translateY(-2px);
+
+  background:
+    rgba(255,255,255,0.11);
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .history-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .championship-history-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .league-records-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .history-page {
+    padding:
+      0 14px 60px;
+  }
+
+
+  .history-hero {
+    margin:
+      0 -14px;
+
+    min-height: 320px;
+  }
+
+
+  .history-hero-content {
+    padding:
+      55px 20px;
+  }
+
+
+  .history-hero h1 {
+    font-size:
+      clamp(46px, 16vw, 78px);
+  }
+
+
+  .history-hero p {
+    font-size: 15px;
+  }
+
+
+  .history-section {
+    margin-top: 60px;
+  }
+
+
+  .section-heading h2 {
+    font-size: 32px;
+  }
+
+
+  .history-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+
+  .history-stat-card {
+    min-height: 130px;
+
+    padding: 18px;
+  }
+
+
+  .history-stat-card strong {
+    font-size: 32px;
+  }
+
+
+  .championship-history-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .championship-card {
+    min-height: auto;
+  }
+
+
+  .league-records-grid {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 10px;
+  }
+
+
+  .record-card {
+    min-height: 220px;
+
+    padding: 18px;
+  }
+
+
+  .record-value {
+    font-size: 28px;
+  }
+
+
+  .season-history-header {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+
+  .season-history-champion {
+    min-width: 0;
+  }
+
+
+  .season-summary-bar {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .season-summary-bar > div {
+    border-right: none;
+
+    border-bottom:
+      1px solid rgba(255,255,255,0.07);
+  }
+
+
+  .season-summary-bar > div:last-child {
+    border-bottom: none;
+  }
+
+
+  .season-championship-panel {
+    padding: 18px;
+  }
+
+
+  .season-final {
+    grid-template-columns:
+      1fr;
+
+    gap: 10px;
+  }
+
+
+  .final-vs {
+    text-align: center;
+  }
+
+
+  .playoff-history-header {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+
+  .playoff-games {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .playoff-byes > div {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .history-footer {
+    margin:
+      80px -14px 0;
+
+    padding:
+      60px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .history-summary-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .league-records-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .history-season-selector {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  .history-season-button {
+    min-width: 0;
+
+    width: 100%;
+  }
+
+
+  .championship-score {
+    font-size: 24px;
+  }
+
+
+  .history-hero {
+    min-height: 290px;
+  }
+
+}
