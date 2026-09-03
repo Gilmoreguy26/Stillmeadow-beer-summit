@@ -2053,12 +2053,14 @@ function renderProfile(teamData = null) {
         </div>
       `;
 
-  const careerHTML =
+   const careerHTML =
     getCareerResumeHTML();
+
+  const playoffHistoryHTML =
+    getPlayoffHistoryHTML();
 
   document.title =
     `${manager.name} | Stillmeadow Beer Summit`;
-
   profile.innerHTML = `
 
     <!-- =============================================
