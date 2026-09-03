@@ -848,9 +848,18 @@ function getFinishLabel(finish) {
 
 function getCareerResumeHTML() {
 
-  const history =
-    manager.history || [];
+  const historyManagerNames = {
+  "Mike Caufield": "Michael Caufield",
+  "Andy Rohrbaugh": "Andrew Rohrbaugh"
+};
 
+const historyName =
+  historyManagerNames[manager.name] || manager.name;
+
+const history =
+  typeof window.getManagerHistory === "function"
+    ? window.getManagerHistory(historyName)
+    : (manager.history || []);
   const stats =
     getCareerStats(history);
 
