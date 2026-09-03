@@ -2348,6 +2348,8 @@ function renderProfile(teamData = null) {
 
         ${careerHTML}
 
+${playoffHistoryHTML}
+
       </article>
 
     </section>
