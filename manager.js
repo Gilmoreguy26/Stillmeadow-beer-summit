@@ -1139,7 +1139,244 @@ const history =
   `;
 
 }
+function getPlayoffHistoryHTML() {
+  const historyManagerNames = {
+    "Mike Caufield": "Michael Caufield",
+    "Andy Rohrbaugh": "Andrew Rohrbaugh"
+  };
 
+  const historyName =
+    historyManagerNames[manager.name] || manager.name;
+
+  if (typeof window.getManagerHistory !== "function") {
+    return "";
+  }
+
+  const history =
+    window.getManagerHistory(historyName);
+
+  if (!Array.isArray(history) || !history.length) {
+    return "";
+  }
+
+  const playoffSeasons = history.filter(
+    (season) =>
+      season.playoffFinish !== "Did not make playoffs"
+  );
+
+  if (!playoffSeasons.length) {
+    return `
+      <div class="career-playoff-history">
+        <div class="career-history-heading">
+          <span>🏆</span>
+          <div>
+            <small>PLAYOFF HISTORY</small>
+            <h4>No playoff appearances yet</h4>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  const seasonHTML = playoffSeasons
+    .map((season) => {
+
+      const leagueSeason =
+        window.LEAGUE_HISTORY?.[season.year];
+
+      const rounds =
+        leagueSeason?.playoffs?.rounds || [];
+
+      const managerGames = [];
+
+      rounds.forEach((round) => {
+        const game = round.games?.find(
+          (game) =>
+            game.managerA === historyName ||
+            game.managerB === historyName
+        );
+
+        if (game) {
+          const isManagerA =
+            game.managerA === historyName;
+
+          const opponent =
+            isManagerA
+              ? game.managerB
+              : game.managerA;
+
+          const managerScore =
+            isManagerA
+              ? game.scoreA
+              : game.scoreB;
+
+          const opponentScore =
+            isManagerA
+              ? game.scoreB
+              : game.scoreA;
+
+          const won =
+            game.winner === historyName;
+
+          managerGames.push({
+            round: round.name,
+            week: round.week,
+            opponent,
+            managerScore,
+            opponentScore,
+            won
+          });
+        }
+      });
+
+      const byeRound =
+        rounds.find((round) =>
+          round.byes?.some(
+            (bye) =>
+              bye.manager === historyName
+          )
+        );
+
+      const resultClass =
+        season.champion
+          ? "playoff-champion"
+          : season.runnerUp
+          ? "playoff-runner-up"
+          : "playoff-appearance";
+
+      const resultIcon =
+        season.champion
+          ? "🏆"
+          : season.runnerUp
+          ? "🥈"
+          : "🏈";
+
+      const gamesHTML = managerGames.length
+        ? managerGames
+            .map(
+              (game) => `
+                <div class="playoff-game">
+                  <div class="playoff-game-round">
+                    ${game.round}
+                  </div>
+
+                  <div class="playoff-game-details">
+                    <span>
+                      ${game.won ? "W" : "L"}
+                    </span>
+
+                    <strong>
+                      ${game.managerScore.toFixed(2)}
+                      –
+                      ${game.opponentScore.toFixed(2)}
+                    </strong>
+
+                    <small>
+                      ${game.won ? "def." : "lost to"}
+                      ${escapeHTML(game.opponent)}
+                    </small>
+                  </div>
+                </div>
+              `
+            )
+            .join("")
+        : "";
+
+      const byeHTML = byeRound
+        ? `
+          <div class="playoff-game playoff-bye">
+            <div class="playoff-game-round">
+              ${byeRound.name}
+            </div>
+
+            <div class="playoff-game-details">
+              <span>BYE</span>
+              <strong>
+                #${byeRound.byes.find(
+                  (bye) =>
+                    bye.manager === historyName
+                )?.seed || ""}
+              </strong>
+              <small>
+                First-round bye
+              </small>
+            </div>
+          </div>
+        `
+        : "";
+
+      return `
+        <article class="playoff-season-card ${resultClass}">
+
+          <div class="playoff-season-header">
+
+            <div>
+              <small>
+                ${season.season}
+              </small>
+
+              <h4>
+                ${season.year}
+              </h4>
+            </div>
+
+            <div class="playoff-result">
+              <span>${resultIcon}</span>
+              <strong>
+                ${escapeHTML(
+                  season.playoffFinish
+                )}
+              </strong>
+            </div>
+
+          </div>
+
+          <div class="playoff-season-team">
+            ${escapeHTML(season.team)}
+            <span>
+              ${escapeHTML(season.record)}
+              • Final Rank #${season.rank}
+            </span>
+          </div>
+
+          <div class="playoff-games">
+
+            ${byeHTML}
+
+            ${gamesHTML}
+
+          </div>
+
+        </article>
+      `;
+    })
+    .join("");
+
+  return `
+    <div class="career-playoff-history">
+
+      <div class="career-history-heading">
+
+        <span>🏆</span>
+
+        <div>
+          <small>POSTSEASON</small>
+          <h4>Playoff History</h4>
+          <p>
+            Every postseason appearance,
+            matchup and result.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="playoff-history-grid">
+        ${seasonHTML}
+      </div>
+
+    </div>
+  `;
+}
 
 /* =========================================================
    FIND TEAM BY ESPN TEAM ID
