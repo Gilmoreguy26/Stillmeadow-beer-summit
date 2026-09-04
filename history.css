@@ -1856,3 +1856,441 @@
   color: #ffffff !important;
   opacity: 0.75;
 }
+/* =========================================================
+   BEER BOOT HALL OF FAME
+   Dedicated styling
+   ========================================================= */
+
+#beer-boot-hall-of-fame {
+    position: relative;
+    margin-top: 70px;
+    padding: 70px 0 80px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-hof-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-hof-kicker {
+    color: #b7791f !important;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-hof-heading h2 {
+    color: #f3c969 !important;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    margin: 0 0 15px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-hof-heading p {
+    color: #cbd5e1 !important;
+    max-width: 700px;
+    margin: 0 auto 18px;
+    line-height: 1.7;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-hof-established {
+    color: #94a3b8 !important;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+}
+
+
+/* =========================================================
+   INDUCTEE GRID
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-inductee-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 70px;
+}
+
+
+/* =========================================================
+   INDUCTEE CARD
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-inductee-card {
+    background: #f4f1e8 !important;
+    border: 1px solid #d6d0c0;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+    position: relative;
+    overflow: hidden;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-inductee-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: #b7791f;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-card-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-card-status {
+    color: #6b7280 !important;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+}
+
+
+/* =========================================================
+   THIS IS THE IMPORTANT PART:
+   ALL TEXT ON THE LIGHT INDUCTEE CARDS IS DARK.
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-inductee-name {
+    color: #111827 !important;
+    font-size: 1.65rem;
+    line-height: 1.15;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-inductee-nickname {
+    color: #8a5a00 !important;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    margin-bottom: 20px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-inductee-description {
+    color: #374151 !important;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin: 20px 0;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-highlight {
+    color: #1f2937 !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.5;
+    padding: 8px 0;
+    border-top: 1px solid #ddd7c8;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-highlight:last-child {
+    border-bottom: 1px solid #ddd7c8;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-quote {
+    color: #4b5563 !important;
+    font-style: italic;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #d6d0c0;
+}
+
+
+/* =========================================================
+   BIG STAT
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-big-stat {
+    background: #e9e3d3 !important;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 18px 0;
+    text-align: center;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-big-number {
+    display: block;
+    color: #7a4b00 !important;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 900;
+    margin-bottom: 6px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-big-label {
+    display: block;
+    color: #4b5563 !important;
+    font-size: 0.62rem;
+    line-height: 1.4;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+}
+
+
+/* =========================================================
+   SUBHEADINGS
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-subheading {
+    text-align: center;
+    margin: 65px 0 30px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-subheading-kicker {
+    color: #b7791f !important;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    margin-bottom: 7px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-subheading h3 {
+    color: #f3c969 !important;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-subheading p {
+    color: #94a3b8 !important;
+    margin: 10px auto 0;
+}
+
+
+/* =========================================================
+   RECORD BOOK
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-record-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-record-card {
+    background: #f4f1e8 !important;
+    border: 1px solid #d6d0c0;
+    border-radius: 15px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-record-icon {
+    font-size: 1.7rem;
+    margin-bottom: 12px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-record-title {
+    color: #4b5563 !important;
+    font-size: 0.67rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-record-value {
+    color: #111827 !important;
+    font-size: 1.45rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 7px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-record-holder {
+    color: #8a5a00 !important;
+    font-size: 0.9rem;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-record-detail {
+    color: #6b7280 !important;
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   DRAFT DAY HALL OF FAME
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-draft-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-draft-card {
+    background: #f4f1e8 !important;
+    border: 1px solid #d6d0c0;
+    border-radius: 15px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-draft-year {
+    color: #8a5a00 !important;
+    font-size: 1.35rem;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-draft-icon {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-draft-game {
+    color: #111827 !important;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.35;
+    margin-bottom: 16px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-draft-winner-label {
+    color: #6b7280 !important;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    margin-bottom: 5px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-draft-winner {
+    color: #8a5a00 !important;
+    font-size: 0.9rem;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   CLOSING
+   ========================================================= */
+
+#beer-boot-hall-of-fame .beer-boot-closing {
+    text-align: center;
+    margin-top: 75px;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-closing-line {
+    height: 1px;
+    max-width: 250px;
+    margin: 12px auto;
+    background: rgba(243, 201, 105, 0.35);
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-closing-text {
+    color: #f3c969 !important;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+}
+
+
+#beer-boot-hall-of-fame .beer-boot-closing-subtext {
+    color: #94a3b8 !important;
+    font-size: 0.72rem;
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    #beer-boot-hall-of-fame .beer-boot-inductee-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #beer-boot-hall-of-fame .beer-boot-record-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #beer-boot-hall-of-fame .beer-boot-draft-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    #beer-boot-hall-of-fame {
+        padding: 50px 0 60px;
+    }
+
+    #beer-boot-hall-of-fame .beer-boot-inductee-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #beer-boot-hall-of-fame .beer-boot-record-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #beer-boot-hall-of-fame .beer-boot-draft-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #beer-boot-hall-of-fame .beer-boot-inductee-card {
+        padding: 24px;
+    }
+
+}
