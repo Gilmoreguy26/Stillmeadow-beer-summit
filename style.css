@@ -3169,3 +3169,66 @@ footer span {
     font-size: 7px;
   }
 }
+/* =========================================================
+   BEER BOOT HALL OF FAME — INDUCTEE TEXT VISIBILITY
+   ========================================================= */
+
+.hof-inductee,
+.hof-inductee h3,
+.hof-inductee h4,
+.hof-inductee p,
+.hof-inductee .hof-title,
+.hof-inductee .hof-description,
+.hof-inductee .hof-stat,
+.hof-inductee .hof-stat-label,
+.hof-inductee .hof-stat-value {
+  color: #ffffff !important;
+}
+
+/* Inductee name */
+.hof-inductee h3 {
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+/* Hall of Fame title/nickname */
+.hof-inductee h4,
+.hof-inductee .hof-title {
+  color: #f5c542 !important;
+  font-weight: 700;
+}
+
+/* Description / accomplishments */
+.hof-inductee p,
+.hof-inductee .hof-description {
+  color: #e8e8e8 !important;
+}
+
+/* Stats */
+.hof-inductee .hof-stat-value {
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+.hof-inductee .hof-stat-label {
+  color: #cfcfcf !important;
+}
+
+/* Quote / legacy text */
+.hof-inductee blockquote {
+  color: #ffffff !important;
+}
+
+.hof-inductee blockquote::before,
+.hof-inductee blockquote::after {
+  color: #f5c542 !important;
+}
+
+/* Make sure links inside the cards aren't dark */
+.hof-inductee a {
+  color: #ffffff !important;
+}
+
+.hof-inductee a:hover {
+  color: #f5c542 !important;
+}
