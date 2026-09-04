@@ -59,52 +59,18 @@ function getSeason(year) {
 ========================================================= */
 
 function initializeHistoryPage() {
+    renderHistorySummary();
+    renderChampionshipHistory();
+    renderAllTimeLeaderboard();
+    renderLeagueRecords();
 
-  if (!window.LEAGUE_HISTORY) {
+    // Beer Boot Hall of Fame
+    renderBeerBootHallOfFame();
 
-    console.error(
-      "LEAGUE_HISTORY was not found. Make sure history.js loads before history-page.js."
-    );
-
-    return;
-  }
-
-
-  const years = Object.keys(window.LEAGUE_HISTORY)
-    .map(Number)
-    .sort((a, b) => a - b);
-
-
-  if (!years.length) {
-
-    console.error(
-      "No historical seasons were found."
-    );
-
-    return;
-  }
-
-
-  currentHistoryYear =
-    years[years.length - 1];
-
-
-  renderHistorySummary();
-
-  renderChampionshipHistory();
-
-  renderAllTimeLeaderboard();
-
-  renderLeagueRecords();
-
-  renderSeasonSelector();
-
-  renderSeasonHistory(currentHistoryYear);
-
-  renderHistoricalPlayoffs();
-
+    renderSeasonSelector();
+    renderSeasonHistory(currentHistoryYear);
+    renderHistoricalPlayoffs();
 }
-
 
 /* =========================================================
    HISTORY SUMMARY
