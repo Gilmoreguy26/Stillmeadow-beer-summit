@@ -114,8 +114,9 @@
   letter-spacing: -0.05em;
 
   text-transform: uppercase;
-}
 
+  color: #ffffff !important;
+}
 
 .history-hero p {
   max-width: 600px;
