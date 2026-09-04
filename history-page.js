@@ -1197,24 +1197,41 @@ function renderBeerBootHallOfFame() {
 
 
     {
-      icon: "❓",
+      icon: "💥",
       title: "HIGHEST SINGLE-GAME SCORE",
-      value: "COMING SOON",
-      holder: "Record pending",
-      detail: "All-time game data will be added"
+      value: "206.12",
+      holder: "Dan Gilmore",
+      detail: "Week 5 • 2021"
     },
 
 
     {
-      icon: "❓",
+      icon: "🍺",
+      title: "HIGHEST COMBINED GAME SCORE",
+      value: "389.22",
+      holder: "Dan Gilmore + Daryl Creager",
+      detail: "Week 5 • 2021 • 206.12 + 183.10"
+    },
+
+
+    {
+      icon: "💀",
       title: "LOWEST SINGLE-GAME SCORE",
-      value: "COMING SOON",
-      holder: "Record pending",
-      detail: "All-time game data will be added"
+      value: "55.88",
+      holder: "Jon Rohrbaugh",
+      detail: "Week 11 • 2024"
+    },
+
+
+    {
+      icon: "💣",
+      title: "BIGGEST BLOWOUT",
+      value: "106.90",
+      holder: "Dave Cox over Jon Rohrbaugh",
+      detail: "Week 11 • 2024 • 162.78 – 55.88"
     }
 
   ];
-
 
   let recordsHTML = "";
 
