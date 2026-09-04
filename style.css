@@ -3170,65 +3170,59 @@ footer span {
   }
 }
 /* =========================================================
-   BEER BOOT HALL OF FAME — INDUCTEE TEXT VISIBILITY
+   BEER BOOT HALL OF FAME — INDUCTEE CARD TEXT
+   Light card background = dark readable text
    ========================================================= */
 
-.hof-inductee,
-.hof-inductee h3,
-.hof-inductee h4,
-.hof-inductee p,
-.hof-inductee .hof-title,
-.hof-inductee .hof-description,
-.hof-inductee .hof-stat,
-.hof-inductee .hof-stat-label,
-.hof-inductee .hof-stat-value {
-  color: #ffffff !important;
+.hof-inductee {
+  color: #1f2937 !important;
 }
 
 /* Inductee name */
 .hof-inductee h3 {
-  color: #ffffff !important;
+  color: #111827 !important;
   font-weight: 800;
 }
 
-/* Hall of Fame title/nickname */
+/* Hall of Fame nickname/title */
 .hof-inductee h4,
 .hof-inductee .hof-title {
-  color: #f5c542 !important;
-  font-weight: 700;
+  color: #8a5a00 !important;
+  font-weight: 800;
 }
 
-/* Description / accomplishments */
+/* Accomplishment / description text */
 .hof-inductee p,
 .hof-inductee .hof-description {
-  color: #e8e8e8 !important;
+  color: #374151 !important;
 }
 
 /* Stats */
 .hof-inductee .hof-stat-value {
-  color: #ffffff !important;
+  color: #111827 !important;
   font-weight: 800;
 }
 
 .hof-inductee .hof-stat-label {
-  color: #cfcfcf !important;
+  color: #4b5563 !important;
 }
 
-/* Quote / legacy text */
+/* Quote */
 .hof-inductee blockquote {
-  color: #ffffff !important;
+  color: #1f2937 !important;
+  font-weight: 600;
 }
 
 .hof-inductee blockquote::before,
 .hof-inductee blockquote::after {
-  color: #f5c542 !important;
+  color: #8a5a00 !important;
 }
 
-/* Make sure links inside the cards aren't dark */
+/* Links */
 .hof-inductee a {
-  color: #ffffff !important;
+  color: #1f2937 !important;
 }
 
 .hof-inductee a:hover {
-  color: #f5c542 !important;
+  color: #8a5a00 !important;
 }
