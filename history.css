@@ -1791,3 +1791,14 @@
   }
 
 }
+/* =========================================================
+   SITE HEADER — HISTORY PAGE TEXT VISIBILITY FIX
+========================================================= */
+
+.site-header .site-logo {
+  color: #ffffff !important;
+}
+
+.site-header .site-subtitle {
+  color: #ffffff !important;
+}
