@@ -860,6 +860,23 @@ const history =
   typeof window.getManagerHistory === "function"
     ? window.getManagerHistory(historyName)
     : (manager.history || []);
+
+// Preserve Turd Award information from the manager database
+const managerHistory =
+  manager.history || [];
+
+const turdSeasons =
+  new Set(
+    managerHistory
+      .filter(season => season.turd === true)
+      .map(season => season.season)
+  );
+
+history.forEach(season => {
+  if (turdSeasons.has(season.year)) {
+    season.turd = true;
+  }
+});
   const stats =
     getCareerStats(history);
 
