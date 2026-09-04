@@ -59,18 +59,25 @@ function getSeason(year) {
 ========================================================= */
 
 function initializeHistoryPage() {
-    renderHistorySummary();
-    renderChampionshipHistory();
-    renderAllTimeLeaderboard();
-    renderLeagueRecords();
 
-    // Beer Boot Hall of Fame
-    renderBeerBootHallOfFame();
+  renderHistorySummary();
 
-    renderSeasonSelector();
-    renderSeasonHistory(currentHistoryYear);
-    renderHistoricalPlayoffs();
+  renderChampionshipHistory();
+
+  renderAllTimeLeaderboard();
+
+  renderLeagueRecords();
+
+  renderBeerBootHallOfFame();
+
+  renderSeasonSelector();
+
+  renderSeasonHistory(currentHistoryYear);
+
+  renderHistoricalPlayoffs();
+
 }
+
 
 /* =========================================================
    HISTORY SUMMARY
@@ -79,7 +86,7 @@ function initializeHistoryPage() {
 function renderHistorySummary() {
 
   const seasons =
-    Object.values(window.LEAGUE_HISTORY);
+    Object.values(window.LEAGUE_HISTORY || {});
 
   const seasonsElement =
     document.getElementById("history-seasons");
@@ -98,14 +105,10 @@ function renderHistorySummary() {
     seasons.length;
 
 
-  /*
-     Unique champions
-  */
-
   const champions =
     [...new Set(
       seasons.map(
-        (season) => season.champion
+        season => season.champion
       )
     )];
 
@@ -133,22 +136,23 @@ function renderHistorySummary() {
   }
 
 
-  /*
-     League size
-  */
-
   const teamCounts =
     [...new Set(
       seasons.map(
-        (season) => season.teams
+        season => season.teams
       )
     )]
+    .filter(Boolean)
     .sort((a, b) => a - b);
 
 
   if (teamsElement) {
 
-    if (teamCounts.length === 1) {
+    if (!teamCounts.length) {
+
+      teamsElement.textContent = "—";
+
+    } else if (teamCounts.length === 1) {
 
       teamsElement.textContent =
         teamCounts[0];
@@ -198,29 +202,32 @@ function renderChampionshipHistory() {
   }
 
 
-  /*
-     Show newest season first
-  */
-
-  championships.reverse();
+  const sortedChampionships =
+    [...championships].sort(
+      (a, b) =>
+        Number(b.year) -
+        Number(a.year)
+    );
 
 
   container.innerHTML =
-    championships.map(
-      (season) => {
+    sortedChampionships.map(
+      season => {
 
         const margin =
-          season.championScore -
-          season.runnerUpScore;
+          Number(season.championScore || 0) -
+          Number(season.runnerUpScore || 0);
 
 
         return `
 
           <article
-            class="championship-card
-              ${season.year === 2025
+            class="
+              championship-card
+              ${Number(season.year) === 2025
                 ? "latest-championship"
-                : ""}"
+                : ""}
+            "
           >
 
             <div class="championship-card-header">
@@ -230,7 +237,7 @@ function renderChampionshipHistory() {
               </span>
 
               <strong class="championship-year">
-                ${season.year}
+                ${escapeHTML(season.year)}
               </strong>
 
             </div>
@@ -303,6 +310,7 @@ function renderChampionshipHistory() {
             <div class="championship-margin">
 
               Victory margin:
+
               <strong>
                 ${formatNumber(margin)}
               </strong>
@@ -359,7 +367,7 @@ function renderAllTimeLeaderboard() {
       (manager, index) => {
 
         const isChampion =
-          manager.championships > 0;
+          Number(manager.championships || 0) > 0;
 
 
         return `
@@ -438,9 +446,7 @@ function renderAllTimeLeaderboard() {
 
 
             <td>
-
               ${manager.playoffAppearances}
-
             </td>
 
 
@@ -469,708 +475,897 @@ function renderAllTimeLeaderboard() {
 
 function renderLeagueRecords() {
 
+  const container =
+    document.getElementById(
+      "league-records"
+    );
+
+
+  if (!container) return;
+
+
+  /*
+     Use the historical database's record
+     function when available.
+  */
+
+  const records =
+    typeof getLeagueRecords === "function"
+      ? getLeagueRecords()
+      : null;
+
+
+  /*
+     If the existing history.js provides
+     a record object, render it dynamically.
+  */
+
+  if (records && typeof records === "object") {
+
+    const entries = [];
+
+
+    Object.entries(records).forEach(
+      ([key, value]) => {
+
+        if (
+          value === null ||
+          value === undefined ||
+          typeof value === "object"
+        ) {
+          return;
+        }
+
+
+        entries.push({
+          title: key,
+          value: value
+        });
+
+      }
+    );
+
+
+    if (entries.length) {
+
+      container.innerHTML =
+        entries.map(
+          entry => `
+
+            <article class="league-record-card">
+
+              <div class="league-record-title">
+                ${escapeHTML(
+                  formatRecordTitle(entry.title)
+                )}
+              </div>
+
+              <div class="league-record-value">
+                ${escapeHTML(entry.value)}
+              </div>
+
+            </article>
+
+          `
+        ).join("");
+
+      return;
+    }
+
+  }
+
+
+  /*
+     Fallback records.
+     These are known historical records and
+     ensure the page still displays correctly.
+  */
+
+  container.innerHTML = `
+
+    <div class="league-record-card">
+
+      <div class="league-record-title">
+        HIGHEST SEASON SCORE
+      </div>
+
+      <div class="league-record-value">
+        2,078.86
+      </div>
+
+      <div class="league-record-holder">
+        Daryl Creager • 2022
+      </div>
+
+    </div>
+
+
+    <div class="league-record-card">
+
+      <div class="league-record-title">
+        LOWEST SEASON SCORE
+      </div>
+
+      <div class="league-record-value">
+        1,420.14
+      </div>
+
+      <div class="league-record-holder">
+        Jon Rohrbaugh • 2023
+      </div>
+
+    </div>
+
+
+    <div class="league-record-card">
+
+      <div class="league-record-title">
+        MOST CHAMPIONSHIPS
+      </div>
+
+      <div class="league-record-value">
+        3
+      </div>
+
+      <div class="league-record-holder">
+        Mike Ames
+      </div>
+
+    </div>
+
+
+    <div class="league-record-card">
+
+      <div class="league-record-title">
+        MOST PLAYOFF APPEARANCES
+      </div>
+
+      <div class="league-record-value">
+        6
+      </div>
+
+      <div class="league-record-holder">
+        Andy Rohrbaugh
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function formatRecordTitle(value) {
+
+  return String(value || "")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+
+}
+
+
 /* =========================================================
    BEER BOOT HALL OF FAME
-   ========================================================= */
+========================================================= */
 
 function renderBeerBootHallOfFame() {
 
-    const inducteesContainer =
-        document.getElementById("beer-boot-inductees");
+  const inducteesContainer =
+    document.getElementById(
+      "beer-boot-inductees"
+    );
 
-    const recordsContainer =
-        document.getElementById("beer-boot-records");
+  const recordsContainer =
+    document.getElementById(
+      "beer-boot-records"
+    );
 
-    const draftContainer =
-        document.getElementById("beer-boot-draft-games");
+  const draftContainer =
+    document.getElementById(
+      "beer-boot-draft-games"
+    );
 
-    if (!inducteesContainer ||
-        !recordsContainer ||
-        !draftContainer) {
-        return;
+
+  if (
+    !inducteesContainer ||
+    !recordsContainer ||
+    !draftContainer
+  ) {
+    return;
+  }
+
+
+  /* =====================================================
+     HELPERS
+  ===================================================== */
+
+  function normalizeManagerName(name) {
+
+    if (!name) {
+      return "";
     }
 
-
-    /* =====================================================
-       HELPER FUNCTIONS
-       ===================================================== */
-
-    function normalizeManagerName(name) {
-
-        if (!name) {
-            return "";
-        }
-
-        if (name === "Andrew Rohrbaugh") {
-            return "Andy Rohrbaugh";
-        }
-
-        return name;
+    if (name === "Andrew Rohrbaugh") {
+      return "Andy Rohrbaugh";
     }
 
-
-    function getManagerStats(managerName) {
-
-        const normalizedTarget =
-            normalizeManagerName(managerName);
-
-        let championships = 0;
-        let playoffAppearances = 0;
-        let careerWins = 0;
-
-        if (!window.LEAGUE_HISTORY) {
-            return {
-                championships,
-                playoffAppearances,
-                careerWins
-            };
-        }
-
-
-        /*
-         * Count championships directly from the
-         * historical season database.
-         */
-
-        Object.values(window.LEAGUE_HISTORY).forEach(season => {
-
-            if (!season) {
-                return;
-            }
-
-            const champion =
-                normalizeManagerName(season.champion);
-
-            if (champion === normalizedTarget) {
-                championships++;
-            }
-
-        });
-
-
-        /*
-         * Use the existing all-time leaderboard when
-         * available for career wins and playoff appearances.
-         */
-
-        if (typeof getAllTimeManagerLeaderboard === "function") {
-
-            const leaderboard =
-                getAllTimeManagerLeaderboard();
-
-            const manager =
-                leaderboard.find(item =>
-                    normalizeManagerName(
-                        item.manager ||
-                        item.name ||
-                        item.managerName
-                    ) === normalizedTarget
-                );
-
-            if (manager) {
-
-                careerWins =
-                    Number(
-                        manager.wins ??
-                        manager.regularSeasonWins ??
-                        manager.totalWins ??
-                        0
-                    );
-
-                playoffAppearances =
-                    Number(
-                        manager.playoffAppearances ??
-                        manager.playoffs ??
-                        0
-                    );
-            }
-        }
-
-
-        return {
-            championships,
-            playoffAppearances,
-            careerWins
-        };
+    if (name === "Michael Caufield") {
+      return "Mike Caufield";
     }
 
+    return name;
 
-    /* =====================================================
-       INDUCTEES
-       ===================================================== */
-
-    const inducteeDefinitions = [
-
-        {
-            manager: "Mike Ames",
-            nickname: "THE ORIGINAL DYNASTY",
-            icon: "🏆",
-            description:
-                "The winningest champion in Summit history. Mike built the league's first true dynasty and still owns the crown.",
-            highlights: [
-                "3 Championships",
-                "2020 • 2021 • 2024",
-                "Most championships in league history"
-            ],
-            type: "champion"
-        },
-
-        {
-            manager: "Daryl Creager",
-            nickname: "THE GODFATHER",
-            icon: "👑",
-            description:
-                "A two-time champion and one of the most dominant regular-season forces the Summit has ever seen.",
-            highlights: [
-                "2 Championships",
-                "2022 • 2025",
-                "2,078.86 points in 2022"
-            ],
-            type: "champion"
-        },
-
-        {
-            manager: "Dan Gilmore",
-            nickname: "THE BREAKER",
-            icon: "⚡",
-            description:
-                "The man who finally broke the dynasty. Dan captured the 2023 championship and forever etched his name into Summit history.",
-            highlights: [
-                "1 Championship",
-                "2023",
-                "Defeated Heather Hallman for the title"
-            ],
-            type: "champion"
-        },
-
-        {
-            manager: "Andy Rohrbaugh",
-            nickname: "THE IRON MAN",
-            icon: "🛡️",
-            description:
-                "Six straight playoff appearances. Andy has been there every single season, making him one of the most dependable managers in league history.",
-            highlights: [
-                "6 Playoff Appearances",
-                "2020–2025",
-                "Most career regular-season wins"
-            ],
-            type: "legend"
-        },
-
-        {
-            manager: "Matt Gilmore",
-            nickname: "THE COMMISSIONER",
-            icon: "🍺",
-            description:
-                "The guy keeping this circus moving. League organizer, commissioner, weekly storyteller and the man responsible for making sure the Summit keeps getting bigger.",
-            highlights: [
-                "Commissioner",
-                "7 Seasons",
-                "4 Draft Games created"
-            ],
-            type: "commissioner"
-        },
-
-        {
-            manager: "Heather Hallman",
-            nickname: "FOREVER PART OF THE SUMMIT",
-            icon: "🔥",
-            description:
-                "A former member who left an unmistakable mark on the league. Two championship-game appearances and enough attitude to make sure nobody forgot her.",
-            highlights: [
-                "2 Championship Game Appearances",
-                "2020 • 2023",
-                "Still part of Summit lore"
-            ],
-            quote:
-                "just because I have a vagina doesn’t mean I don’t know ball…",
-            type: "tribute"
-        }
-
-    ];
+  }
 
 
-    let inducteeHTML = "";
+  function getManagerStats(managerName) {
+
+    const normalizedTarget =
+      normalizeManagerName(managerName);
 
 
-    inducteeDefinitions.forEach(inductee => {
-
-        const stats =
-            getManagerStats(inductee.manager);
-
-
-        let highlightsHTML = "";
-
-        inductee.highlights.forEach(highlight => {
-
-            highlightsHTML += `
-                <div class="beer-boot-highlight">
-                    ${escapeHTML(highlight)}
-                </div>
-            `;
-
-        });
+    let championships = 0;
+    let playoffAppearances = 0;
+    let careerWins = 0;
 
 
-        let quoteHTML = "";
+    const history =
+      window.LEAGUE_HISTORY || {};
 
-        if (inductee.quote) {
 
-            quoteHTML = `
-                <div class="beer-boot-quote">
-                    “${escapeHTML(inductee.quote)}”
-                </div>
-            `;
+    Object.values(history).forEach(
+      season => {
+
+        if (!season) return;
+
+
+        const champion =
+          normalizeManagerName(
+            season.champion
+          );
+
+
+        if (
+          champion ===
+          normalizedTarget
+        ) {
+
+          championships++;
 
         }
 
+      }
+    );
 
-        let statHTML = "";
 
+    if (
+      typeof getAllTimeManagerLeaderboard ===
+      "function"
+    ) {
 
-        if (inductee.manager === "Mike Ames") {
+      const leaderboard =
+        getAllTimeManagerLeaderboard();
 
-            statHTML = `
-                <div class="beer-boot-big-stat">
-                    <span class="beer-boot-big-number">
-                        ${stats.championships || 3}
-                    </span>
-                    <span class="beer-boot-big-label">
-                        CHAMPIONSHIPS
-                    </span>
-                </div>
-            `;
 
-        }
+      const manager =
+        leaderboard.find(
+          item =>
+            normalizeManagerName(
+              item.manager ||
+              item.name ||
+              item.managerName
+            ) === normalizedTarget
+        );
 
 
-        else if (inductee.manager === "Daryl Creager") {
+      if (manager) {
 
-            statHTML = `
-                <div class="beer-boot-big-stat">
-                    <span class="beer-boot-big-number">
-                        ${stats.championships || 2}
-                    </span>
-                    <span class="beer-boot-big-label">
-                        CHAMPIONSHIPS
-                    </span>
-                </div>
-            `;
+        careerWins =
+          Number(
+            manager.wins ??
+            manager.regularSeasonWins ??
+            manager.totalWins ??
+            0
+          );
 
-        }
 
+        playoffAppearances =
+          Number(
+            manager.playoffAppearances ??
+            manager.playoffs ??
+            0
+          );
 
-        else if (inductee.manager === "Dan Gilmore") {
-
-            statHTML = `
-                <div class="beer-boot-big-stat">
-                    <span class="beer-boot-big-number">
-                        ${stats.championships || 1}
-                    </span>
-                    <span class="beer-boot-big-label">
-                        CHAMPIONSHIP
-                    </span>
-                </div>
-            `;
-
-        }
-
-
-        else if (inductee.manager === "Andy Rohrbaugh") {
-
-            statHTML = `
-                <div class="beer-boot-big-stat">
-                    <span class="beer-boot-big-number">
-                        ${stats.playoffAppearances || 6}
-                    </span>
-                    <span class="beer-boot-big-label">
-                        STRAIGHT PLAYOFF APPEARANCES
-                    </span>
-                </div>
-            `;
-
-        }
-
-
-        else if (inductee.manager === "Matt Gilmore") {
-
-            statHTML = `
-                <div class="beer-boot-big-stat">
-                    <span class="beer-boot-big-number">
-                        VII
-                    </span>
-                    <span class="beer-boot-big-label">
-                        SEASONS AS COMMISSIONER
-                    </span>
-                </div>
-            `;
-
-        }
-
-
-        else if (inductee.manager === "Heather Hallman") {
-
-            statHTML = `
-                <div class="beer-boot-big-stat">
-                    <span class="beer-boot-big-number">
-                        2
-                    </span>
-                    <span class="beer-boot-big-label">
-                        TITLE GAME APPEARANCES
-                    </span>
-                </div>
-            `;
-
-        }
-
-
-        inducteeHTML += `
-
-            <article class="beer-boot-inductee-card beer-boot-type-${inductee.type}">
-
-                <div class="beer-boot-card-top">
-
-                    <div class="beer-boot-card-icon">
-                        ${inductee.icon}
-                    </div>
-
-                    <div class="beer-boot-card-status">
-                        INDUCTED
-                    </div>
-
-                </div>
-
-
-                <div class="beer-boot-inductee-name">
-                    ${escapeHTML(inductee.manager)}
-                </div>
-
-
-                <div class="beer-boot-inductee-nickname">
-                    ${escapeHTML(inductee.nickname)}
-                </div>
-
-
-                ${statHTML}
-
-
-                <p class="beer-boot-inductee-description">
-                    ${escapeHTML(inductee.description)}
-                </p>
-
-
-                <div class="beer-boot-highlights">
-                    ${highlightsHTML}
-                </div>
-
-
-                ${quoteHTML}
-
-            </article>
-
-        `;
-
-    });
-
-
-    inducteesContainer.innerHTML =
-        inducteeHTML;
-
-
-    /* =====================================================
-       RECORD BOOK
-       ===================================================== */
-
-    let highestSeasonScore = null;
-    let lowestSeasonScore = null;
-
-
-    if (window.LEAGUE_HISTORY) {
-
-        Object.values(window.LEAGUE_HISTORY).forEach(season => {
-
-            if (!season || !season.standings) {
-                return;
-            }
-
-
-            season.standings.forEach(team => {
-
-                const manager =
-                    normalizeManagerName(
-                        team.manager ||
-                        team.name
-                    );
-
-                const pf =
-                    Number(
-                        team.pf ??
-                        team.pointsFor ??
-                        team.totalPoints ??
-                        0
-                    );
-
-
-                if (!pf) {
-                    return;
-                }
-
-
-                const entry = {
-                    manager,
-                    season: season.year ||
-                            season.season ||
-                            "",
-                    points: pf
-                };
-
-
-                if (!highestSeasonScore ||
-                    pf > highestSeasonScore.points) {
-
-                    highestSeasonScore = entry;
-
-                }
-
-
-                if (!lowestSeasonScore ||
-                    pf < lowestSeasonScore.points) {
-
-                    lowestSeasonScore = entry;
-
-                }
-
-            });
-
-        });
+      }
 
     }
 
 
-    /*
-     * Known historical records.
-     * These are deliberately explicit so the Hall of Fame
-     * remains correct even if the historical data structure
-     * changes.
-     */
-
-    highestSeasonScore = {
-        manager: "Daryl Creager",
-        season: "2022",
-        points: 2078.86
+    return {
+      championships,
+      playoffAppearances,
+      careerWins
     };
 
-
-    lowestSeasonScore = {
-        manager: "Jon Rohrbaugh",
-        season: "2023",
-        points: 1420.14
-    };
+  }
 
 
-    const records = [
+  /* =====================================================
+     INDUCTEES
+  ===================================================== */
 
-        {
-            icon: "🏆",
-            title: "MOST CHAMPIONSHIPS",
-            value: "3",
-            holder: "Mike Ames",
-            detail: "2020 • 2021 • 2024"
-        },
+  const inducteeDefinitions = [
 
-        {
-            icon: "🔥",
-            title: "HIGHEST SEASON SCORE",
-            value: formatNumber(
-                highestSeasonScore.points
-            ),
-            holder: highestSeasonScore.manager,
-            detail: `${highestSeasonScore.season} season`
-        },
+    {
+      manager: "Mike Ames",
+      nickname: "THE ORIGINAL DYNASTY",
+      icon: "🏆",
+      description:
+        "The winningest champion in Summit history. Mike built the league's first true dynasty and still owns the crown.",
+      highlights: [
+        "3 Championships",
+        "2020 • 2021 • 2024",
+        "Most championships in league history"
+      ],
+      type: "champion"
+    },
 
-        {
-            icon: "💀",
-            title: "LOWEST SEASON SCORE",
-            value: formatNumber(
-                lowestSeasonScore.points
-            ),
-            holder: lowestSeasonScore.manager,
-            detail: `${lowestSeasonScore.season} season`
-        },
 
-        {
-            icon: "🛡️",
-            title: "MOST PLAYOFF APPEARANCES",
-            value: "6",
-            holder: "Andy Rohrbaugh",
-            detail: "2020–2025 • Every season"
-        },
+    {
+      manager: "Daryl Creager",
+      nickname: "THE GODFATHER",
+      icon: "👑",
+      description:
+        "A two-time champion and one of the most dominant regular-season forces the Summit has ever seen.",
+      highlights: [
+        "2 Championships",
+        "2022 • 2025",
+        "2,078.86 points in 2022"
+      ],
+      type: "champion"
+    },
 
-        {
-            icon: "📊",
-            title: "MOST CAREER WINS",
-            value: "102",
-            holder: "Andy Rohrbaugh",
-            detail: "Regular season wins"
-        },
 
-        {
-            icon: "❓",
-            title: "HIGHEST SINGLE-GAME SCORE",
-            value: "COMING SOON",
-            holder: "Record pending",
-            detail: "All-time game data will be added"
-        },
+    {
+      manager: "Dan Gilmore",
+      nickname: "THE BREAKER",
+      icon: "⚡",
+      description:
+        "The man who finally broke the dynasty. Dan captured the 2023 championship and forever etched his name into Summit history.",
+      highlights: [
+        "1 Championship",
+        "2023",
+        "Defeated Heather Hallman for the title"
+      ],
+      type: "champion"
+    },
 
-        {
-            icon: "❓",
-            title: "LOWEST SINGLE-GAME SCORE",
-            value: "COMING SOON",
-            holder: "Record pending",
-            detail: "All-time game data will be added"
+
+    {
+      manager: "Andy Rohrbaugh",
+      nickname: "THE IRON MAN",
+      icon: "🛡️",
+      description:
+        "Six straight playoff appearances. Andy has been there every single season, making him one of the most dependable managers in league history.",
+      highlights: [
+        "6 Playoff Appearances",
+        "2020–2025",
+        "Most career regular-season wins"
+      ],
+      type: "legend"
+    },
+
+
+    {
+      manager: "Matt Gilmore",
+      nickname: "THE COMMISSIONER",
+      icon: "🍺",
+      description:
+        "The guy keeping this circus moving. League organizer, commissioner, weekly storyteller and the man responsible for making sure the Summit keeps getting bigger.",
+      highlights: [
+        "Commissioner",
+        "7 Seasons",
+        "4 Draft Games created"
+      ],
+      type: "commissioner"
+    },
+
+
+    {
+      manager: "Heather Hallman",
+      nickname: "FOREVER PART OF THE SUMMIT",
+      icon: "🔥",
+      description:
+        "A former member who left an unmistakable mark on the league. Two championship-game appearances and enough attitude to make sure nobody forgot her.",
+      highlights: [
+        "2 Championship Game Appearances",
+        "2020 • 2023",
+        "Still part of Summit lore"
+      ],
+      quote:
+        "just because I have a vagina doesn’t mean I don’t know ball…",
+      type: "tribute"
+    }
+
+  ];
+
+
+  let inducteeHTML = "";
+
+
+  inducteeDefinitions.forEach(
+    inductee => {
+
+      const stats =
+        getManagerStats(
+          inductee.manager
+        );
+
+
+      let highlightsHTML = "";
+
+
+      inductee.highlights.forEach(
+        highlight => {
+
+          highlightsHTML += `
+
+            <div class="beer-boot-highlight">
+              ${escapeHTML(highlight)}
+            </div>
+
+          `;
+
         }
-
-    ];
-
-
-    let recordsHTML = "";
+      );
 
 
-    records.forEach(record => {
+      let quoteHTML = "";
 
-        recordsHTML += `
 
-            <article class="beer-boot-record-card">
+      if (inductee.quote) {
 
-                <div class="beer-boot-record-icon">
-                    ${record.icon}
-                </div>
+        quoteHTML = `
 
-                <div class="beer-boot-record-title">
-                    ${escapeHTML(record.title)}
-                </div>
-
-                <div class="beer-boot-record-value">
-                    ${escapeHTML(record.value)}
-                </div>
-
-                <div class="beer-boot-record-holder">
-                    ${escapeHTML(record.holder)}
-                </div>
-
-                <div class="beer-boot-record-detail">
-                    ${escapeHTML(record.detail)}
-                </div>
-
-            </article>
+          <div class="beer-boot-quote">
+            “${escapeHTML(inductee.quote)}”
+          </div>
 
         `;
 
-    });
+      }
 
 
-    recordsContainer.innerHTML =
-        recordsHTML;
+      let statHTML = "";
 
 
-    /* =====================================================
-       DRAFT DAY HALL OF FAME
-       ===================================================== */
+      if (
+        inductee.manager ===
+        "Mike Ames"
+      ) {
 
-    const draftGames = [
+        statHTML = `
 
-        {
-            year: "2026",
-            game: "Man Card Competition",
-            winner: "Andy Rohrbaugh",
-            icon: "🏆"
-        },
+          <div class="beer-boot-big-stat">
 
-        {
-            year: "2025",
-            game: "Drive, Pitch, Putt",
-            winner: "Caufield",
-            icon: "🏆"
-        },
+            <span class="beer-boot-big-number">
+              ${stats.championships || 3}
+            </span>
 
-        {
-            year: "2024",
-            game: "Punt, Pass, Kick",
-            winner: "Matt Gilmore",
-            icon: "🏆"
-        },
+            <span class="beer-boot-big-label">
+              CHAMPIONSHIPS
+            </span>
 
-        {
-            year: "2023",
-            game: "Yard Game Olympics",
-            winner: "Matt Gilmore",
-            icon: "🏆"
-        },
-
-        {
-            year: "2022",
-            game: "Trivia / Game Picks",
-            winner: "Rob Robertson",
-            icon: "🏆"
-        },
-
-        {
-            year: "2021",
-            game: "Bad Beer Tasting Competition",
-            winner: "Andy Rohrbaugh",
-            icon: "🏆"
-        },
-
-        {
-            year: "2020",
-            game: "Hat Pull",
-            winner: "Dan Gilmore",
-            icon: "🏆"
-        }
-
-    ];
-
-
-    let draftHTML = "";
-
-
-    draftGames.forEach(item => {
-
-        draftHTML += `
-
-            <article class="beer-boot-draft-card">
-
-                <div class="beer-boot-draft-year">
-                    ${escapeHTML(item.year)}
-                </div>
-
-                <div class="beer-boot-draft-icon">
-                    ${item.icon}
-                </div>
-
-                <div class="beer-boot-draft-game">
-                    ${escapeHTML(item.game)}
-                </div>
-
-                <div class="beer-boot-draft-winner-label">
-                    WINNER
-                </div>
-
-                <div class="beer-boot-draft-winner">
-                    ${escapeHTML(item.winner)}
-                </div>
-
-            </article>
+          </div>
 
         `;
 
-    });
+      }
 
 
-    draftContainer.innerHTML =
-        draftHTML;
+      else if (
+        inductee.manager ===
+        "Daryl Creager"
+      ) {
+
+        statHTML = `
+
+          <div class="beer-boot-big-stat">
+
+            <span class="beer-boot-big-number">
+              ${stats.championships || 2}
+            </span>
+
+            <span class="beer-boot-big-label">
+              CHAMPIONSHIPS
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      else if (
+        inductee.manager ===
+        "Dan Gilmore"
+      ) {
+
+        statHTML = `
+
+          <div class="beer-boot-big-stat">
+
+            <span class="beer-boot-big-number">
+              ${stats.championships || 1}
+            </span>
+
+            <span class="beer-boot-big-label">
+              CHAMPIONSHIP
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      else if (
+        inductee.manager ===
+        "Andy Rohrbaugh"
+      ) {
+
+        statHTML = `
+
+          <div class="beer-boot-big-stat">
+
+            <span class="beer-boot-big-number">
+              ${stats.playoffAppearances || 6}
+            </span>
+
+            <span class="beer-boot-big-label">
+              STRAIGHT PLAYOFF APPEARANCES
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      else if (
+        inductee.manager ===
+        "Matt Gilmore"
+      ) {
+
+        statHTML = `
+
+          <div class="beer-boot-big-stat">
+
+            <span class="beer-boot-big-number">
+              VII
+            </span>
+
+            <span class="beer-boot-big-label">
+              SEASONS AS COMMISSIONER
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      else if (
+        inductee.manager ===
+        "Heather Hallman"
+      ) {
+
+        statHTML = `
+
+          <div class="beer-boot-big-stat">
+
+            <span class="beer-boot-big-number">
+              2
+            </span>
+
+            <span class="beer-boot-big-label">
+              TITLE GAME APPEARANCES
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      inducteeHTML += `
+
+        <article
+          class="
+            beer-boot-inductee-card
+            beer-boot-type-${inductee.type}
+          "
+        >
+
+          <div class="beer-boot-card-top">
+
+            <div class="beer-boot-card-icon">
+              ${inductee.icon}
+            </div>
+
+            <div class="beer-boot-card-status">
+              INDUCTED
+            </div>
+
+          </div>
+
+
+          <div class="beer-boot-inductee-name">
+            ${escapeHTML(inductee.manager)}
+          </div>
+
+
+          <div class="beer-boot-inductee-nickname">
+            ${escapeHTML(inductee.nickname)}
+          </div>
+
+
+          ${statHTML}
+
+
+          <p class="beer-boot-inductee-description">
+            ${escapeHTML(inductee.description)}
+          </p>
+
+
+          <div class="beer-boot-highlights">
+            ${highlightsHTML}
+          </div>
+
+
+          ${quoteHTML}
+
+        </article>
+
+      `;
+
+    }
+  );
+
+
+  inducteesContainer.innerHTML =
+    inducteeHTML;
+
+
+  /* =====================================================
+     HALL OF FAME RECORD BOOK
+  ===================================================== */
+
+  const records = [
+
+    {
+      icon: "🏆",
+      title: "MOST CHAMPIONSHIPS",
+      value: "3",
+      holder: "Mike Ames",
+      detail: "2020 • 2021 • 2024"
+    },
+
+
+    {
+      icon: "🔥",
+      title: "HIGHEST SEASON SCORE",
+      value: "2,078.86",
+      holder: "Daryl Creager",
+      detail: "2022 season"
+    },
+
+
+    {
+      icon: "💀",
+      title: "LOWEST SEASON SCORE",
+      value: "1,420.14",
+      holder: "Jon Rohrbaugh",
+      detail: "2023 season"
+    },
+
+
+    {
+      icon: "🛡️",
+      title: "MOST PLAYOFF APPEARANCES",
+      value: "6",
+      holder: "Andy Rohrbaugh",
+      detail: "2020–2025 • Every season"
+    },
+
+
+    {
+      icon: "📊",
+      title: "MOST CAREER WINS",
+      value: "102",
+      holder: "Andy Rohrbaugh",
+      detail: "Regular season wins"
+    },
+
+
+    {
+      icon: "❓",
+      title: "HIGHEST SINGLE-GAME SCORE",
+      value: "COMING SOON",
+      holder: "Record pending",
+      detail: "All-time game data will be added"
+    },
+
+
+    {
+      icon: "❓",
+      title: "LOWEST SINGLE-GAME SCORE",
+      value: "COMING SOON",
+      holder: "Record pending",
+      detail: "All-time game data will be added"
+    }
+
+  ];
+
+
+  let recordsHTML = "";
+
+
+  records.forEach(
+    record => {
+
+      recordsHTML += `
+
+        <article class="beer-boot-record-card">
+
+          <div class="beer-boot-record-icon">
+            ${record.icon}
+          </div>
+
+          <div class="beer-boot-record-title">
+            ${escapeHTML(record.title)}
+          </div>
+
+          <div class="beer-boot-record-value">
+            ${escapeHTML(record.value)}
+          </div>
+
+          <div class="beer-boot-record-holder">
+            ${escapeHTML(record.holder)}
+          </div>
+
+          <div class="beer-boot-record-detail">
+            ${escapeHTML(record.detail)}
+          </div>
+
+        </article>
+
+      `;
+
+    }
+  );
+
+
+  recordsContainer.innerHTML =
+    recordsHTML;
+
+
+  /* =====================================================
+     DRAFT DAY HALL OF FAME
+  ===================================================== */
+
+  const draftGames = [
+
+    {
+      year: "2026",
+      game: "Man Card Competition",
+      winner: "Andy Rohrbaugh",
+      icon: "🏆"
+    },
+
+
+    {
+      year: "2025",
+      game: "Drive, Pitch, Putt",
+      winner: "Caufield",
+      icon: "🏆"
+    },
+
+
+    {
+      year: "2024",
+      game: "Punt, Pass, Kick",
+      winner: "Matt Gilmore",
+      icon: "🏆"
+    },
+
+
+    {
+      year: "2023",
+      game: "Yard Game Olympics",
+      winner: "Matt Gilmore",
+      icon: "🏆"
+    },
+
+
+    {
+      year: "2022",
+      game: "Trivia / Game Picks",
+      winner: "Rob Robertson",
+      icon: "🏆"
+    },
+
+
+    {
+      year: "2021",
+      game: "Bad Beer Tasting Competition",
+      winner: "Andy Rohrbaugh",
+      icon: "🏆"
+    },
+
+
+    {
+      year: "2020",
+      game: "Hat Pull",
+      winner: "Dan Gilmore",
+      icon: "🏆"
+    }
+
+  ];
+
+
+  let draftHTML = "";
+
+
+  draftGames.forEach(
+    item => {
+
+      draftHTML += `
+
+        <article class="beer-boot-draft-card">
+
+          <div class="beer-boot-draft-year">
+            ${escapeHTML(item.year)}
+          </div>
+
+          <div class="beer-boot-draft-icon">
+            ${item.icon}
+          </div>
+
+          <div class="beer-boot-draft-game">
+            ${escapeHTML(item.game)}
+          </div>
+
+          <div class="beer-boot-draft-winner-label">
+            WINNER
+          </div>
+
+          <div class="beer-boot-draft-winner">
+            ${escapeHTML(item.winner)}
+          </div>
+
+        </article>
+
+      `;
+
+    }
+  );
+
+
+  draftContainer.innerHTML =
+    draftHTML;
 
 }
+
+
 /* =========================================================
    SEASON SELECTOR
 ========================================================= */
@@ -1187,14 +1382,18 @@ function renderSeasonSelector() {
 
 
   const years =
-    Object.keys(window.LEAGUE_HISTORY)
-      .map(Number)
-      .sort((a, b) => b - a);
+    Object.keys(
+      window.LEAGUE_HISTORY || {}
+    )
+    .map(Number)
+    .sort(
+      (a, b) => b - a
+    );
 
 
   container.innerHTML =
     years.map(
-      (year) => {
+      year => {
 
         const season =
           getSeason(year);
@@ -1215,7 +1414,7 @@ function renderSeasonSelector() {
 
             <span>
               ${escapeHTML(
-                season.season
+                season?.season || ""
               )}
             </span>
 
@@ -1236,7 +1435,7 @@ function renderSeasonSelector() {
       ".history-season-button"
     )
     .forEach(
-      (button) => {
+      button => {
 
         button.addEventListener(
           "click",
@@ -1257,7 +1456,7 @@ function renderSeasonSelector() {
                 ".history-season-button"
               )
               .forEach(
-                (btn) =>
+                btn =>
                   btn.classList.remove(
                     "active"
                   )
@@ -1278,11 +1477,6 @@ function renderSeasonSelector() {
               year
             );
 
-
-            /*
-               Scroll gently to the
-               season history section.
-            */
 
             const seasonContainer =
               document.getElementById(
@@ -1343,7 +1537,8 @@ function renderSeasonHistory(year) {
     [...(season.standings || [])]
       .sort(
         (a, b) =>
-          a.rank - b.rank
+          Number(a.rank) -
+          Number(b.rank)
       );
 
 
@@ -1443,45 +1638,25 @@ function renderSeasonHistory(year) {
 
           <tr>
 
-            <th>
-              #
-            </th>
+            <th>#</th>
 
-            <th>
-              MANAGER
-            </th>
+            <th>MANAGER</th>
 
-            <th>
-              TEAM
-            </th>
+            <th>TEAM</th>
 
-            <th>
-              RECORD
-            </th>
+            <th>RECORD</th>
 
-            <th>
-              PF
-            </th>
+            <th>PF</th>
 
-            <th>
-              PA
-            </th>
+            <th>PA</th>
 
-            <th>
-              DIFF
-            </th>
+            <th>DIFF</th>
 
-            <th>
-              DIV
-            </th>
+            <th>DIV</th>
 
-            <th>
-              HOME
-            </th>
+            <th>HOME</th>
 
-            <th>
-              AWAY
-            </th>
+            <th>AWAY</th>
 
           </tr>
 
@@ -1492,7 +1667,7 @@ function renderSeasonHistory(year) {
 
           ${
             standings.map(
-              (team) => {
+              team => {
 
                 const isChampion =
                   team.manager ===
@@ -1579,14 +1754,14 @@ function renderSeasonHistory(year) {
 
                     <td
                       class="
-                        ${team.diff >= 0
+                        ${Number(team.diff) >= 0
                           ? "positive"
                           : "negative"}
                       "
                     >
 
                       ${
-                        team.diff >= 0
+                        Number(team.diff) >= 0
                           ? "+"
                           : ""
                       }${formatNumber(
@@ -1672,19 +1847,21 @@ function renderSeasonHistory(year) {
 
           <strong>
             ${escapeHTML(
-              season.championship.winner
+              season.championship?.winner ||
+              ""
             )}
           </strong>
 
           <small>
             ${escapeHTML(
-              season.championship.winnerTeam
+              season.championship?.winnerTeam ||
+              ""
             )}
           </small>
 
           <b>
             ${formatNumber(
-              season.championship.winnerScore
+              season.championship?.winnerScore
             )}
           </b>
 
@@ -1704,19 +1881,21 @@ function renderSeasonHistory(year) {
 
           <strong>
             ${escapeHTML(
-              season.championship.loser
+              season.championship?.loser ||
+              ""
             )}
           </strong>
 
           <small>
             ${escapeHTML(
-              season.championship.loserTeam
+              season.championship?.loserTeam ||
+              ""
             )}
           </small>
 
           <b>
             ${formatNumber(
-              season.championship.loserScore
+              season.championship?.loserScore
             )}
           </b>
 
@@ -1764,11 +1943,6 @@ function renderHistoricalPlayoffs(
   }
 
 
-  /*
-     The playoff section follows
-     the selected season.
-  */
-
   const rounds =
     season.playoffs.rounds || [];
 
@@ -1815,7 +1989,7 @@ function renderHistoricalPlayoffs(
 
       ${
         rounds.map(
-          (round) =>
+          round =>
             renderPlayoffRound(
               round,
               season
@@ -1883,7 +2057,7 @@ function renderPlayoffRound(
 
                 ${
                   byes.map(
-                    (bye) => `
+                    bye => `
 
                       <div class="playoff-bye">
 
@@ -1922,7 +2096,7 @@ function renderPlayoffRound(
 
         ${
           games.map(
-            (game) =>
+            game =>
               renderPlayoffGame(
                 game,
                 season
@@ -2065,9 +2239,7 @@ function renderPlayoffGame(
 
         ${
           winner
-            ? `🏆 ${escapeHTML(
-                winner
-              )}`
+            ? `🏆 ${escapeHTML(winner)}`
             : ""
         }
 
