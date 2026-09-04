@@ -469,227 +469,708 @@ function renderAllTimeLeaderboard() {
 
 function renderLeagueRecords() {
 
-  const container =
-    document.getElementById(
-      "league-records"
-    );
+/* =========================================================
+   BEER BOOT HALL OF FAME
+   ========================================================= */
 
+function renderBeerBootHallOfFame() {
 
-  if (!container) return;
+    const inducteesContainer =
+        document.getElementById("beer-boot-inductees");
 
+    const recordsContainer =
+        document.getElementById("beer-boot-records");
 
-  const records =
-    typeof getLeagueRecords === "function"
-      ? getLeagueRecords()
-      : null;
+    const draftContainer =
+        document.getElementById("beer-boot-draft-games");
 
+    if (!inducteesContainer ||
+        !recordsContainer ||
+        !draftContainer) {
+        return;
+    }
 
-  if (!records) {
 
-    container.innerHTML = `
-      <div class="history-empty">
-        League records are unavailable.
-      </div>
-    `;
+    /* =====================================================
+       HELPER FUNCTIONS
+       ===================================================== */
 
-    return;
-  }
+    function normalizeManagerName(name) {
 
+        if (!name) {
+            return "";
+        }
 
-  const cards = [];
+        if (name === "Andrew Rohrbaugh") {
+            return "Andy Rohrbaugh";
+        }
 
+        return name;
+    }
 
-  /* -----------------------------------------
-     Highest Points For
-  ------------------------------------------ */
 
-  if (records.highestPF) {
+    function getManagerStats(managerName) {
 
-    const record =
-      records.highestPF;
+        const normalizedTarget =
+            normalizeManagerName(managerName);
 
+        let championships = 0;
+        let playoffAppearances = 0;
+        let careerWins = 0;
 
-    cards.push(`
+        if (!window.LEAGUE_HISTORY) {
+            return {
+                championships,
+                playoffAppearances,
+                careerWins
+            };
+        }
+
+
+        /*
+         * Count championships directly from the
+         * historical season database.
+         */
+
+        Object.values(window.LEAGUE_HISTORY).forEach(season => {
+
+            if (!season) {
+                return;
+            }
+
+            const champion =
+                normalizeManagerName(season.champion);
+
+            if (champion === normalizedTarget) {
+                championships++;
+            }
+
+        });
+
+
+        /*
+         * Use the existing all-time leaderboard when
+         * available for career wins and playoff appearances.
+         */
+
+        if (typeof getAllTimeManagerLeaderboard === "function") {
+
+            const leaderboard =
+                getAllTimeManagerLeaderboard();
+
+            const manager =
+                leaderboard.find(item =>
+                    normalizeManagerName(
+                        item.manager ||
+                        item.name ||
+                        item.managerName
+                    ) === normalizedTarget
+                );
+
+            if (manager) {
+
+                careerWins =
+                    Number(
+                        manager.wins ??
+                        manager.regularSeasonWins ??
+                        manager.totalWins ??
+                        0
+                    );
+
+                playoffAppearances =
+                    Number(
+                        manager.playoffAppearances ??
+                        manager.playoffs ??
+                        0
+                    );
+            }
+        }
+
+
+        return {
+            championships,
+            playoffAppearances,
+            careerWins
+        };
+    }
+
+
+    /* =====================================================
+       INDUCTEES
+       ===================================================== */
+
+    const inducteeDefinitions = [
+
+        {
+            manager: "Mike Ames",
+            nickname: "THE ORIGINAL DYNASTY",
+            icon: "🏆",
+            description:
+                "The winningest champion in Summit history. Mike built the league's first true dynasty and still owns the crown.",
+            highlights: [
+                "3 Championships",
+                "2020 • 2021 • 2024",
+                "Most championships in league history"
+            ],
+            type: "champion"
+        },
+
+        {
+            manager: "Daryl Creager",
+            nickname: "THE GODFATHER",
+            icon: "👑",
+            description:
+                "A two-time champion and one of the most dominant regular-season forces the Summit has ever seen.",
+            highlights: [
+                "2 Championships",
+                "2022 • 2025",
+                "2,078.86 points in 2022"
+            ],
+            type: "champion"
+        },
+
+        {
+            manager: "Dan Gilmore",
+            nickname: "THE BREAKER",
+            icon: "⚡",
+            description:
+                "The man who finally broke the dynasty. Dan captured the 2023 championship and forever etched his name into Summit history.",
+            highlights: [
+                "1 Championship",
+                "2023",
+                "Defeated Heather Hallman for the title"
+            ],
+            type: "champion"
+        },
+
+        {
+            manager: "Andy Rohrbaugh",
+            nickname: "THE IRON MAN",
+            icon: "🛡️",
+            description:
+                "Six straight playoff appearances. Andy has been there every single season, making him one of the most dependable managers in league history.",
+            highlights: [
+                "6 Playoff Appearances",
+                "2020–2025",
+                "Most career regular-season wins"
+            ],
+            type: "legend"
+        },
+
+        {
+            manager: "Matt Gilmore",
+            nickname: "THE COMMISSIONER",
+            icon: "🍺",
+            description:
+                "The guy keeping this circus moving. League organizer, commissioner, weekly storyteller and the man responsible for making sure the Summit keeps getting bigger.",
+            highlights: [
+                "Commissioner",
+                "7 Seasons",
+                "4 Draft Games created"
+            ],
+            type: "commissioner"
+        },
+
+        {
+            manager: "Heather Hallman",
+            nickname: "FOREVER PART OF THE SUMMIT",
+            icon: "🔥",
+            description:
+                "A former member who left an unmistakable mark on the league. Two championship-game appearances and enough attitude to make sure nobody forgot her.",
+            highlights: [
+                "2 Championship Game Appearances",
+                "2020 • 2023",
+                "Still part of Summit lore"
+            ],
+            quote:
+                "just because I have a vagina doesn’t mean I don’t know ball…",
+            type: "tribute"
+        }
+
+    ];
+
+
+    let inducteeHTML = "";
+
+
+    inducteeDefinitions.forEach(inductee => {
+
+        const stats =
+            getManagerStats(inductee.manager);
+
+
+        let highlightsHTML = "";
+
+        inductee.highlights.forEach(highlight => {
+
+            highlightsHTML += `
+                <div class="beer-boot-highlight">
+                    ${escapeHTML(highlight)}
+                </div>
+            `;
+
+        });
+
+
+        let quoteHTML = "";
+
+        if (inductee.quote) {
+
+            quoteHTML = `
+                <div class="beer-boot-quote">
+                    “${escapeHTML(inductee.quote)}”
+                </div>
+            `;
+
+        }
+
+
+        let statHTML = "";
+
+
+        if (inductee.manager === "Mike Ames") {
+
+            statHTML = `
+                <div class="beer-boot-big-stat">
+                    <span class="beer-boot-big-number">
+                        ${stats.championships || 3}
+                    </span>
+                    <span class="beer-boot-big-label">
+                        CHAMPIONSHIPS
+                    </span>
+                </div>
+            `;
+
+        }
+
+
+        else if (inductee.manager === "Daryl Creager") {
+
+            statHTML = `
+                <div class="beer-boot-big-stat">
+                    <span class="beer-boot-big-number">
+                        ${stats.championships || 2}
+                    </span>
+                    <span class="beer-boot-big-label">
+                        CHAMPIONSHIPS
+                    </span>
+                </div>
+            `;
+
+        }
+
+
+        else if (inductee.manager === "Dan Gilmore") {
+
+            statHTML = `
+                <div class="beer-boot-big-stat">
+                    <span class="beer-boot-big-number">
+                        ${stats.championships || 1}
+                    </span>
+                    <span class="beer-boot-big-label">
+                        CHAMPIONSHIP
+                    </span>
+                </div>
+            `;
 
-      <article class="record-card">
+        }
 
-        <div class="record-icon">
-          🔥
-        </div>
 
-        <div class="record-label">
-          HIGHEST POINTS FOR
-        </div>
+        else if (inductee.manager === "Andy Rohrbaugh") {
 
-        <strong class="record-value">
-          ${formatNumber(record.pf)}
-        </strong>
+            statHTML = `
+                <div class="beer-boot-big-stat">
+                    <span class="beer-boot-big-number">
+                        ${stats.playoffAppearances || 6}
+                    </span>
+                    <span class="beer-boot-big-label">
+                        STRAIGHT PLAYOFF APPEARANCES
+                    </span>
+                </div>
+            `;
 
-        <h3>
-          ${escapeHTML(record.manager)}
-        </h3>
+        }
 
-        <p>
-          ${escapeHTML(record.team)}
-        </p>
 
-        <small>
-          ${record.year} •
-          ${escapeHTML(record.record)}
-        </small>
+        else if (inductee.manager === "Matt Gilmore") {
 
-      </article>
+            statHTML = `
+                <div class="beer-boot-big-stat">
+                    <span class="beer-boot-big-number">
+                        VII
+                    </span>
+                    <span class="beer-boot-big-label">
+                        SEASONS AS COMMISSIONER
+                    </span>
+                </div>
+            `;
 
-    `);
+        }
 
-  }
 
+        else if (inductee.manager === "Heather Hallman") {
 
-  /* -----------------------------------------
-     Best Regular Season Record
-  ------------------------------------------ */
+            statHTML = `
+                <div class="beer-boot-big-stat">
+                    <span class="beer-boot-big-number">
+                        2
+                    </span>
+                    <span class="beer-boot-big-label">
+                        TITLE GAME APPEARANCES
+                    </span>
+                </div>
+            `;
 
-  if (records.bestRecord) {
+        }
 
-    const record =
-      records.bestRecord;
 
+        inducteeHTML += `
 
-    cards.push(`
+            <article class="beer-boot-inductee-card beer-boot-type-${inductee.type}">
 
-      <article class="record-card">
+                <div class="beer-boot-card-top">
 
-        <div class="record-icon">
-          👑
-        </div>
+                    <div class="beer-boot-card-icon">
+                        ${inductee.icon}
+                    </div>
 
-        <div class="record-label">
-          BEST REGULAR SEASON RECORD
-        </div>
+                    <div class="beer-boot-card-status">
+                        INDUCTED
+                    </div>
 
-        <strong class="record-value">
-          ${escapeHTML(record.record)}
-        </strong>
+                </div>
 
-        <h3>
-          ${escapeHTML(record.manager)}
-        </h3>
 
-        <p>
-          ${escapeHTML(record.team)}
-        </p>
+                <div class="beer-boot-inductee-name">
+                    ${escapeHTML(inductee.manager)}
+                </div>
 
-        <small>
-          ${record.year} •
-          ${record.wins} wins
-        </small>
 
-      </article>
+                <div class="beer-boot-inductee-nickname">
+                    ${escapeHTML(inductee.nickname)}
+                </div>
 
-    `);
 
-  }
+                ${statHTML}
 
 
-  /* -----------------------------------------
-     Biggest Championship Margin
-  ------------------------------------------ */
+                <p class="beer-boot-inductee-description">
+                    ${escapeHTML(inductee.description)}
+                </p>
 
-  if (records.biggestChampionshipMargin) {
 
-    const record =
-      records.biggestChampionshipMargin;
+                <div class="beer-boot-highlights">
+                    ${highlightsHTML}
+                </div>
 
 
-    cards.push(`
+                ${quoteHTML}
 
-      <article class="record-card">
+            </article>
 
-        <div class="record-icon">
-          💀
-        </div>
+        `;
 
-        <div class="record-label">
-          BIGGEST CHAMPIONSHIP MARGIN
-        </div>
+    });
 
-        <strong class="record-value">
-          ${formatNumber(record.margin)}
-        </strong>
 
-        <h3>
-          ${escapeHTML(record.winner)}
-        </h3>
+    inducteesContainer.innerHTML =
+        inducteeHTML;
 
-        <p>
-          ${formatNumber(record.winnerScore)}
-          –
-          ${formatNumber(record.loserScore)}
-        </p>
 
-        <small>
-          ${record.year} •
-          vs ${escapeHTML(record.loser)}
-        </small>
+    /* =====================================================
+       RECORD BOOK
+       ===================================================== */
 
-      </article>
+    let highestSeasonScore = null;
+    let lowestSeasonScore = null;
 
-    `);
 
-  }
+    if (window.LEAGUE_HISTORY) {
 
+        Object.values(window.LEAGUE_HISTORY).forEach(season => {
 
-  /* -----------------------------------------
-     Highest Championship Score
-  ------------------------------------------ */
+            if (!season || !season.standings) {
+                return;
+            }
 
-  if (records.highestChampionshipScore) {
 
-    const record =
-      records.highestChampionshipScore;
+            season.standings.forEach(team => {
 
+                const manager =
+                    normalizeManagerName(
+                        team.manager ||
+                        team.name
+                    );
 
-    cards.push(`
+                const pf =
+                    Number(
+                        team.pf ??
+                        team.pointsFor ??
+                        team.totalPoints ??
+                        0
+                    );
 
-      <article class="record-card">
 
-        <div class="record-icon">
-          💰
-        </div>
+                if (!pf) {
+                    return;
+                }
 
-        <div class="record-label">
-          HIGHEST CHAMPIONSHIP SCORE
-        </div>
 
-        <strong class="record-value">
-          ${formatNumber(record.score)}
-        </strong>
+                const entry = {
+                    manager,
+                    season: season.year ||
+                            season.season ||
+                            "",
+                    points: pf
+                };
 
-        <h3>
-          ${escapeHTML(record.manager)}
-        </h3>
 
-        <p>
-          ${escapeHTML(record.team)}
-        </p>
+                if (!highestSeasonScore ||
+                    pf > highestSeasonScore.points) {
 
-        <small>
-          ${record.year} • Championship
-        </small>
+                    highestSeasonScore = entry;
 
-      </article>
+                }
 
-    `);
 
-  }
+                if (!lowestSeasonScore ||
+                    pf < lowestSeasonScore.points) {
 
+                    lowestSeasonScore = entry;
 
-  container.innerHTML =
-    cards.join("");
+                }
+
+            });
+
+        });
+
+    }
+
+
+    /*
+     * Known historical records.
+     * These are deliberately explicit so the Hall of Fame
+     * remains correct even if the historical data structure
+     * changes.
+     */
+
+    highestSeasonScore = {
+        manager: "Daryl Creager",
+        season: "2022",
+        points: 2078.86
+    };
+
+
+    lowestSeasonScore = {
+        manager: "Jon Rohrbaugh",
+        season: "2023",
+        points: 1420.14
+    };
+
+
+    const records = [
+
+        {
+            icon: "🏆",
+            title: "MOST CHAMPIONSHIPS",
+            value: "3",
+            holder: "Mike Ames",
+            detail: "2020 • 2021 • 2024"
+        },
+
+        {
+            icon: "🔥",
+            title: "HIGHEST SEASON SCORE",
+            value: formatNumber(
+                highestSeasonScore.points
+            ),
+            holder: highestSeasonScore.manager,
+            detail: `${highestSeasonScore.season} season`
+        },
+
+        {
+            icon: "💀",
+            title: "LOWEST SEASON SCORE",
+            value: formatNumber(
+                lowestSeasonScore.points
+            ),
+            holder: lowestSeasonScore.manager,
+            detail: `${lowestSeasonScore.season} season`
+        },
+
+        {
+            icon: "🛡️",
+            title: "MOST PLAYOFF APPEARANCES",
+            value: "6",
+            holder: "Andy Rohrbaugh",
+            detail: "2020–2025 • Every season"
+        },
+
+        {
+            icon: "📊",
+            title: "MOST CAREER WINS",
+            value: "102",
+            holder: "Andy Rohrbaugh",
+            detail: "Regular season wins"
+        },
+
+        {
+            icon: "❓",
+            title: "HIGHEST SINGLE-GAME SCORE",
+            value: "COMING SOON",
+            holder: "Record pending",
+            detail: "All-time game data will be added"
+        },
+
+        {
+            icon: "❓",
+            title: "LOWEST SINGLE-GAME SCORE",
+            value: "COMING SOON",
+            holder: "Record pending",
+            detail: "All-time game data will be added"
+        }
+
+    ];
+
+
+    let recordsHTML = "";
+
+
+    records.forEach(record => {
+
+        recordsHTML += `
+
+            <article class="beer-boot-record-card">
+
+                <div class="beer-boot-record-icon">
+                    ${record.icon}
+                </div>
+
+                <div class="beer-boot-record-title">
+                    ${escapeHTML(record.title)}
+                </div>
+
+                <div class="beer-boot-record-value">
+                    ${escapeHTML(record.value)}
+                </div>
+
+                <div class="beer-boot-record-holder">
+                    ${escapeHTML(record.holder)}
+                </div>
+
+                <div class="beer-boot-record-detail">
+                    ${escapeHTML(record.detail)}
+                </div>
+
+            </article>
+
+        `;
+
+    });
+
+
+    recordsContainer.innerHTML =
+        recordsHTML;
+
+
+    /* =====================================================
+       DRAFT DAY HALL OF FAME
+       ===================================================== */
+
+    const draftGames = [
+
+        {
+            year: "2026",
+            game: "Man Card Competition",
+            winner: "Andy Rohrbaugh",
+            icon: "🏆"
+        },
+
+        {
+            year: "2025",
+            game: "Drive, Pitch, Putt",
+            winner: "Caufield",
+            icon: "🏆"
+        },
+
+        {
+            year: "2024",
+            game: "Punt, Pass, Kick",
+            winner: "Matt Gilmore",
+            icon: "🏆"
+        },
+
+        {
+            year: "2023",
+            game: "Yard Game Olympics",
+            winner: "Matt Gilmore",
+            icon: "🏆"
+        },
+
+        {
+            year: "2022",
+            game: "Trivia / Game Picks",
+            winner: "Rob Robertson",
+            icon: "🏆"
+        },
+
+        {
+            year: "2021",
+            game: "Bad Beer Tasting Competition",
+            winner: "Andy Rohrbaugh",
+            icon: "🏆"
+        },
+
+        {
+            year: "2020",
+            game: "Hat Pull",
+            winner: "Dan Gilmore",
+            icon: "🏆"
+        }
+
+    ];
+
+
+    let draftHTML = "";
+
+
+    draftGames.forEach(item => {
+
+        draftHTML += `
+
+            <article class="beer-boot-draft-card">
+
+                <div class="beer-boot-draft-year">
+                    ${escapeHTML(item.year)}
+                </div>
+
+                <div class="beer-boot-draft-icon">
+                    ${item.icon}
+                </div>
+
+                <div class="beer-boot-draft-game">
+                    ${escapeHTML(item.game)}
+                </div>
+
+                <div class="beer-boot-draft-winner-label">
+                    WINNER
+                </div>
+
+                <div class="beer-boot-draft-winner">
+                    ${escapeHTML(item.winner)}
+                </div>
+
+            </article>
+
+        `;
+
+    });
+
+
+    draftContainer.innerHTML =
+        draftHTML;
 
 }
-
-
 /* =========================================================
    SEASON SELECTOR
 ========================================================= */
