@@ -3170,59 +3170,65 @@ footer span {
   }
 }
 /* =========================================================
-   BEER BOOT HALL OF FAME — INDUCTEE CARD TEXT
-   Light card background = dark readable text
+   BEER BOOT HALL OF FAME
+   FORCE DARK TEXT ON LIGHT INDUCTEE CARDS
    ========================================================= */
 
-.hof-inductee {
-  color: #1f2937 !important;
+/* ALL text inside Hall of Fame inductee cards */
+#beer-boot-hall-of-fame .hof-inductee,
+#beer-boot-hall-of-fame .hof-inductee *,
+#beer-boot-hall-of-fame .inductee,
+#beer-boot-hall-of-fame .inductee *,
+#beer-boot-hall-of-fame .hall-of-fame-card,
+#beer-boot-hall-of-fame .hall-of-fame-card * {
+    color: #1f2937 !important;
 }
 
-/* Inductee name */
-.hof-inductee h3 {
-  color: #111827 !important;
-  font-weight: 800;
+/* Names */
+#beer-boot-hall-of-fame .hof-inductee h1,
+#beer-boot-hall-of-fame .hof-inductee h2,
+#beer-boot-hall-of-fame .hof-inductee h3,
+#beer-boot-hall-of-fame .hof-inductee h4,
+#beer-boot-hall-of-fame .inductee h1,
+#beer-boot-hall-of-fame .inductee h2,
+#beer-boot-hall-of-fame .inductee h3,
+#beer-boot-hall-of-fame .inductee h4 {
+    color: #111827 !important;
+    font-weight: 800 !important;
 }
 
-/* Hall of Fame nickname/title */
-.hof-inductee h4,
-.hof-inductee .hof-title {
-  color: #8a5a00 !important;
-  font-weight: 800;
+/* Titles / nicknames */
+#beer-boot-hall-of-fame .hof-title,
+#beer-boot-hall-of-fame .inductee-title,
+#beer-boot-hall-of-fame .hof-subtitle {
+    color: #8a5a00 !important;
+    font-weight: 800 !important;
 }
 
-/* Accomplishment / description text */
-.hof-inductee p,
-.hof-inductee .hof-description {
-  color: #374151 !important;
+/* Paragraphs and descriptions */
+#beer-boot-hall-of-fame .hof-inductee p,
+#beer-boot-hall-of-fame .inductee p,
+#beer-boot-hall-of-fame .hof-inductee span,
+#beer-boot-hall-of-fame .inductee span {
+    color: #374151 !important;
 }
 
 /* Stats */
-.hof-inductee .hof-stat-value {
-  color: #111827 !important;
-  font-weight: 800;
+#beer-boot-hall-of-fame .hof-stat,
+#beer-boot-hall-of-fame .hof-stat *,
+#beer-boot-hall-of-fame .stat,
+#beer-boot-hall-of-fame .stat * {
+    color: #111827 !important;
 }
 
-.hof-inductee .hof-stat-label {
-  color: #4b5563 !important;
-}
-
-/* Quote */
-.hof-inductee blockquote {
-  color: #1f2937 !important;
-  font-weight: 600;
-}
-
-.hof-inductee blockquote::before,
-.hof-inductee blockquote::after {
-  color: #8a5a00 !important;
+/* Quotes */
+#beer-boot-hall-of-fame blockquote,
+#beer-boot-hall-of-fame blockquote * {
+    color: #374151 !important;
 }
 
 /* Links */
-.hof-inductee a {
-  color: #1f2937 !important;
-}
-
-.hof-inductee a:hover {
-  color: #8a5a00 !important;
+#beer-boot-hall-of-fame a,
+#beer-boot-hall-of-fame a * {
+    color: #1f2937 !important;
 }
