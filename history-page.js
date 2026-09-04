@@ -1197,7 +1197,7 @@ function renderBeerBootHallOfFame() {
     {
       icon: "📊",
       title: "MOST CAREER WINS",
-      value: "102",
+      value: "51",
       holder: "Andy Rohrbaugh",
       detail: "Regular season wins"
     },
