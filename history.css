@@ -116,6 +116,11 @@
   text-transform: uppercase;
 
   color: #ffffff !important;
+
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.75),
+    0 0 12px rgba(255, 255, 255, 0.20),
+    0 0 30px rgba(255, 255, 255, 0.10);
 }
 
 .history-hero p {
