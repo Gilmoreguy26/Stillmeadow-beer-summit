@@ -1792,8 +1792,12 @@
 
 }
 /* =========================================================
-   SITE HEADER — HISTORY PAGE TEXT VISIBILITY FIX
+   SITE HEADER — HISTORY PAGE
 ========================================================= */
+
+.site-header {
+  background: #090d14;
+}
 
 .site-header .site-logo {
   color: #ffffff !important;
