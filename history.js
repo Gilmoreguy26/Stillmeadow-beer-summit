@@ -2376,3 +2376,187 @@ window.getChampionshipHistory =
 
 window.getAllTimeManagerLeaderboard =
   getAllTimeManagerLeaderboard;
+/* =========================================================
+   BEER BOOT HALL OF FAME
+   Dynamic Historical Records
+   ========================================================= */
+function initializeBeerBootHallOfFame() {
+  if (typeof LEAGUE_HISTORY === "undefined") {
+    console.warn("LEAGUE_HISTORY not found.");
+    return;
+  }
+  const seasons = Object.values(LEAGUE_HISTORY);
+  /* -------------------------------------------------------
+     BUILD CAREER MANAGER TOTALS
+     ------------------------------------------------------- */
+  const managerTotals = {};
+  seasons.forEach(season => {
+    if (!season.standings) return;
+    season.standings.forEach(team => {
+      /*
+       * Andrew Rohrbaugh and Andy Rohrbaugh are treated
+       * as the same manager.
+       */
+      const manager =
+        team.manager === "Andrew Rohrbaugh"
+          ? "Andy Rohrbaugh"
+          : team.manager;
+      if (!managerTotals[manager]) {
+        managerTotals[manager] = {
+          wins: 0,
+          losses: 0,
+          ties: 0,
+          seasons: 0,
+          playoffAppearances: 0
+        };
+      }
+      managerTotals[manager].wins += Number(team.wins || 0);
+      managerTotals[manager].losses += Number(team.losses || 0);
+      managerTotals[manager].ties += Number(team.ties || 0);
+      managerTotals[manager].seasons += 1;
+    });
+  });
+  /* -------------------------------------------------------
+     PLAYOFF APPEARANCES
+     ------------------------------------------------------- */
+  seasons.forEach(season => {
+    if (!season.standings) return;
+    season.standings.forEach(team => {
+      const manager =
+        team.manager === "Andrew Rohrbaugh"
+          ? "Andy Rohrbaugh"
+          : team.manager;
+      /*
+       * A manager qualifies for the playoffs if they appear
+       * in the playoff rounds or have a playoff finish.
+       */
+      let madePlayoffs = false;
+      if (season.playoffs) {
+        const playoffJSON =
+          JSON.stringify(season.playoffs);
+        if (playoffJSON.includes(team.manager)) {
+          madePlayoffs = true;
+        }
+      }
+      if (madePlayoffs) {
+        managerTotals[manager].playoffAppearances++;
+      }
+    });
+  });
+  /* -------------------------------------------------------
+     ANDY — CAREER WINS
+     ------------------------------------------------------- */
+  const andy = managerTotals["Andy Rohrbaugh"];
+  if (andy) {
+    const winsElement =
+      document.getElementById("hof-andy-wins");
+    const playoffElement =
+      document.getElementById("hof-andy-playoffs");
+    const playoffRecordElement =
+      document.getElementById("record-playoff-appearances");
+    if (winsElement) {
+      winsElement.textContent = andy.wins;
+    }
+    if (playoffElement) {
+      playoffElement.textContent =
+        andy.playoffAppearances;
+    }
+    if (playoffRecordElement) {
+      playoffRecordElement.textContent =
+        andy.playoffAppearances;
+    }
+  }
+  /* -------------------------------------------------------
+     HIGHEST / LOWEST SEASON SCORE
+     ------------------------------------------------------- */
+  let highestSeason = null;
+  let lowestSeason = null;
+  seasons.forEach(season => {
+    if (!season.standings) return;
+    season.standings.forEach(team => {
+      const score = Number(team.pf);
+      if (!Number.isFinite(score)) return;
+      const record = {
+        score,
+        manager: team.manager,
+        year: season.year,
+        team: team.team
+      };
+      if (
+        highestSeason === null ||
+        score > highestSeason.score
+      ) {
+        highestSeason = record;
+      }
+      if (
+        lowestSeason === null ||
+        score < lowestSeason.score
+      ) {
+        lowestSeason = record;
+      }
+    });
+  });
+  /* -------------------------------------------------------
+     DISPLAY HIGHEST SEASON SCORE
+     ------------------------------------------------------- */
+  if (highestSeason) {
+    const score =
+      document.getElementById(
+        "record-high-season-score"
+      );
+    const manager =
+      document.getElementById(
+        "record-high-season-manager"
+      );
+    const year =
+      document.getElementById(
+        "record-high-season-year"
+      );
+    if (score)
+      score.textContent =
+        highestSeason.score.toFixed(2);
+    if (manager)
+      manager.textContent =
+        highestSeason.manager;
+    if (year)
+      year.textContent =
+        `${highestSeason.year} • ${highestSeason.team}`;
+  }
+  /* -------------------------------------------------------
+     DISPLAY LOWEST SEASON SCORE
+     ------------------------------------------------------- */
+  if (lowestSeason) {
+    const score =
+      document.getElementById(
+        "record-low-season-score"
+      );
+    const manager =
+      document.getElementById(
+        "record-low-season-manager"
+      );
+    const year =
+      document.getElementById(
+        "record-low-season-year"
+      );
+    if (score)
+      score.textContent =
+        lowestSeason.score.toFixed(2);
+    if (manager)
+      manager.textContent =
+        lowestSeason.manager;
+    if (year)
+      year.textContent =
+        `${lowestSeason.year} • ${lowestSeason.team}`;
+  }
+}
+/* =========================================================
+   INITIALIZE WHEN PAGE IS READY
+   ========================================================= */
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeBeerBootHallOfFame
+  );
+} else {
+  initializeBeerBootHallOfFame();
+}
