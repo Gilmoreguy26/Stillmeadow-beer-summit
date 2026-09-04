@@ -1812,3 +1812,47 @@
 .site-header .site-subtitle {
   color: #ffffff !important;
 }
+/* =========================================================
+   HISTORY HERO — TEXT VISIBILITY
+========================================================= */
+
+.history-hero {
+  color: #ffffff;
+}
+
+.history-hero .history-kicker {
+  color: #ffffff !important;
+  opacity: 0.75;
+}
+
+.history-hero h1 {
+  color: #ffffff !important;
+
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.75),
+    0 0 12px rgba(255, 255, 255, 0.20),
+    0 0 30px rgba(255, 255, 255, 0.10);
+}
+
+.history-hero p {
+  color: #ffffff !important;
+  opacity: 0.72;
+}
+
+.history-hero .history-years {
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.03);
+}
+/* =========================================================
+   SITE NAV — TEXT VISIBILITY
+========================================================= */
+
+.site-header .site-nav a {
+  color: #ffffff !important;
+}
+
+.site-header .site-nav a:hover {
+  color: #ffffff !important;
+  opacity: 0.75;
+}
