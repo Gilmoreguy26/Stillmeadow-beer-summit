@@ -484,86 +484,9 @@ function renderLeagueRecords() {
   if (!container) return;
 
 
-  /*
-     Use the historical database's record
-     function when available.
-  */
-
-  const records =
-    typeof getLeagueRecords === "function"
-      ? getLeagueRecords()
-      : null;
-
-
-  /*
-     If the existing history.js provides
-     a record object, render it dynamically.
-  */
-
-  if (records && typeof records === "object") {
-
-    const entries = [];
-
-
-    Object.entries(records).forEach(
-      ([key, value]) => {
-
-        if (
-          value === null ||
-          value === undefined ||
-          typeof value === "object"
-        ) {
-          return;
-        }
-
-
-        entries.push({
-          title: key,
-          value: value
-        });
-
-      }
-    );
-
-
-    if (entries.length) {
-
-      container.innerHTML =
-        entries.map(
-          entry => `
-
-            <article class="league-record-card">
-
-              <div class="league-record-title">
-                ${escapeHTML(
-                  formatRecordTitle(entry.title)
-                )}
-              </div>
-
-              <div class="league-record-value">
-                ${escapeHTML(entry.value)}
-              </div>
-
-            </article>
-
-          `
-        ).join("");
-
-      return;
-    }
-
-  }
-
-
-  /*
-     Fallback records.
-     These are known historical records and
-     ensure the page still displays correctly.
-  */
-
   container.innerHTML = `
 
-    <div class="league-record-card">
+    <article class="league-record-card">
 
       <div class="league-record-title">
         HIGHEST SEASON SCORE
@@ -577,10 +500,10 @@ function renderLeagueRecords() {
         Daryl Creager • 2022
       </div>
 
-    </div>
+    </article>
 
 
-    <div class="league-record-card">
+    <article class="league-record-card">
 
       <div class="league-record-title">
         LOWEST SEASON SCORE
@@ -594,10 +517,10 @@ function renderLeagueRecords() {
         Jon Rohrbaugh • 2023
       </div>
 
-    </div>
+    </article>
 
 
-    <div class="league-record-card">
+    <article class="league-record-card">
 
       <div class="league-record-title">
         MOST CHAMPIONSHIPS
@@ -611,10 +534,10 @@ function renderLeagueRecords() {
         Mike Ames
       </div>
 
-    </div>
+    </article>
 
 
-    <div class="league-record-card">
+    <article class="league-record-card">
 
       <div class="league-record-title">
         MOST PLAYOFF APPEARANCES
@@ -625,15 +548,99 @@ function renderLeagueRecords() {
       </div>
 
       <div class="league-record-holder">
+        Andy Rohrbaugh • 2020–2025
+      </div>
+
+    </article>
+
+
+    <article class="league-record-card">
+
+      <div class="league-record-title">
+        MOST CAREER WINS
+      </div>
+
+      <div class="league-record-value">
+        51
+      </div>
+
+      <div class="league-record-holder">
         Andy Rohrbaugh
       </div>
 
-    </div>
+    </article>
+
+
+    <article class="league-record-card">
+
+      <div class="league-record-title">
+        HIGHEST SINGLE-GAME SCORE
+      </div>
+
+      <div class="league-record-value">
+        206.12
+      </div>
+
+      <div class="league-record-holder">
+        Dan Gilmore • Week 5, 2021
+      </div>
+
+    </article>
+
+
+    <article class="league-record-card">
+
+      <div class="league-record-title">
+        HIGHEST COMBINED GAME SCORE
+      </div>
+
+      <div class="league-record-value">
+        389.22
+      </div>
+
+      <div class="league-record-holder">
+        Dan Gilmore + Daryl Creager • Week 5, 2021
+      </div>
+
+    </article>
+
+
+    <article class="league-record-card">
+
+      <div class="league-record-title">
+        LOWEST SINGLE-GAME SCORE
+      </div>
+
+      <div class="league-record-value">
+        55.88
+      </div>
+
+      <div class="league-record-holder">
+        Jon Rohrbaugh • Week 11, 2024
+      </div>
+
+    </article>
+
+
+    <article class="league-record-card">
+
+      <div class="league-record-title">
+        BIGGEST BLOWOUT
+      </div>
+
+      <div class="league-record-value">
+        106.90
+      </div>
+
+      <div class="league-record-holder">
+        Dave Cox over Jon Rohrbaugh • Week 11, 2024
+      </div>
+
+    </article>
 
   `;
 
 }
-
 
 function formatRecordTitle(value) {
 
